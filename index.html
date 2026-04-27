@@ -1,0 +1,1998 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>智学刷题｜手机高级版</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body{
+            background: #0A0C16;
+            color: #F0F2FF;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            padding-bottom: 70px;
+        }
+        .glass-card{
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            transition: all 0.3s ease;
+        }
+        .glass-card:active{
+            transform: scale(0.98);
+            background: rgba(255,255,255,0.08);
+        }
+        .btn-gradient{
+            background: linear-gradient(135deg, #6C63FF, #A78BFA);
+            border-radius: 20px;
+            color: #fff;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(108, 99, 255, 0.3);
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+        .btn-gradient:active{
+            transform: translateY(2px);
+            box-shadow: 0 3px 10px rgba(108, 99, 255, 0.2);
+        }
+        .btn-gradient:disabled{
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn-gradient.loading{
+            position: relative;
+            color: transparent;
+        }
+        .btn-gradient.loading::after{
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin-left: -10px;
+            margin-top: -10px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: btnSpin 0.8s linear infinite;
+        }
+        @keyframes btnSpin{
+            to{transform: rotate(360deg);}
+        }
+        .page{
+            display: none;
+            animation: pageIn 0.3s ease forwards;
+        }
+        .page.active{
+            display: block;
+        }
+        @keyframes pageIn {
+            from{opacity: 0; transform: translateY(10px);}
+            to{opacity: 1; transform: translateY(0);}
+        }
+        .nav-item{
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .nav-item.active i,.nav-item.active p{
+            color: #A78BFA;
+        }
+        .option-selected{
+            border: 1px solid #A78BFA !important;
+            background: rgba(167, 139, 250, 0.1) !important;
+        }
+        input{
+            background:rgba(255,255,255,0.05);
+            border:1px solid rgba(255,255,255,0.1);
+            border-radius:16px;
+            padding:14px;
+            color:#fff;
+            outline:none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        input:focus{
+            border-color: rgba(167, 139, 250, 0.5);
+            box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.1);
+        }
+        input.error{
+            border-color: rgba(239, 68, 68, 0.5);
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+        ::-webkit-scrollbar{width: 4px;}
+        ::-webkit-scrollbar-thumb{background: rgba(167, 139, 250, 0.3);border-radius: 4px;}
+        textarea{resize: none;outline: none;}
+
+        nav{
+            transition: all 0.3s;
+        }
+        nav.hide-nav{
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+        }
+
+        /* Toast Notification System */
+        .toast-container{
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        }
+        .toast{
+            background: rgba(30, 32, 48, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: toastIn 0.3s ease forwards;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            pointer-events: auto;
+        }
+        .toast.toast-out{
+            animation: toastOut 0.3s ease forwards;
+        }
+        .toast.success{border-color: rgba(34, 197, 94, 0.3);}
+        .toast.success i{color: #22c55e;}
+        .toast.error{border-color: rgba(239, 68, 68, 0.3);}
+        .toast.error i{color: #ef4444;}
+        .toast.info{border-color: rgba(59, 130, 246, 0.3);}
+        .toast.info i{color: #3b82f6;}
+        .toast.warning{border-color: rgba(251, 191, 36, 0.3);}
+        .toast.warning i{color: #fbbf24;}
+        @keyframes toastIn{
+            from{opacity: 0; transform: translateY(-20px);}
+            to{opacity: 1; transform: translateY(0);}
+        }
+        @keyframes toastOut{
+            from{opacity: 1; transform: translateY(0);}
+            to{opacity: 0; transform: translateY(-20px);}
+        }
+
+        /* Ripple Effect */
+        .ripple{
+            position: relative;
+            overflow: hidden;
+        }
+        .ripple::before{
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s, height 0.4s;
+        }
+        .ripple:active::before{
+            width: 200px;
+            height: 200px;
+        }
+
+        /* Progress Ring */
+        .progress-ring{
+            transform: rotate(-90deg);
+        }
+        .progress-ring-circle{
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        /* Card Hover Effect */
+        .glass-card.hoverable:hover{
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+        }
+
+        /* Tab Indicator Animation */
+        .tab-indicator{
+            position: relative;
+        }
+        .tab-indicator::after{
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #6C63FF, #A78BFA);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        .tab-indicator.active::after{
+            transform: scaleX(1);
+        }
+
+        /* Shake Animation for Error */
+        @keyframes shake{
+            0%, 100%{transform: translateX(0);}
+            25%{transform: translateX(-5px);}
+            75%{transform: translateX(5px);}
+        }
+        .shake{
+            animation: shake 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Toast Notification Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- 登录注册页面 -->
+<div id="loginPage" class="page active px-5 pt-16">
+    <div class="text-center mb-10">
+        <h1 class="text-[30px] font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">智学刷题</h1>
+        <p class="text-gray-400 mt-2">私密本地账号 · 数据永久保存在本机</p>
+    </div>
+
+    <div class="glass-card p-6">
+        <div class="flex gap-4 mb-6">
+            <span id="loginTab" class="font-medium text-purple-400 border-b-2 border-purple-400 pb-1">登录</span>
+            <span id="regTab" class="font-medium text-gray-400">注册</span>
+        </div>
+
+        <div id="loginBox">
+            <input type="text" id="loginUser" placeholder="请输入账号" class="w-full mb-4">
+            <input type="password" id="loginPwd" placeholder="请输入密码" class="w-full mb-6">
+            <button onclick="Auth.login()" class="btn-gradient w-full py-4">立即登录</button>
+        </div>
+
+        <div id="regBox" class="hidden">
+            <input type="text" id="regUser" placeholder="设置账号" class="w-full mb-4">
+            <input type="password" id="regPwd" placeholder="设置密码" class="w-full mb-6">
+            <button onclick="Auth.register()" class="btn-gradient w-full py-4">创建账号</button>
+        </div>
+    </div>
+
+    <p class="text-center text-gray-500 text-xs mt-6">所有错题 & 记录仅保存在你手机本地</p>
+</div>
+
+<!-- 首页 -->
+<div id="homePage" class="page px-4">
+    <header class="px-1 pt-8 pb-4 flex justify-between items-center">
+        <div>
+            <h1 class="text-[24px] font-bold">欢迎回来</h1>
+            <p class="text-gray-400 text-[14px] mt-1" id="nowUserName">用户</p>
+        </div>
+        <button onclick="Auth.logout()" class="text-gray-400 text-sm">退出登录</button>
+    </header>
+
+    <div class="glass-card p-6 mb-6">
+        <div class="flex justify-between items-center">
+            <div>
+                <p class="text-gray-400 text-[13px]">综合正确率</p>
+                <h2 class="text-[32px] font-bold text-indigo-300 mt-1" id="totalRate">0%</h2>
+            </div>
+            <div class="text-right">
+                <p class="text-gray-400 text-[13px]">累计刷题</p>
+                <h2 class="text-[32px] font-bold mt-1" id="totalNum">0</h2>
+            </div>
+        </div>
+        <div class="flex justify-between mt-6 pt-4 border-t border-white/[0.05]">
+            <div class="text-center">
+                <p class="text-gray-400 text-[12px]">答对</p>
+                <p class="text-[18px] font-semibold text-green-400" id="rightCount">0</p>
+            </div>
+            <div class="text-center">
+                <p class="text-gray-400 text-[12px]">错题</p>
+                <p class="text-[18px] font-semibold text-red-400" id="wrongCount">0</p>
+            </div>
+            <div class="text-center">
+                <p class="text-gray-400 text-[12px]">薄弱模块</p>
+                <p class="text-[18px] font-semibold text-yellow-400" id="weakModule">未检测</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 mb-6">
+        <div class="glass-card p-5 text-center flex flex-col items-center justify-center" onclick="Exam.startRandom()">
+            <i class="fa fa-random text-2xl text-indigo-400 mb-2"></i>
+            <p class="font-medium text-[15px]">随机刷题</p>
+            <p class="text-[12px] text-gray-400 mt-1">选择/多选/判断</p>
+        </div>
+        <div class="glass-card p-5 text-center flex flex-col items-center justify-center" onclick="UI.switchPage('specialTrainPage')">
+            <i class="fa fa-th-list text-2xl text-purple-400 mb-2"></i>
+            <p class="font-medium text-[15px]">专项训练</p>
+            <p class="text-[12px] text-gray-400 mt-1">自主选择题型</p>
+        </div>
+    </div>
+
+    <div class="glass-card p-5 mb-6" onclick="TestExam.start()">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-red-500/20 to-orange-500/20 flex items-center justify-center">
+                    <i class="fa fa-clock-o text-xl text-red-400"></i>
+                </div>
+                <div>
+                    <p class="font-medium text-[15px]">模拟考试</p>
+                    <p class="text-[12px] text-gray-400 mt-1">90分钟 · 随机组卷</p>
+                </div>
+            </div>
+            <i class="fa fa-chevron-right text-gray-500"></i>
+        </div>
+    </div>
+
+    <div class="glass-card p-5">
+        <div class="flex justify-between items-center mb-4">
+            <p class="font-medium text-[16px]">模块错题分析</p>
+            <span class="text-[12px] text-purple-300">智能短板识别</span>
+        </div>
+        <canvas id="weakAnalyzeChart" height="190"></canvas>
+    </div>
+</div>
+
+<!-- 刷题页面 -->
+<div id="examPage" class="page px-4">
+    <div class="glass-card p-6 my-5">
+        <span class="inline-block px-3 py-1 bg-indigo-500/20 text-indigo-300 text-[12px] rounded-full mb-3" id="questionModule">模块名称</span>
+        <h3 class="text-[17px] leading-relaxed font-medium" id="questionTitle">题目加载中...</h3>
+    </div>
+
+    <div class="space-y-3 px-1" id="answerOptions"></div>
+
+    <div class="glass-card p-5 mt-5 hidden" id="answerAnalyze">
+        <div class="flex items-center gap-2 mb-3">
+            <i class="fa fa-check-circle text-green-400"></i>
+            <p class="font-medium text-green-300" id="correctAnswerTip">正确答案：</p>
+        </div>
+        <p class="text-[15px] mb-4" id="correctAnswerContent"></p>
+        <p class="text-gray-300 text-[14px] leading-relaxed mb-4">
+            <span class="font-medium text-white">解析：</span>
+            <span id="answerExplain"></span>
+        </p>
+        <textarea placeholder="写下错题更正思路/知识点总结..." class="w-full bg-white/[0.05] border border-white/[0.08] rounded-16 p-4 text-[14px] text-gray-200 min-h-[100px]" id="errorNote"></textarea>
+        <button class="btn-gradient w-full py-3.5 mt-4 text-[15px]" onclick="Exam.saveNote()">保存复盘笔记</button>
+    </div>
+
+    <button class="btn-gradient w-full py-4 mt-6 text-[16px]" onclick="Exam.next()" id="nextBtn" disabled>下一题</button>
+</div>
+
+<!-- 模拟考试页面 -->
+<div id="testExamPage" class="page px-4">
+    <div class="flex items-center justify-between mb-4 pt-4">
+        <div class="flex items-center gap-3">
+            <button onclick="TestExam.confirmExit()" class="text-gray-400">
+                <i class="fa fa-times text-xl"></i>
+            </button>
+            <span class="text-[15px] font-medium">模拟考试</span>
+        </div>
+        <div class="flex items-center gap-2 bg-red-500/20 px-3 py-1.5 rounded-full">
+            <i class="fa fa-clock-o text-red-400 text-sm"></i>
+            <span id="testTimer" class="text-red-400 font-mono text-[15px] font-medium">90:00</span>
+        </div>
+    </div>
+
+    <div class="glass-card p-5 mb-4">
+        <div class="flex justify-between items-center mb-3">
+            <span class="text-[13px] text-gray-400">第 <span id="testCurrentQ" class="text-white font-medium">1</span> / <span id="testTotalQ">0</span> 题</span>
+            <span id="testQuestionModule" class="text-[12px] text-purple-300 bg-purple-500/20 px-2 py-1 rounded-full">模块</span>
+        </div>
+        <div class="w-full bg-white/10 rounded-full h-1.5 mb-4">
+            <div id="testProgressBar" class="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full transition-all duration-300" style="width: 0%"></div>
+        </div>
+        <h3 class="text-[16px] leading-relaxed font-medium" id="testQuestionTitle">题目加载中...</h3>
+    </div>
+
+    <div class="space-y-3 px-1" id="testAnswerOptions"></div>
+
+    <div class="glass-card p-5 mt-5 hidden" id="testAnswerAnalyze">
+        <div class="flex items-center gap-2 mb-3">
+            <i class="fa fa-check-circle text-green-400"></i>
+            <p class="font-medium text-green-300">正确答案：</p>
+        </div>
+        <p class="text-[15px] mb-4" id="testCorrectAnswerContent"></p>
+        <p class="text-gray-300 text-[14px] leading-relaxed">
+            <span class="font-medium text-white">解析：</span>
+            <span id="testAnswerExplain"></span>
+        </p>
+    </div>
+
+    <div class="flex gap-3 mt-6">
+        <button onclick="TestExam.prev()" id="testPrevBtn" class="btn-gradient flex-1 py-4 opacity-60" disabled>
+            <i class="fa fa-chevron-left mr-2"></i>上一题
+        </button>
+        <button onclick="TestExam.next()" id="testNextBtn" class="btn-gradient flex-1 py-4">
+            下一题<i class="fa fa-chevron-right ml-2"></i>
+        </button>
+    </div>
+    <button onclick="TestExam.confirmMultiAnswer()" id="testConfirmBtn" class="btn-gradient w-full py-4 mt-3 hidden bg-gradient-to-r from-green-500 to-teal-500">
+        <i class="fa fa-check mr-2"></i>确认答案
+    </button>
+    <button onclick="TestExam.submit()" id="testSubmitBtn" class="btn-gradient w-full py-4 mt-3 hidden bg-gradient-to-r from-red-500 to-orange-500">
+        <i class="fa fa-paper-plane mr-2"></i>交卷
+    </button>
+</div>
+
+<!-- 考试成绩页面 -->
+<div id="testResultPage" class="page px-4">
+    <div class="text-center pt-8 pb-6">
+        <div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center mb-4">
+            <i class="fa fa-graduation-cap text-4xl text-indigo-400"></i>
+        </div>
+        <h2 class="text-[24px] font-bold">考试完成</h2>
+        <p class="text-gray-400 text-[14px] mt-1">恭喜你完成了本次模拟考试</p>
+    </div>
+
+    <div class="glass-card p-6 mb-6">
+        <div class="grid grid-cols-2 gap-4 mb-6">
+            <div class="text-center p-4 bg-green-500/10 rounded-2xl">
+                <p class="text-[28px] font-bold text-green-400" id="testResultRight">0</p>
+                <p class="text-[12px] text-gray-400 mt-1">答对题数</p>
+            </div>
+            <div class="text-center p-4 bg-red-500/10 rounded-2xl">
+                <p class="text-[28px] font-bold text-red-400" id="testResultWrong">0</p>
+                <p class="text-[12px] text-gray-400 mt-1">答错题数</p>
+            </div>
+        </div>
+        <div class="text-center p-4 bg-indigo-500/10 rounded-2xl">
+            <p class="text-[36px] font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent" id="testResultRate">0%</p>
+            <p class="text-[12px] text-gray-400 mt-1">正确率</p>
+        </div>
+        <div class="text-center p-4 bg-yellow-500/10 rounded-2xl mt-4">
+            <p class="text-[28px] font-bold text-yellow-400" id="testResultScore">0分</p>
+            <p class="text-[12px] text-gray-400 mt-1">本次得分</p>
+        </div>
+    </div>
+
+    <div class="glass-card p-5 mb-6">
+        <div class="flex justify-between items-center mb-4">
+            <p class="font-medium text-[16px]">模块正确率分析</p>
+        </div>
+        <canvas id="testModuleChart" height="180"></canvas>
+    </div>
+
+    <div class="space-y-3 mb-6" id="testErrorListContainer"></div>
+
+    <button onclick="TestExam.viewErrors()" class="btn-gradient w-full py-4 mb-3">
+        <i class="fa fa-exclamation-circle mr-2"></i>查看错题
+    </button>
+    <button onclick="TestExam.backHome()" class="w-full py-4 border border-white/10 rounded-20 text-gray-300 font-medium">
+        返回首页
+    </button>
+</div>
+
+<!-- 专项训练页面 -->
+<div id="specialTrainPage" class="page px-4">
+    <div class="pt-6 pb-4">
+        <h2 class="text-[18px] font-bold">专项训练</h2>
+        <p class="text-[13px] text-gray-400 mt-1">选择想要练习的题型</p>
+    </div>
+    
+    <div class="grid grid-cols-2 gap-4 mb-4">
+        <div class="glass-card p-5 text-center cursor-pointer" onclick="SpecialTrain.start('单选题')">
+            <div class="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-br from-blue-500/20 to-indigo-500/20 flex items-center justify-center mb-3">
+                <i class="fa fa-dot-circle-o text-xl text-blue-400"></i>
+            </div>
+            <p class="font-medium text-[15px]">单选题</p>
+            <p class="text-[12px] text-gray-400 mt-1">共60题</p>
+        </div>
+        <div class="glass-card p-5 text-center cursor-pointer" onclick="SpecialTrain.start('多选题')">
+            <div class="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center mb-3">
+                <i class="fa fa-check-square text-xl text-purple-400"></i>
+            </div>
+            <p class="font-medium text-[15px]">多选题</p>
+            <p class="text-[12px] text-gray-400 mt-1">共15题</p>
+        </div>
+        <div class="glass-card p-5 text-center cursor-pointer" onclick="SpecialTrain.start('判断题')">
+            <div class="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-br from-green-500/20 to-teal-500/20 flex items-center justify-center mb-3">
+                <i class="fa fa-toggle-on text-xl text-green-400"></i>
+            </div>
+            <p class="font-medium text-[15px]">判断题</p>
+            <p class="text-[12px] text-gray-400 mt-1">共20题</p>
+        </div>
+        <div class="glass-card p-5 text-center cursor-pointer" onclick="SpecialTrain.start('计算题')">
+            <div class="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-br from-orange-500/20 to-red-500/20 flex items-center justify-center mb-3">
+                <i class="fa fa-calculator text-xl text-orange-400"></i>
+            </div>
+            <p class="font-medium text-[15px]">计算题</p>
+            <p class="text-[12px] text-gray-400 mt-1">共2题</p>
+        </div>
+        <div class="glass-card p-5 text-center cursor-pointer" onclick="SpecialTrain.start('简答题')">
+            <div class="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-br from-yellow-500/20 to-amber-500/20 flex items-center justify-center mb-3">
+                <i class="fa fa-edit text-xl text-yellow-400"></i>
+            </div>
+            <p class="font-medium text-[15px]">简答题</p>
+            <p class="text-[12px] text-gray-400 mt-1">共2题</p>
+        </div>
+        <div class="glass-card p-5 text-center cursor-pointer" onclick="SpecialTrain.start('论述题')">
+            <div class="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-br from-pink-500/20 to-rose-500/20 flex items-center justify-center mb-3">
+                <i class="fa fa-file-text text-xl text-pink-400"></i>
+            </div>
+            <p class="font-medium text-[15px]">论述题</p>
+            <p class="text-[12px] text-gray-400 mt-1">共2题</p>
+        </div>
+    </div>
+</div>
+
+<!-- 错题本 -->
+<div id="errorBookPage" class="page px-4">
+    <div class="flex justify-between items-center mb-5">
+        <h2 class="text-[18px] font-bold">错题记录本</h2>
+        <span class="text-[13px] text-red-400" id="errorTotal">共0题</span>
+    </div>
+    <div class="space-y-4" id="errorListContainer">
+        <div class="glass-card p-6 text-center text-gray-400">
+            <i class="fa fa-inbox text-3xl mb-2"></i>
+            <p>暂无错题，继续加油！</p>
+        </div>
+    </div>
+</div>
+
+<!-- 底部导航 -->
+<nav class="fixed bottom-0 left-0 w-full bg-[#111425] border-t border-white/[0.05] flex justify-around items-center py-3 hide-nav">
+    <div class="nav-item text-center flex flex-col items-center active" onclick="UI.switchPage('homePage', this)">
+        <i class="fa fa-home text-lg"></i>
+        <p class="text-[12px] mt-1">首页</p>
+    </div>
+    <div class="nav-item text-center flex flex-col items-center" onclick="UI.switchPage('examPage', this)">
+        <i class="fa fa-book text-lg"></i>
+        <p class="text-[12px] mt-1">刷题</p>
+    </div>
+    <div class="nav-item text-center flex flex-col items-center" onclick="UI.switchPage('testExamPage', this)">
+        <i class="fa fa-file-text-o text-lg"></i>
+        <p class="text-[12px] mt-1">考试</p>
+    </div>
+    <div class="nav-item text-center flex flex-col items-center" onclick="UI.switchPage('errorBookPage', this)">
+        <i class="fa fa-exclamation-circle text-lg"></i>
+        <p class="text-[12px] mt-1">错题本</p>
+    </div>
+</nav>
+
+<script>
+// ==================== 工具函数模块 ====================
+const Utils = {
+    $: (id) => document.getElementById(id),
+    $$: (selector) => document.querySelectorAll(selector),
+    debounce: (fn, delay) => {
+        let timer = null;
+        return (...args) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => fn.apply(this, args), delay);
+        };
+    },
+    throttle: (fn, delay) => {
+        let flag = true;
+        return (...args) => {
+            if (!flag) return;
+            flag = false;
+            setTimeout(() => {
+                fn.apply(this, args);
+                flag = true;
+            }, delay);
+        };
+    }
+};
+
+// ==================== Toast通知系统 ====================
+const Toast = {
+    show: function(message, type = 'info', duration = 3000) {
+        const container = Utils.$('toastContainer');
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        
+        const icons = {
+            success: 'fa-check-circle',
+            error: 'fa-times-circle',
+            info: 'fa-info-circle',
+            warning: 'fa-exclamation-triangle'
+        };
+        
+        toast.innerHTML = `
+            <i class="fa ${icons[type]}"></i>
+            <span>${message}</span>
+        `;
+        
+        container.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.classList.add('toast-out');
+            setTimeout(() => toast.remove(), 300);
+        }, duration);
+    },
+    success: function(msg, duration) { this.show(msg, 'success', duration); },
+    error: function(msg, duration) { this.show(msg, 'error', duration); },
+    info: function(msg, duration) { this.show(msg, 'info', duration); },
+    warning: function(msg, duration) { this.show(msg, 'warning', duration); }
+};
+
+// ==================== 表单验证模块 ====================
+const Validator = {
+    isEmpty: (value) => !value || value.trim().length === 0,
+    minLength: (value, len) => value && value.length >= len,
+    patterns: {
+        username: /^[a-zA-Z0-9_]{4,16}$/,
+        password: /^.{6,}$/
+    },
+    validate: function(data) {
+        const errors = [];
+        for (let field in data) {
+            if (this.isEmpty(data[field])) {
+                errors.push(`${field}不能为空`);
+            }
+        }
+        return errors;
+    }
+};
+
+// ==================== 状态管理模块 ====================
+const Store = {
+    state: {
+        currentUser: '',
+        currentQuestionIndex: 0,
+        totalRight: 0,
+        totalWrong: 0,
+        errorQuestionList: [],
+        moduleErrorCount: {},
+        isAnswered: false,
+        examMode: 'random'
+    },
+    listeners: [],
+    
+    subscribe(fn) {
+        this.listeners.push(fn);
+        return () => {
+            this.listeners = this.listeners.filter(l => l !== fn);
+        };
+    },
+    
+    notify() {
+        this.listeners.forEach(fn => fn(this.state));
+    },
+    
+    setState(updates) {
+        Object.assign(this.state, updates);
+        this.notify();
+    }
+};
+
+// ==================== 数据存储模块 ====================
+const DataStore = {
+    KEY: 'userAllData',
+    
+    getAll() {
+        return JSON.parse(localStorage.getItem(this.KEY)) || {};
+    },
+    
+    save(data) {
+        localStorage.setItem(this.KEY, JSON.stringify(data));
+    },
+    
+    getUser(user) {
+        return this.getAll()[user];
+    },
+    
+    userExists(user) {
+        return !!this.getAll()[user];
+    },
+    
+    createUser(user, pwd) {
+        const all = this.getAll();
+        if (all[user]) return false;
+        
+        const moduleErr = {};
+        QuestionBank.getModules().forEach(m => moduleErr[m] = 0);
+        
+        all[user] = {
+            password: pwd,
+            right: 0,
+            wrong: 0,
+            errorList: [],
+            moduleErr: moduleErr
+        };
+        this.save(all);
+        return true;
+    },
+    
+    updateUser(user, data) {
+        const all = this.getAll();
+        if (!all[user]) return;
+        Object.assign(all[user], data);
+        this.save(all);
+    }
+};
+
+// ==================== 题库模块 ====================
+const QuestionBank = {
+    data: [
+        // 单选题
+        {"title":"1. 职业守则是：（ ）职业技能标准的核心要素","options":["爱岗敬业","精益求精","遵纪守法","诚实守信"],"answer":2,"module":"单选题","explain":"职业技能标准核心要素：遵纪守法。"},
+        {"title":"2. 职业技能是：（ ）职业技能标准的核心要素","options":["遵纪守法","爱岗敬业","精益求精","诚实守信"],"answer":1,"module":"单选题","explain":"职业技能标准核心要素：爱岗敬业。"},
+        {"title":"3. 泵站职业技能的方针是：（ ）","options":["安全第一","预防为主","安全第一预防为主","安全第一预防为了生产"],"answer":2,"module":"单选题","explain":"泵站职业技能方针：安全第一预防为主。"},
+        {"title":"4. 规程的内容，是指在人和人、人和物以及物和物之间的相互关系时所做的（ ）","options":["时效性标准","技术性标准","规范性标准","适用范围性"],"answer":2,"module":"单选题","explain":"规程的核心是规范性标准。"},
+        {"title":"5. 水泵的工况点是：指（ ）的实际工况","options":["流量","扬程","功率","效率"],"answer":0,"module":"单选题","explain":"水泵工况点主要指流量的实际工况。"},
+        {"title":"6. 同一规格的零件，从一批中任取一个，不需任何挑选或修配就能装到机器上，并能满足其使用要求的性质称为（ ）","options":["互换性","配合","精度","尺寸偏差"],"answer":2,"module":"单选题","explain":"精度是指零件的加工质量。"},
+        {"title":"7. 我国的尺寸标注方法是：（ ）","options":["偏差=最大极限尺寸-基本尺寸","偏差=最小极限尺寸-最大极限尺寸","公差=最大极限尺寸-最小极限尺寸","公差=上偏差-下偏差"],"answer":1,"module":"单选题","explain":"偏差的计算方法。"},
+        {"title":"8. 80h8表示圆柱孔的基本尺寸为80mm，（ ）","options":["基本偏差为H，公差等级为8级","公差为8mm","偏差为8mm","基本偏差为h，公差等级为8级"],"answer":0,"module":"单选题","explain":"尺寸标注的含义。"},
+        {"title":"9. 在尺寸公差相同的情况下，IT01到IT18中，IT01的公差值（ ）","options":["最大","最小","较大","较小"],"answer":1,"module":"单选题","explain":"IT等级的含义。"},
+        {"title":"10. 比例尺的单位是（ ）单位。","options":["长度","面积","体积","重量"],"answer":1,"module":"单选题","explain":"比例尺的单位。"},
+        {"title":"11. 量块的使用要求是：应选择（ ）的量块组合尺寸。","options":["最多","最少","相同","较大"],"answer":1,"module":"单选题","explain":"量块使用原则。"},
+        {"title":"12. 水泵施工图的种类不包括（ ）","options":["轴测图","装配示意图","原理图","安装图"],"answer":2,"module":"单选题","explain":"水泵施工图的种类。"},
+        {"title":"13. 装配示意图的特点是：（ ）","options":["表达机器的工作原理","表达零件的结构形状","只表达机器中各零件的位置和装配关系","装配示意图不能作为零件图的依据"],"answer":1,"module":"单选题","explain":"装配示意图的特点。"},
+        {"title":"14. 泵站运行管理人员应按规定参加培训，并（ ）持证上岗。","options":["经专业院校毕业","经考试合格","经单位批准","经注册"],"answer":3,"module":"单选题","explain":"泵站运行管理人员的要求。"},
+        {"title":"15. 技术规程的编写依据是：（ ）等有关技术标准。","options":["泵站设计规范","泵站更新改造技术规范","泵站运行管理规程","水泵及泵站设备安装技术规程"],"answer":2,"module":"单选题","explain":"技术规程的编写依据。"},
+        {"title":"16. 泵站效率应根据泵站类型和（ ）以及水源的可靠性等因素确定。","options":["平均扬程","最高扬程","最小扬程","泵站流量"],"answer":0,"module":"单选题","explain":"泵站效率的确定因素。"},
+        {"title":"17. 冷却系统应根据（ ）的规定。","options":["冷却系统规范","通风系统规范","水源情况确定","泵站规模"],"answer":2,"module":"单选题","explain":"冷却系统的规定。"},
+        {"title":"18. 一台水泵从一个较大的敞开式吸水池吸水，当水泵转动时，水泵叶轮进口处（ ）同时会影响水泵的扬程。","options":["绝对压力降低","相对压力降低","应该压力降低","没有变化"],"answer":0,"module":"单选题","explain":"水泵叶轮进口处的压力变化。"},
+        {"title":"19. 电动双位温度控制器应能根据温度变化自动进行控制和（ ）的动作。","options":["检测","调节","显示","报警"],"answer":2,"module":"单选题","explain":"电动双位温度控制器的功能。"},
+        {"title":"20. 液位传感器根据（ ）原理制成。","options":["液体体积","液体质量","液体压力","液体密度"],"answer":2,"module":"单选题","explain":"液位传感器的原理。"},
+        {"title":"21. 压力变送器将（ ）转换为标准电流信号。","options":["压力变化","电压变化","电阻变化","频率变化"],"answer":0,"module":"单选题","explain":"压力变送器的工作原理。"},
+        {"title":"22. 闸阀的作用是（ ）。","options":["调节流量","截断流体","改变流向","调节压力"],"answer":1,"module":"单选题","explain":"闸阀的主要作用是截断流体。"},
+        {"title":"23. 其中（ ）是衡量水泵性能的重要指标。","options":["流量","扬程","功率","效率"],"answer":3,"module":"单选题","explain":"效率是衡量水泵性能的重要指标。"},
+        {"title":"24. 压力传感器应定期进行（ ）检查。","options":["示值","漏泄","损坏","灵敏度"],"answer":0,"module":"单选题","explain":"压力传感器应定期进行示值检查。"},
+        {"title":"25. 直流电动机的调速方法不包括（ ）。","options":["串电阻调速","改变电压调速","弱磁调速","改变频率调速"],"answer":3,"module":"单选题","explain":"直流电动机调速方法。"},
+        {"title":"26. 变频器转换成为小惯量电机设备的（ ）设备。","options":["调速","控制","保护","启动"],"answer":0,"module":"单选题","explain":"变频器是调速设备。"},
+        {"title":"27. 一通道直角坐标机器人出口处应安装（ ）。","options":["传感器","执行器","控制器","显示器"],"answer":0,"module":"单选题","explain":"直角坐标机器人出口处应安装传感器。"},
+        {"title":"28. 压力容器设计的使用寿命一般为（ ）年。","options":["5","10","15","20"],"answer":2,"module":"单选题","explain":"压力容器设计使用寿命一般为15年。"},
+        {"title":"29. 使用高压清洗机时应该（ ）进行操作。","options":["随意","单人","两人配合","多人"],"answer":2,"module":"单选题","explain":"高压清洗机应两人配合操作。"},
+        {"title":"30. 意味着该设备（ ）超出规定范围。","options":["温度","压力","流量","转速"],"answer":1,"module":"单选题","explain":"压力超出规定范围的含义。"},
+        {"title":"31. 用户停止使用时应该（ ）设备。","options":["开启","关闭","维修","保养"],"answer":1,"module":"单选题","explain":"停止使用时应关闭设备。"},
+        {"title":"32. 调节阀门的口径应按（ ）计算确定。","options":["流量","压力","温度","功率"],"answer":0,"module":"单选题","explain":"调节阀门口径按流量计算。"},
+        {"title":"33. 管道系统存在（ ）时会产生水击现象。","options":["流量变化","压力变化","温度变化","流速变化"],"answer":3,"module":"单选题","explain":"流速变化会产生水击现象。"},
+        {"title":"34. 蝶阀的特点是（ ）。","options":["结构复杂","体积大","操作简便","价格高"],"answer":2,"module":"单选题","explain":"蝶阀的特点是操作简便。"},
+        {"title":"35. 液压系统蓄能器的作用是（ ）。","options":["储油","储能","过滤","冷却"],"answer":1,"module":"单选题","explain":"蓄能器的作用是储能。"},
+        {"title":"36. 决策液压系统切换时应（ ）安装。","options":["水平","垂直","倾斜","任意"],"answer":1,"module":"单选题","explain":"液压系统切换时应垂直安装。"},
+        {"title":"37. 定量式蓄能器在（ ）时需要安装固定装置。","options":["运行","检修","清洗","充气"],"answer":0,"module":"单选题","explain":"定量式蓄能器运行时需要固定装置。"},
+        {"title":"38. 皮囊式蓄能器保养的重要内容是（ ）皮囊。","options":["清洗","检查","更换","充气"],"answer":2,"module":"单选题","explain":"皮囊式蓄能器需要更换皮囊。"},
+        {"title":"39. 自动化系统监控的主要参数不包括（ ）。","options":["温度","压力","流量","颜色"],"answer":3,"module":"单选题","explain":"自动化系统监控的主要参数。"},
+        {"title":"40. 泵站管理系统的远动终端设备应安装在（ ）的环境中。","options":["高温","潮湿","干燥","腐蚀"],"answer":2,"module":"单选题","explain":"远动终端设备应安装在干燥环境中。"},
+        {"title":"41. PLC是指：（ ）。","options":["可编程控制系统","可编程控制器","过程控制器","程序逻辑控制器"],"answer":1,"module":"单选题","explain":"PLC是可编程控制器。"},
+        {"title":"42. 自动化系统监控的主要数据采集周期一般应小于（ ）秒。","options":["1","2","5","10"],"answer":0,"module":"单选题","explain":"数据采集周期一般小于1秒。"},
+        {"title":"43. 自动化系统的安全防护不包括（ ）。","options":["设备安全","通信安全","信息安全","人身安全"],"answer":3,"module":"单选题","explain":"安全防护不包括人身安全。"},
+        {"title":"44. 泵站自动化系统可根据（ ）调节运行参数。","options":["时间","季节","需求","经验"],"answer":2,"module":"单选题","explain":"可根据需求调节运行参数。"},
+        {"title":"45. 模拟量信号传输时需要使用（ ）设备。","options":["放大器","调制解调器","转换器","滤波器"],"answer":1,"module":"单选题","explain":"模拟量信号传输需要调制解调器。"},
+        {"title":"46. 使用的液压油的形式有（ ）等多种形式。","options":["压力式","容积式","速度式","功率式"],"answer":0,"module":"单选题","explain":"液压油的形式有压力式等。"},
+        {"title":"47. 自动化系统与技术创新之间的关系是（ ）。","options":["无关系","促进","阻碍","替代"],"answer":1,"module":"单选题","explain":"自动化系统促进技术创新。"},
+        {"title":"48. 自动化系统通讯接口常用的有（ ）。","options":["RS232","RS485","RJ45","USB"],"answer":1,"module":"单选题","explain":"常用通讯接口有RS485。"},
+        {"title":"49. 培训计划一般由（ ）组织人员制定。","options":["领导","专家","员工","培训机构"],"answer":0,"module":"单选题","explain":"培训计划由领导组织制定。"},
+        {"title":"50. （ ）需要明确人员培训需求及培训目标。","options":["培训计划","培训内容","培训方式","培训时间"],"answer":0,"module":"单选题","explain":"培训计划需要明确需求和目标。"},
+        {"title":"51. 下列关于继续教育的方式，说法正确的是（ ）。","options":["自学","面授","网络","以上都可以"],"answer":3,"module":"单选题","explain":"继续教育方式包括以上都可以。"},
+        {"title":"52. 标准作业指导书主要依据（ ）编写。","options":["理论","经验","标准作业流程","设备说明书"],"answer":2,"module":"单选题","explain":"标准作业指导书依据标准作业流程。"},
+        {"title":"53. 编写培训指导书应依据（ ）职业标准。","options":["高级工","技师","高级技师","工程师"],"answer":1,"module":"单选题","explain":"培训指导书依据技师职业标准。"},
+        {"title":"54. 安全生产责任制的落实需要（ ）。","options":["领导","员工","全员","第三方"],"answer":2,"module":"单选题","explain":"安全生产责任制需要全员落实。"},
+        {"title":"55. 泵站机电设备通常包括（ ）等机电设备。","options":["主机","辅机","电气设备","以上都是"],"answer":3,"module":"单选题","explain":"泵站机电设备包括以上都是。"},
+        {"title":"56. 电机选择正确与否直接影响泵站的（ ）。","options":["运行效率","安全","寿命","以上都是"],"answer":3,"module":"单选题","explain":"电机选择影响以上都是。"},
+        {"title":"57. 安装前对电机进行（ ）检查。","options":["绝缘","外观","性能","振动"],"answer":0,"module":"单选题","explain":"安装前检查电机绝缘。"},
+        {"title":"58. 滚动轴承的（ ）时，应考虑使用刮研方法修理。","options":["磨损","尺寸","结构","间隙"],"answer":3,"module":"单选题","explain":"滚动轴承间隙时应刮研修理。"},
+        {"title":"59. 检修更换水泵轴时，应考虑轴的（ ）以及强度要求。","options":["长度","直径","材料","形状"],"answer":2,"module":"单选题","explain":"更换水泵轴要考虑材料。"},
+        {"title":"60. 电机运行时应该监视电机运行电流保持在（ ）范围内。","options":["额定电流","最大电流","最小电流","启动电流"],"answer":0,"module":"单选题","explain":"电机运行电流应保持在额定电流范围内。"},
+        // 多选题（答案格式为数组）
+        {"title":"61. 液压系统滤清器的主要作用包括：（ ）","options":["过滤液压油中的杂质","保持液压油清洁","减少液压系统故障","以上都是"],"answer":[0,1,2,3],"module":"多选题","explain":"滤清器的作用包括以上所有。"},
+        {"title":"62. 下列属于泵站安全保护装置的有：（ ）","options":["安全阀","溢流阀","减压阀","泄压阀"],"answer":[0,1,3],"module":"多选题","explain":"安全保护装置包括安全阀、溢流阀、泄压阀。"},
+        {"title":"63. 水泵的并联运行适用于：（ ）","options":["流量变化大","扬程变化大","需要提高供水可靠性","需要调节扬程"],"answer":[0,2],"module":"多选题","explain":"并联运行适用于流量变化大、需要提高供水可靠性的情况。"},
+        {"title":"64. 泵站自动化系统的主要通讯方式包括：（ ）","options":["RS232","RS485","RJ45","USB"],"answer":[0,1,2],"module":"多选题","explain":"常用通讯方式有RS232、RS485、RJ45。"},
+        {"title":"65. 培训工作的基本环节包括：（ ）","options":["需求分析","计划制定","实施培训","效果评估"],"answer":[0,1,2,3],"module":"多选题","explain":"培训工作包括以上所有环节。"},
+        {"title":"66. 液压系统的主要元件包括：（ ）","options":["液压泵","液压缸","液压阀","液压油箱"],"answer":[0,1,2,3],"module":"多选题","explain":"液压系统包括以上所有元件。"},
+        {"title":"67. 水泵的常见故障包括：（ ）","options":["气蚀","轴承发热","密封泄漏","流量不足"],"answer":[0,1,2,3],"module":"多选题","explain":"水泵常见故障包括以上所有。"},
+        {"title":"68. 泵站运行管理的基本要求包括：（ ）","options":["安全运行","经济运行","高效运行","环保运行"],"answer":[0,1,2,3],"module":"多选题","explain":"泵站运行管理要求包括以上所有。"},
+        {"title":"69. 下列属于泵站节能措施的有：（ ）","options":["变频调速","叶片调节","合理选型","优化运行"],"answer":[0,1,2,3],"module":"多选题","explain":"节能措施包括以上所有。"},
+        {"title":"70. 泵站自动化系统的主要功能包括：（ ）","options":["数据采集","远程监控","故障报警","自动控制"],"answer":[0,1,2,3],"module":"多选题","explain":"自动化系统功能包括以上所有。"},
+        {"title":"71. 职业道德的基本要求包括：（ ）","options":["爱岗敬业","诚实守信","办事公道","奉献社会"],"answer":[0,1,2,3],"module":"多选题","explain":"职业道德基本要求包括以上所有。"},
+        {"title":"72. 泵站机电设备的日常维护包括：（ ）","options":["清洁","润滑","检查","紧固"],"answer":[0,1,2,3],"module":"多选题","explain":"日常维护包括以上所有内容。"},
+        {"title":"73. 水泵的运行参数包括：（ ）","options":["流量","扬程","功率","效率"],"answer":[0,1,2,3],"module":"多选题","explain":"水泵运行参数包括以上所有。"},
+        {"title":"74. 下列属于培训效果评估方法的有：（ ）","options":["理论考试","实际操作","问卷调查","跟踪观察"],"answer":[0,1,2,3],"module":"多选题","explain":"培训效果评估方法包括以上所有。"},
+        {"title":"75. 泵站安全生产管理制度包括：（ ）","options":["安全生产责任制","安全操作规程","应急预案","安全培训制度"],"answer":[0,1,2,3],"module":"多选题","explain":"安全生产管理制度包括以上所有。"},
+        // 判断题
+        {"title":"76. 职业道德是指从事一定职业的人们在职业活动中应遵循的行为准则。（ ）","options":["正确","错误"],"answer":0,"module":"判断题","explain":"职业道德是职业活动的行为准则。"},
+        {"title":"77. 水泵的效率越高，能量损失越小。（ ）","options":["正确","错误"],"answer":0,"module":"判断题","explain":"水泵效率越高说明能量损失越小。"},
+        {"title":"78. 液压系统中的液压油不需要定期更换。（ ）","options":["正确","错误"],"answer":1,"module":"判断题","explain":"液压油需要定期更换以保证系统正常运行。"},
+        {"title":"79. 泵站运行管理人员不需要持证上岗。（ ）","options":["正确","错误"],"answer":1,"module":"判断题","explain":"泵站运行管理人员需要持证上岗。"},
+        {"title":"80. 自动化系统可以提高泵站的运行效率。（ ）","options":["正确","错误"],"answer":0,"module":"判断题","explain":"自动化系统确实可以提高运行效率。"},
+        {"title":"81. 水泵的工况点是指水泵的实际运行点。（ ）","options":["正确","错误"],"answer":0,"module":"判断题","explain":"水泵工况点是指实际运行点。"},
+        {"title":"82. 泵站可以随意排放污水。（ ）","options":["正确","错误"],"answer":1,"module":"判断题","explain":"泵站不能随意排放污水。"},
+        {"title":"83. 变频器可以降低水泵的能耗。（ ）","options":["正确","错误"],"answer":0,"module":"判断题","explain":"变频器可以调节水泵转速，降低能耗。"},
+        {"title":"84. 液压系统不需要进行日常维护。（ ）","options":["正确","错误"],"answer":1,"module":"判断题","explain":"液压系统需要进行日常维护。"},
+        {"title":"85. 泵站运行记录不需要保存。（ ）","options":["正确","错误"],"answer":1,"module":"判断题","explain":"泵站运行记录需要保存以备查阅。"},
+        {"title":"86. 水泵启动前需要先灌水。（ ）","options":["正确","错误"],"answer":0,"module":"判断题","explain":"水泵启动前需要灌水以防止气蚀。"},
+        {"title":"87. 轴承温度过高会影响水泵正常运行。（ ）","options":["正确","错误"],"answer":0,"module":"判断题","explain":"轴承温度过高会影响正常运行。"},
+        {"title":"88. 泵站的电气设备不需要接地保护。（ ）","options":["正确","错误"],"answer":1,"module":"判断题","explain":"电气设备需要接地保护以确保安全。"},
+        {"title":"89. 自动化系统可以实现泵站的远程监控。（ ）","options":["正确","错误"],"answer":0,"module":"判断题","explain":"自动化系统可以实现远程监控。"},
+        {"title":"90. 水泵并联运行可以增加流量。（ ）","options":["正确","错误"],"answer":0,"module":"判断题","explain":"水泵并联运行可以增加流量。"},
+        {"title":"91. 液压油粘度越高越好。（ ）","options":["正确","错误"],"answer":1,"module":"判断题","explain":"液压油粘度要适宜，不是越高越好。"},
+        {"title":"92. 泵站节能改造可以降低运行成本。（ ）","options":["正确","错误"],"answer":0,"module":"判断题","explain":"节能改造可以降低运行成本。"},
+        {"title":"93. 水泵电机可以使用变频器调速。（ ）","options":["正确","错误"],"answer":0,"module":"判断题","explain":"水泵电机可以使用变频器调速。"},
+        {"title":"94. 培训只是为了满足法规要求。（ ）","options":["正确","错误"],"answer":1,"module":"判断题","explain":"培训不仅是为了满足法规要求，更是提高员工技能。"},
+        {"title":"95. 泵站的安全阀需要定期校验。（ ）","options":["正确","错误"],"answer":0,"module":"判断题","explain":"安全阀需要定期校验以确保安全功能正常。"},
+        // 计算题
+        {"title":"96. 一皮带轮传动，已知主动轮转速n1=960r/min，主动轮直径为30mm，从动轮直径为60mm，求从动轮转速n2。","options":[],"answer":"480r/min","module":"计算题","explain":"解析：n2 = n1 × (D1/D2) = 960 × (30/60) = 480r/min"},
+        {"title":"97. 视频监控存储计算：某泵站使用小码流压缩方式，共12路，每24小时每路需要15帧，计算所需硬盘容量。","options":[],"answer":"1476.5G","module":"计算题","explain":"解析：G = 24 × 12 × 15 × 350 / 1024 = 1476.5G"},
+        // 简答题
+        {"title":"98. 简述传感器检定的步骤和数据。","options":[],"answer":"传感器检定步骤包括：外观检查、零点调整、量程调整、重复性测试、稳定性测试等。数据记录包括：检定日期、环境条件、标准值、测量值、误差值等。","module":"简答题","explain":"传感器检定是确保传感器测量准确性的重要环节，需要按照标准流程进行。"},
+        {"title":"99. 电机启动时，泵站运行人员应做哪些检查？","options":[],"answer":"检查项目包括：电源电压是否正常、电机绕组绝缘是否良好、轴承润滑是否充足、冷却系统是否正常、负载是否正常、启动装置是否可靠等。","module":"简答题","explain":"电机启动前的检查是确保设备安全运行的重要环节。"},
+        // 论述题
+        {"title":"100. 试述泵站运行专业技能知识培训要点。","options":[],"answer":"培训要点包括：机械基础和识图知识、水泵知识、泵站运行管理知识、泵站安全管理知识、自动化知识、计算机知识等。","module":"论述题","explain":"专业技能培训是提高泵站运行人员素质的重要手段。"},
+        {"title":"101. 试述双速异步电机节能的技术方案。","options":[],"answer":"双速异步电机节能方案包括：合理选择电机类型、优化运行方式、采用变频调速技术、定期维护保养等。通过这些措施可以显著提高电机运行效率，降低能耗。","module":"论述题","explain":"节能是泵站运行管理的重要目标，双速异步电机是实现节能的有效手段。"}
+    ],
+    
+    getAll() { return this.data; },
+    getLength() { return this.data.length; },
+    getByIndex(index) { return this.data[index]; },
+    getRandomIndex() { return Math.floor(Math.random() * this.data.length); },
+    getModules() { return [...new Set(this.data.map(q => q.module))]; },
+    getByModule(module) { return this.data.filter(q => q.module === module); },
+    shuffle() {
+        const arr = [...this.data];
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    },
+    shuffleArray(arr) {
+        const result = [...arr];
+        for (let i = result.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [result[i], result[j]] = [result[j], result[i]];
+        }
+        return result;
+    }
+};
+
+// ==================== UI渲染模块 ====================
+const UI = {
+    switchPage(pageId, navItem) {
+        Utils.$$('.page').forEach(p => p.classList.remove('active'));
+        Utils.$$('.nav-item').forEach(n => n.classList.remove('active'));
+        Utils.$(pageId).classList.add('active');
+        if (navItem) navItem.classList.add('active');
+        
+        Store.setState({ currentPage: pageId });
+        
+        if (pageId === 'examPage') {
+            Utils.$('testTimer').parentElement.style.display = '';
+            if (Store.state.currentQuestionIndex === 0 && Store.state.examMode === '') {
+                Exam.startRandom();
+            } else {
+                this.renderExamQuestion();
+            }
+        } else if (pageId === 'testExamPage') {
+            Utils.$('testTimer').parentElement.style.display = '';
+        } else {
+            Utils.$('testTimer').parentElement.style.display = '';
+        }
+    },
+    
+    renderExamQuestion() {
+        const q = QuestionBank.getByIndex(Store.state.currentQuestionIndex);
+        if (!q) return;
+        
+        Utils.$('questionModule').innerText = q.module;
+        Utils.$('questionTitle').innerText = q.title;
+        Utils.$('answerAnalyze').classList.add('hidden');
+        Utils.$('nextBtn').disabled = true;
+        
+        const box = Utils.$('answerOptions');
+        box.innerHTML = '';
+        
+        const isWritten = ['计算题', '简答题', '论述题'].includes(q.module);
+        
+        if (isWritten) {
+            // 显示文本输入框
+            const textarea = document.createElement('textarea');
+            textarea.className = 'w-full p-4 bg-white/5 border border-white/20 rounded-xl text-[14px] min-h-[200px] resize-y';
+            textarea.placeholder = '请在此输入答案...';
+            box.appendChild(textarea);
+            
+            // 显示提交按钮
+            const submitBtn = document.createElement('button');
+            submitBtn.className = 'btn-gradient w-full py-3 mt-3 bg-gradient-to-r from-blue-500 to-cyan-500';
+            submitBtn.innerHTML = '<i class="fa fa-check mr-2"></i>提交答案';
+            submitBtn.onclick = () => Exam.handleWrittenAnswer(textarea.value, q);
+            box.appendChild(submitBtn);
+        } else {
+            // 显示选择题选项
+            q.options.forEach((item, index) => {
+                const dom = document.createElement('div');
+                dom.className = 'glass-card p-4.5 flex items-center gap-3 ripple';
+                dom.innerHTML = `
+                    <span class="w-6 h-6 flex items-center justify-center border border-white/20 rounded-full text-[13px]">${String.fromCharCode(65 + index)}</span>
+                    <span class="text-[15px]">${item}</span>
+                `;
+                dom.dataset.index = index;
+                dom.onclick = () => Exam.handleAnswer(index, dom);
+                box.appendChild(dom);
+            });
+        }
+        
+        Store.setState({ isAnswered: false });
+    },
+    
+    renderErrorList() {
+        const wrap = Utils.$('errorListContainer');
+        const errors = Store.state.errorQuestionList;
+        
+        if (errors.length === 0) {
+            wrap.innerHTML = `<div class="glass-card p-6 text-center text-gray-400"><i class="fa fa-inbox text-3xl mb-2"></i><p>暂无错题，继续加油！</p></div>`;
+            return;
+        }
+        
+        wrap.innerHTML = errors.map(item => `
+            <div class="glass-card p-5">
+                <span class="inline-block px-2 py-1 bg-red-500/20 text-red-300 text-[12px] rounded-full mb-2">${item.module}</span>
+                <p class="text-[15px] leading-relaxed">${item.title}</p>
+            </div>
+        `).join('');
+    },
+    
+    updateStats() {
+        const { totalRight, totalWrong, errorQuestionList, moduleErrorCount } = Store.state;
+        const total = totalRight + totalWrong;
+        const rate = total === 0 ? "0" : ((totalRight / total) * 100).toFixed(1);
+        
+        Utils.$('totalRate').innerText = rate + "%";
+        Utils.$('totalNum').innerText = total;
+        Utils.$('rightCount').innerText = totalRight;
+        Utils.$('wrongCount').innerText = totalWrong;
+        Utils.$('errorTotal').innerText = `共${errorQuestionList.length}题`;
+        
+        let weakText = "未检测";
+        let max = 0;
+        for (let k in moduleErrorCount) {
+            if (moduleErrorCount[k] > max) {
+                max = moduleErrorCount[k];
+                weakText = k;
+            }
+        }
+        Utils.$('weakModule').innerText = max === 0 ? "未检测" : weakText;
+    },
+    
+    showAnswerResult(q, selectedIndex, dom) {
+        Utils.$('answerAnalyze').classList.remove('hidden');
+        Utils.$('correctAnswerContent').innerText = `${String.fromCharCode(65 + q.answer)}. ${q.options[q.answer]}`;
+        Utils.$('answerExplain').innerText = q.explain;
+        Utils.$('nextBtn').disabled = false;
+        
+        if (selectedIndex === q.answer) {
+            dom.classList.add('border-green-500/50');
+        } else {
+            dom.classList.add('border-red-500/50');
+            const correctDom = Utils.$$('#answerOptions div')[q.answer];
+            if (correctDom) correctDom.classList.add('border-green-500/50', 'option-selected');
+        }
+    },
+    
+    drawChart() {
+        const ctx = Utils.$('weakAnalyzeChart').getContext('2d');
+        if (window.weakChart) window.weakChart.destroy();
+        
+        window.weakChart = new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: Object.keys(Store.state.moduleErrorCount),
+                datasets: [{
+                    label: "错题数量",
+                    data: Object.values(Store.state.moduleErrorCount),
+                    backgroundColor: 'rgba(167, 139, 250, 0.6)',
+                    borderRadius: 8,
+                    barThickness: 30
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { 
+                        beginAtZero: true, 
+                        grid: { color: 'rgba(255,255,255,0.05)' }, 
+                        ticks: { color: '#9CA3AF' } 
+                    },
+                    x: { 
+                        grid: { display: false }, 
+                        ticks: { color: '#9CA3AF' } 
+                    }
+                }
+            }
+        });
+    }
+};
+
+// ==================== 认证模块 ====================
+const Auth = {
+    register() {
+        const user = Utils.$('regUser').value.trim();
+        const pwd = Utils.$('regPwd').value.trim();
+        
+        if (!user) {
+            alert('请输入账号');
+            return;
+        }
+        
+        if (!pwd) {
+            alert('请输入密码');
+            return;
+        }
+        
+        if (DataStore.userExists(user)) {
+            alert('账号已存在');
+            return;
+        }
+        
+        DataStore.createUser(user, pwd);
+        alert('注册成功，请登录');
+        this.showLoginTab();
+    },
+    
+    login() {
+        const user = Utils.$('loginUser').value.trim();
+        const pwd = Utils.$('loginPwd').value.trim();
+        
+        if (!user) {
+            alert('请输入账号');
+            return;
+        }
+        
+        if (!pwd) {
+            alert('请输入密码');
+            return;
+        }
+        
+        const userData = DataStore.getUser(user);
+        if (!userData) {
+            alert('账号不存在');
+            return;
+        }
+        
+        if (userData.password !== pwd) {
+            alert('密码错误');
+            return;
+        }
+        
+        Store.setState({
+            currentUser: user,
+            totalRight: userData.right || 0,
+            totalWrong: userData.wrong || 0,
+            errorQuestionList: userData.errorList || [],
+            moduleErrorCount: userData.moduleErr || {}
+        });
+        
+        Utils.$('nowUserName').innerText = user;
+        const nav = document.querySelector('nav');
+        if (nav) nav.classList.remove('hide-nav');
+        UI.switchPage('homePage');
+        UI.updateStats();
+        UI.renderErrorList();
+        UI.drawChart();
+        
+        Toast.success(`欢迎回来，${user}`);
+    },
+    
+    logout() {
+        Store.setState({
+            currentUser: '',
+            totalRight: 0,
+            totalWrong: 0,
+            errorQuestionList: [],
+            currentQuestionIndex: 0,
+            isAnswered: false
+        });
+        
+        Utils.$('nav').classList.add('hide-nav');
+        UI.switchPage('loginPage');
+        Utils.$('loginUser').value = '';
+        Utils.$('loginPwd').value = '';
+    },
+    
+    showLoginTab() {
+        Utils.$('loginTab').classList.add('text-purple-400', 'border-b-2', 'border-purple-400');
+        Utils.$('regTab').classList.remove('text-purple-400', 'border-b-2', 'border-purple-400');
+        Utils.$('loginBox').classList.remove('hidden');
+        Utils.$('regBox').classList.add('hidden');
+    },
+    
+    showRegTab() {
+        Utils.$('regTab').classList.add('text-purple-400', 'border-b-2', 'border-purple-400');
+        Utils.$('loginTab').classList.remove('text-purple-400', 'border-b-2', 'border-purple-400');
+        Utils.$('regBox').classList.remove('hidden');
+        Utils.$('loginBox').classList.add('hidden');
+    }
+};
+
+// ==================== 刷题模块 ====================
+const Exam = {
+    choiceModules: ['单选题', '多选题', '判断题'],
+    
+    startRandom() {
+        const choiceQuestions = QuestionBank.data.filter(q => this.choiceModules.includes(q.module));
+        const randomIndex = Math.floor(Math.random() * choiceQuestions.length);
+        const actualIndex = QuestionBank.data.indexOf(choiceQuestions[randomIndex]);
+        Store.setState({
+            currentQuestionIndex: actualIndex,
+            examMode: 'random'
+        });
+        UI.renderExamQuestion();
+        UI.switchPage('examPage');
+    },
+    
+    handleAnswer(selectedIndex, dom) {
+        if (Store.state.isAnswered) return;
+        
+        Store.setState({ isAnswered: true });
+        
+        const q = QuestionBank.getByIndex(Store.state.currentQuestionIndex);
+        const { totalRight, totalWrong, errorQuestionList, moduleErrorCount } = Store.state;
+        
+        Utils.$$('#answerOptions div').forEach(d => d.onclick = null);
+        dom.classList.add('option-selected');
+        
+        let newRight = totalRight;
+        let newWrong = totalWrong;
+        let newErrors = [...errorQuestionList];
+        let newModuleErr = { ...moduleErrorCount };
+        
+        if (selectedIndex === q.answer) {
+            newRight++;
+        } else {
+            newWrong++;
+            newModuleErr[q.module] = (newModuleErr[q.module] || 0) + 1;
+            if (!newErrors.some(x => x.title === q.title)) {
+                newErrors.push(q);
+            }
+        }
+        
+        Store.setState({
+            totalRight: newRight,
+            totalWrong: newWrong,
+            errorQuestionList: newErrors,
+            moduleErrorCount: newModuleErr
+        });
+        
+        DataStore.updateUser(Store.state.currentUser, {
+            right: newRight,
+            wrong: newWrong,
+            errorList: newErrors,
+            moduleErr: newModuleErr
+        });
+        
+        UI.showAnswerResult(q, selectedIndex, dom);
+        UI.updateStats();
+        UI.renderErrorList();
+        UI.drawChart();
+    },
+    
+    next() {
+        const currentAnswer = Store.state.answers[Store.state.currentQuestionIndex];
+        if (currentAnswer === -1) {
+            Toast.info('请先回答当前题目');
+            return;
+        }
+        let nextIndex = Store.state.currentQuestionIndex + 1;
+        if (nextIndex >= QuestionBank.getLength()) {
+            nextIndex = 0;
+            Toast.info('已到达最后一题，从头开始');
+        }
+        Store.setState({ currentQuestionIndex: nextIndex });
+        UI.renderExamQuestion();
+    },
+    
+    handleWrittenAnswer(answer, q) {
+        if (Store.state.isAnswered) return;
+        
+        Store.setState({ isAnswered: true });
+        
+        const { totalRight, totalWrong, errorQuestionList, moduleErrorCount } = Store.state;
+        
+        let newRight = totalRight;
+        let newWrong = totalWrong;
+        let newErrors = [...errorQuestionList];
+        let newModuleErr = { ...moduleErrorCount };
+        
+        const isCorrect = answer.trim() === q.answer.trim();
+        
+        if (isCorrect) {
+            newRight++;
+        } else {
+            newWrong++;
+            newModuleErr[q.module] = (newModuleErr[q.module] || 0) + 1;
+            if (!newErrors.some(x => x.title === q.title)) {
+                newErrors.push(q);
+            }
+        }
+        
+        Store.setState({
+            totalRight: newRight,
+            totalWrong: newWrong,
+            errorQuestionList: newErrors,
+            moduleErrorCount: newModuleErr
+        });
+        
+        DataStore.updateUser(Store.state.currentUser, {
+            right: newRight,
+            wrong: newWrong,
+            errorList: newErrors,
+            moduleErr: newModuleErr
+        });
+        
+        Utils.$('answerAnalyze').classList.remove('hidden');
+        Utils.$('correctAnswerContent').innerText = q.answer;
+        Utils.$('answerExplain').innerText = q.explain;
+        Utils.$('nextBtn').disabled = false;
+        
+        const textarea = Utils.$$('#answerOptions textarea')[0];
+        if (textarea) {
+            textarea.disabled = true;
+        }
+        
+        const submitBtn = Utils.$$('#answerOptions button')[0];
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa fa-check-circle mr-2"></i>已提交';
+        }
+        
+        UI.updateStats();
+        UI.renderErrorList();
+        UI.drawChart();
+    },
+    
+    saveNote() {
+        const note = Utils.$('errorNote').value.trim();
+        if (note) {
+            Toast.success('复盘笔记已保存');
+        }
+        Utils.$('errorNote').value = '';
+    }
+};
+
+// ==================== 专项训练模块 ====================
+const SpecialTrain = {
+    currentModule: '',
+    questionList: [],
+    currentIndex: 0,
+    answers: [],
+    
+    start(module) {
+        this.currentModule = module;
+        this.questionList = QuestionBank.shuffleArray(QuestionBank.getByModule(module));
+        this.currentIndex = 0;
+        this.answers = new Array(this.questionList.length).fill(-1);
+        
+        Utils.$('testTimer').parentElement.style.display = 'none';
+        Utils.$('testTotalQ').innerText = this.questionList.length;
+        this.renderQuestion();
+        UI.switchPage('testExamPage');
+    },
+    
+    renderQuestion() {
+        const q = this.questionList[this.currentIndex];
+        const total = this.questionList.length;
+        const isJudge = q.module === '判断题';
+        const isWritten = ['计算题', '简答题', '论述题'].includes(q.module);
+        
+        Utils.$('testCurrentQ').innerText = this.currentIndex + 1;
+        Utils.$('testTotalQ').innerText = total;
+        Utils.$('testQuestionModule').innerText = q.module;
+        Utils.$('testQuestionTitle').innerText = q.title;
+        
+        const progress = ((this.currentIndex + 1) / total) * 100;
+        Utils.$('testProgressBar').style.width = `${progress}%`;
+        
+        const box = Utils.$('testAnswerOptions');
+        box.innerHTML = '';
+        
+        if (isWritten) {
+            const textarea = document.createElement('textarea');
+            textarea.className = 'w-full p-4 bg-white/5 border border-white/20 rounded-xl text-[14px] min-h-[200px] resize-y';
+            textarea.placeholder = '请在此输入答案...';
+            if (this.answers[this.currentIndex] !== -1) {
+                textarea.value = this.answers[this.currentIndex];
+            }
+            box.appendChild(textarea);
+            
+            const submitBtn = document.createElement('button');
+            submitBtn.className = 'btn-gradient w-full py-3 mt-3 bg-gradient-to-r from-blue-500 to-cyan-500';
+            submitBtn.innerHTML = '<i class="fa fa-check mr-2"></i>提交答案';
+            submitBtn.onclick = () => this.submitWrittenAnswer(textarea.value);
+            box.appendChild(submitBtn);
+        } else {
+            q.options.forEach((item, index) => {
+                const dom = document.createElement('div');
+                const isSelected = this.answers[this.currentIndex] === index;
+                const label = isJudge ? item : String.fromCharCode(65 + index);
+                dom.className = `glass-card p-4.5 flex items-center gap-3 ripple ${isSelected ? 'option-selected' : ''}`;
+                dom.innerHTML = `
+                    <span class="w-6 h-6 flex items-center justify-center border border-white/20 rounded-full text-[13px] ${isSelected ? 'bg-purple-500 border-purple-500' : ''}">${label}</span>
+                    <span class="text-[15px]">${item}</span>
+                `;
+                dom.dataset.index = index;
+                dom.onclick = () => this.selectAnswer(index, dom);
+                box.appendChild(dom);
+            });
+        }
+        
+        Utils.$('testPrevBtn').disabled = this.currentIndex === 0;
+        
+        if (this.currentIndex === total - 1) {
+            Utils.$('testNextBtn').classList.add('hidden');
+            Utils.$('testSubmitBtn').classList.remove('hidden');
+            Utils.$('testSubmitBtn').innerHTML = '<i class="fa fa-flag-checkered mr-2"></i>完成训练';
+            Utils.$('testSubmitBtn').className = 'btn-gradient w-full py-4 mt-3 bg-gradient-to-r from-green-500 to-teal-500';
+            Utils.$('testSubmitBtn').onclick = () => this.finish();
+        } else {
+            Utils.$('testNextBtn').classList.remove('hidden');
+            Utils.$('testSubmitBtn').classList.add('hidden');
+        }
+        
+        Utils.$('testAnswerAnalyze').classList.add('hidden');
+    },
+    
+    selectAnswer(index, dom) {
+        const q = this.questionList[this.currentIndex];
+        const isMulti = q.module === '多选题';
+        
+        if (this.answers[this.currentIndex] !== -1 && !isMulti) {
+            return;
+        }
+        
+        if (isMulti) {
+            if (this.answers[this.currentIndex] === -1) {
+                this.answers[this.currentIndex] = [];
+            }
+            const arr = this.answers[this.currentIndex];
+            const idx = arr.indexOf(index);
+            if (idx === -1) {
+                arr.push(index);
+            } else {
+                arr.splice(idx, 1);
+            }
+            
+            Utils.$$('#testAnswerOptions div').forEach((d, i) => {
+                const span = d.querySelector('span:first-child');
+                if (arr.includes(i)) {
+                    d.classList.add('option-selected');
+                    span.classList.add('bg-purple-500', 'border-purple-500');
+                } else {
+                    d.classList.remove('option-selected');
+                    span.classList.remove('bg-purple-500', 'border-purple-500');
+                }
+            });
+            
+            Utils.$('testConfirmBtn').classList.remove('hidden');
+            Utils.$('testNextBtn').classList.add('hidden');
+            Utils.$('testAnswerAnalyze').classList.add('hidden');
+        } else {
+            this.answers[this.currentIndex] = index;
+            
+            Utils.$$('#testAnswerOptions div').forEach((d, i) => {
+                const span = d.querySelector('span:first-child');
+                if (i === index) {
+                    d.classList.add('option-selected');
+                    span.classList.add('bg-purple-500', 'border-purple-500');
+                } else {
+                    d.style.opacity = '0.5';
+                }
+                d.onclick = null;
+            });
+            
+            Utils.$('testAnswerAnalyze').classList.remove('hidden');
+            const isJudge = q.module === '判断题';
+            const answerText = isJudge ? q.options[q.answer] : `${String.fromCharCode(65 + q.answer)}. ${q.options[q.answer]}`;
+            Utils.$('testCorrectAnswerContent').innerText = answerText;
+            Utils.$('testAnswerExplain').innerText = q.explain;
+            
+            setTimeout(() => {
+                if (this.currentIndex < this.questionList.length - 1) {
+                    this.next();
+                }
+            }, 1500);
+        }
+    },
+    
+    confirmMultiAnswer() {
+        const q = this.questionList[this.currentIndex];
+        const userAnswer = this.answers[this.currentIndex];
+        
+        Utils.$('testConfirmBtn').classList.add('hidden');
+        
+        Utils.$$('#testAnswerOptions div').forEach((d) => {
+            d.style.opacity = '0.5';
+            d.onclick = null;
+        });
+        
+        Utils.$('testAnswerAnalyze').classList.remove('hidden');
+        const answerLetters = userAnswer.map(a => String.fromCharCode(65 + a)).join('、');
+        Utils.$('testCorrectAnswerContent').innerText = `${answerLetters}. ${userAnswer.map(a => q.options[a]).join('、')}`;
+        Utils.$('testAnswerExplain').innerText = q.explain;
+        
+        setTimeout(() => {
+            if (this.currentIndex < this.questionList.length - 1) {
+                this.next();
+            }
+        }, 1500);
+    },
+    
+    submitWrittenAnswer(answer) {
+        const q = this.questionList[this.currentIndex];
+        this.answers[this.currentIndex] = answer;
+        
+        Utils.$('testAnswerAnalyze').classList.remove('hidden');
+        Utils.$('testCorrectAnswerContent').innerText = q.answer;
+        Utils.$('testAnswerExplain').innerText = q.explain;
+        
+        const textarea = Utils.$$('#testAnswerOptions textarea')[0];
+        if (textarea) {
+            textarea.disabled = true;
+        }
+        
+        const submitBtn = Utils.$$('#testAnswerOptions button')[0];
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa fa-check-circle mr-2"></i>已提交';
+        }
+        
+        setTimeout(() => {
+            if (this.currentIndex < this.questionList.length - 1) {
+                this.next();
+            }
+        }, 1500);
+    },
+    
+    next() {
+        const currentAnswer = this.answers[this.currentIndex];
+        if (currentAnswer === -1) {
+            Toast.info('请先回答当前题目');
+            return;
+        }
+        if (this.currentIndex < this.questionList.length - 1) {
+            this.currentIndex++;
+            this.renderQuestion();
+        }
+    },
+    
+    prev() {
+        if (this.currentIndex > 0) {
+            this.currentIndex--;
+            this.renderQuestion();
+        }
+    },
+    
+    finish() {
+        const unanswered = this.answers.filter(a => a === -1).length;
+        if (unanswered > 0) {
+            Toast.info('请完成所有题目后再结束训练');
+            return;
+        }
+        let right = 0;
+        let wrong = 0;
+        
+        this.questionList.forEach((q, index) => {
+            const userAnswer = this.answers[index];
+            let isCorrect = false;
+            
+            if (q.module === '多选题') {
+                if (Array.isArray(userAnswer) && Array.isArray(q.answer)) {
+                    const userSet = new Set(userAnswer);
+                    const answerSet = new Set(q.answer);
+                    isCorrect = userSet.size === answerSet.size && [...userSet].every(a => answerSet.has(a));
+                }
+            } else if (['计算题', '简答题', '论述题'].includes(q.module)) {
+                isCorrect = userAnswer !== -1 && userAnswer.trim() === q.answer.trim();
+            } else {
+                isCorrect = userAnswer === q.answer;
+            }
+            
+            if (isCorrect) {
+                right++;
+            } else {
+                wrong++;
+            }
+        });
+        
+        const total = right + wrong;
+        const rate = total === 0 ? 0 : ((right / total) * 100).toFixed(1);
+        
+        alert(`${this.currentModule}练习完成！\n正确率：${rate}% (${right}/${total})`);
+        
+        Utils.$('testTimer').parentElement.style.display = '';
+        this.currentIndex = 0;
+        this.answers = new Array(this.questionList.length).fill(-1);
+        this.renderQuestion();
+    }
+};
+
+// ==================== 模拟考试模块 ====================
+const TestExam = {
+    TOTAL_TIME: 90 * 60,
+    timerId: null,
+    timeLeft: 0,
+    testPaper: [],
+    currentIndex: 0,
+    answers: [],
+    moduleStats: {},
+    EXAM_CONFIG: {
+        '单选题': { count: 60, score: 0.5 },
+        '多选题': { count: 15, score: 2 },
+        '判断题': { count: 20, score: 0.5 },
+        '计算题': { count: 2, score: 5 },
+        '简答题': { count: 2, score: 5 },
+        '论述题': { count: 2, score: 7.5 }
+    },
+    totalScore: 0,
+    
+    start() {
+        const shuffledPaper = [];
+        const modules = Object.keys(this.EXAM_CONFIG);
+        
+        modules.forEach(module => {
+            const moduleQuestions = QuestionBank.getByModule(module);
+            if (moduleQuestions && moduleQuestions.length > 0) {
+                const shuffled = QuestionBank.shuffleArray(moduleQuestions);
+                const count = Math.min(this.EXAM_CONFIG[module].count, shuffled.length);
+                for (let i = 0; i < count; i++) {
+                    shuffledPaper.push(shuffled[i]);
+                }
+            }
+        });
+        
+        this.testPaper = shuffledPaper;
+        this.currentIndex = 0;
+        this.answers = new Array(this.testPaper.length).fill(-1);
+        this.timeLeft = this.TOTAL_TIME;
+        
+        this.moduleStats = {};
+        modules.forEach(m => {
+            this.moduleStats[m] = { total: 0, right: 0, score: 0 };
+        });
+        
+        this.totalScore = 0;
+        this.testPaper.forEach(q => {
+            if (this.moduleStats[q.module]) {
+                this.moduleStats[q.module].total++;
+                this.totalScore += this.EXAM_CONFIG[q.module].score;
+            }
+        });
+        
+        Utils.$('testTotalQ').innerText = this.testPaper.length;
+        this.renderQuestion();
+        this.startTimer();
+        UI.switchPage('testExamPage');
+    },
+    
+    startTimer() {
+        this.updateTimerDisplay();
+        this.timerId = setInterval(() => {
+            this.timeLeft--;
+            this.updateTimerDisplay();
+            
+            if (this.timeLeft <= 0) {
+                this.autoSubmit();
+            }
+            
+            if (this.timeLeft === 300) {
+                Toast.warning('还剩5分钟');
+            }
+        }, 1000);
+    },
+    
+    updateTimerDisplay() {
+        const mins = Math.floor(this.timeLeft / 60);
+        const secs = this.timeLeft % 60;
+        Utils.$('testTimer').innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    },
+    
+    stopTimer() {
+        if (this.timerId) {
+            clearInterval(this.timerId);
+            this.timerId = null;
+        }
+    },
+    
+    renderQuestion() {
+        const q = this.testPaper[this.currentIndex];
+        const total = this.testPaper.length;
+        const isJudge = q.module === '判断题';
+        const isWritten = ['计算题', '简答题', '论述题'].includes(q.module);
+        
+        Utils.$('testCurrentQ').innerText = this.currentIndex + 1;
+        Utils.$('testTotalQ').innerText = total;
+        Utils.$('testQuestionModule').innerText = q.module;
+        Utils.$('testQuestionTitle').innerText = q.title;
+        
+        const progress = ((this.currentIndex + 1) / total) * 100;
+        Utils.$('testProgressBar').style.width = `${progress}%`;
+        
+        const box = Utils.$('testAnswerOptions');
+        box.innerHTML = '';
+        
+        if (isWritten) {
+            // 显示文本输入框
+            const textarea = document.createElement('textarea');
+            textarea.className = 'w-full p-4 bg-white/5 border border-white/20 rounded-xl text-[14px] min-h-[200px] resize-y';
+            textarea.placeholder = '请在此输入答案...';
+            if (this.answers[this.currentIndex] !== -1) {
+                textarea.value = this.answers[this.currentIndex];
+            }
+            box.appendChild(textarea);
+            
+            // 显示提交按钮
+            const submitBtn = document.createElement('button');
+            submitBtn.className = 'btn-gradient w-full py-3 mt-3 bg-gradient-to-r from-blue-500 to-cyan-500';
+            submitBtn.innerHTML = '<i class="fa fa-check mr-2"></i>提交答案';
+            submitBtn.onclick = () => this.submitWrittenAnswer(textarea.value);
+            box.appendChild(submitBtn);
+        } else {
+            // 显示选择题选项
+            q.options.forEach((item, index) => {
+                const dom = document.createElement('div');
+                const isSelected = this.answers[this.currentIndex] === index;
+                const label = isJudge ? item : String.fromCharCode(65 + index);
+                dom.className = `glass-card p-4.5 flex items-center gap-3 ripple ${isSelected ? 'option-selected' : ''}`;
+                dom.innerHTML = `
+                    <span class="w-6 h-6 flex items-center justify-center border border-white/20 rounded-full text-[13px] ${isSelected ? 'bg-purple-500 border-purple-500' : ''}">${label}</span>
+                    <span class="text-[15px]">${item}</span>
+                `;
+                dom.dataset.index = index;
+                dom.onclick = () => this.selectAnswer(index, dom);
+                box.appendChild(dom);
+            });
+        }
+        
+        Utils.$('testPrevBtn').disabled = this.currentIndex === 0;
+        
+        if (this.currentIndex === total - 1) {
+            Utils.$('testNextBtn').classList.add('hidden');
+            Utils.$('testSubmitBtn').classList.remove('hidden');
+        } else {
+            Utils.$('testNextBtn').classList.remove('hidden');
+            Utils.$('testSubmitBtn').classList.add('hidden');
+        }
+        
+        Utils.$('testAnswerAnalyze').classList.add('hidden');
+    },
+    
+    selectAnswer(index, dom) {
+        const q = this.testPaper[this.currentIndex];
+        const isMulti = q.module === '多选题';
+        
+        if (this.answers[this.currentIndex] !== -1 && !isMulti) {
+            return;
+        }
+        
+        if (isMulti) {
+            if (this.answers[this.currentIndex] === -1) {
+                this.answers[this.currentIndex] = [];
+            }
+            const arr = this.answers[this.currentIndex];
+            const idx = arr.indexOf(index);
+            if (idx === -1) {
+                arr.push(index);
+            } else {
+                arr.splice(idx, 1);
+            }
+            
+            Utils.$$('#testAnswerOptions div').forEach((d, i) => {
+                const span = d.querySelector('span:first-child');
+                if (arr.includes(i)) {
+                    d.classList.add('option-selected');
+                    span.classList.add('bg-purple-500', 'border-purple-500');
+                } else {
+                    d.classList.remove('option-selected');
+                    span.classList.remove('bg-purple-500', 'border-purple-500');
+                }
+            });
+            
+            Utils.$('testConfirmBtn').classList.remove('hidden');
+            Utils.$('testNextBtn').classList.add('hidden');
+            Utils.$('testAnswerAnalyze').classList.add('hidden');
+        } else {
+            this.answers[this.currentIndex] = index;
+            
+            Utils.$$('#testAnswerOptions div').forEach((d, i) => {
+                const span = d.querySelector('span:first-child');
+                if (i === index) {
+                    d.classList.add('option-selected');
+                    span.classList.add('bg-purple-500', 'border-purple-500');
+                } else {
+                    d.style.opacity = '0.5';
+                }
+                d.onclick = null;
+            });
+            
+            if (this.moduleStats[q.module]) {
+                this.moduleStats[q.module].total++;
+                const isCorrect = index === q.answer;
+                if (isCorrect) {
+                    this.moduleStats[q.module].right++;
+                }
+            }
+            
+            Utils.$('testAnswerAnalyze').classList.remove('hidden');
+            const isJudge = q.module === '判断题';
+            const answerText = isJudge ? q.options[q.answer] : `${String.fromCharCode(65 + q.answer)}. ${q.options[q.answer]}`;
+            Utils.$('testCorrectAnswerContent').innerText = answerText;
+            Utils.$('testAnswerExplain').innerText = q.explain;
+            
+            setTimeout(() => {
+                if (this.currentIndex < this.testPaper.length - 1) {
+                    this.next();
+                }
+            }, 1500);
+        }
+    },
+    
+    confirmMultiAnswer() {
+        const q = this.testPaper[this.currentIndex];
+        const userAnswer = this.answers[this.currentIndex];
+        
+        if (this.moduleStats[q.module]) {
+            this.moduleStats[q.module].total++;
+            
+            let isCorrect = false;
+            if (Array.isArray(userAnswer) && Array.isArray(q.answer)) {
+                const userSet = new Set(userAnswer);
+                const answerSet = new Set(q.answer);
+                isCorrect = userSet.size === answerSet.size && [...userSet].every(a => answerSet.has(a));
+            }
+            
+            if (isCorrect) {
+                this.moduleStats[q.module].right++;
+            }
+        }
+        
+        Utils.$('testConfirmBtn').classList.add('hidden');
+        
+        Utils.$$('#testAnswerOptions div').forEach((d) => {
+            d.style.opacity = '0.5';
+            d.onclick = null;
+        });
+        
+        Utils.$('testAnswerAnalyze').classList.remove('hidden');
+        const answerLetters = userAnswer.map(a => String.fromCharCode(65 + a)).join('、');
+        Utils.$('testCorrectAnswerContent').innerText = `${answerLetters}. ${userAnswer.map(a => q.options[a]).join('、')}`;
+        Utils.$('testAnswerExplain').innerText = q.explain;
+        
+        setTimeout(() => {
+            if (this.currentIndex < this.testPaper.length - 1) {
+                this.next();
+            }
+        }, 1500);
+    },
+    
+    submitWrittenAnswer(answer) {
+        const q = this.testPaper[this.currentIndex];
+        this.answers[this.currentIndex] = answer;
+        
+        if (this.moduleStats[q.module]) {
+            this.moduleStats[q.module].total++;
+        }
+        
+        Utils.$('testAnswerAnalyze').classList.remove('hidden');
+        Utils.$('testCorrectAnswerContent').innerText = q.answer;
+        Utils.$('testAnswerExplain').innerText = q.explain;
+        
+        const textarea = Utils.$$('#testAnswerOptions textarea')[0];
+        if (textarea) {
+            textarea.disabled = true;
+        }
+        
+        const submitBtn = Utils.$$('#testAnswerOptions button')[0];
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa fa-check-circle mr-2"></i>已提交';
+        }
+        
+        setTimeout(() => {
+            if (this.currentIndex < this.testPaper.length - 1) {
+                this.next();
+            }
+        }, 1500);
+    },
+    
+    next() {
+        const currentAnswer = this.answers[this.currentIndex];
+        if (currentAnswer === -1) {
+            Toast.info('请先回答当前题目');
+            return;
+        }
+        if (this.currentIndex < this.testPaper.length - 1) {
+            this.currentIndex++;
+            this.renderQuestion();
+        }
+    },
+    
+    prev() {
+        if (this.currentIndex > 0) {
+            this.currentIndex--;
+            this.renderQuestion();
+        }
+    },
+    
+    confirmExit() {
+        if (confirm('确定要退出考试吗？退出后本次考试成绩将不会保存。')) {
+            this.stopTimer();
+            UI.switchPage('homePage');
+        }
+    },
+    
+    submit() {
+        const unanswered = this.answers.filter(a => a === -1).length;
+        if (unanswered > 0) {
+            if (!confirm(`还有${unanswered}题未作答，确定要交卷吗？`)) {
+                return;
+            }
+        }
+        this.finishTest();
+    },
+    
+    autoSubmit() {
+        this.stopTimer();
+        this.finishTest();
+    },
+    
+    finishTest() {
+        this.stopTimer();
+        
+        let right = 0;
+        let wrong = 0;
+        const errorList = [];
+        
+        this.testPaper.forEach((q, index) => {
+            const userAnswer = this.answers[index];
+            let isCorrect = false;
+            
+            if (q.module === '多选题') {
+                if (Array.isArray(userAnswer) && Array.isArray(q.answer)) {
+                    const userSet = new Set(userAnswer);
+                    const answerSet = new Set(q.answer);
+                    isCorrect = userSet.size === answerSet.size && [...userSet].every(a => answerSet.has(a));
+                }
+            } else if (['计算题', '简答题', '论述题'].includes(q.module)) {
+                // 主观题验证逻辑 - 简单文本比较
+                isCorrect = userAnswer !== -1 && userAnswer.trim() === q.answer.trim();
+            } else {
+                isCorrect = userAnswer === q.answer;
+            }
+            
+            if (isCorrect) {
+                right++;
+            } else {
+                wrong++;
+                errorList.push({
+                    ...q,
+                    userAnswer: userAnswer
+                });
+            }
+        });
+        
+        const total = right + wrong;
+        const rate = total === 0 ? 0 : ((right / total) * 100).toFixed(1);
+        const score = (this.totalScore * (right / total)).toFixed(1);
+        
+        Utils.$('testResultRight').innerText = right;
+        Utils.$('testResultWrong').innerText = wrong;
+        Utils.$('testResultRate').innerText = rate + '%';
+        
+        const scoreEl = Utils.$('testResultScore');
+        if (scoreEl) scoreEl.innerText = score + '分';
+        
+        const moduleLabels = Object.keys(this.moduleStats);
+        const moduleRightRates = moduleLabels.map(m => {
+            const s = this.moduleStats[m];
+            return s.total === 0 ? 0 : ((s.right / s.total) * 100).toFixed(1);
+        });
+        
+        setTimeout(() => {
+            const ctx = Utils.$('testModuleChart').getContext('2d');
+            if (window.testModuleChart) window.testModuleChart.destroy();
+            
+            window.testModuleChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: moduleLabels,
+                    datasets: [{
+                        label: '正确率',
+                        data: moduleRightRates,
+                        backgroundColor: moduleRightRates.map(r => 
+                            parseFloat(r) >= 60 ? 'rgba(34, 197, 94, 0.6)' : 'rgba(239, 68, 68, 0.6)'
+                        ),
+                        borderRadius: 8,
+                        barThickness: 30
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { 
+                            beginAtZero: true, 
+                            max: 100,
+                            grid: { color: 'rgba(255,255,255,0.05)' }, 
+                            ticks: { color: '#9CA3AF' } 
+                        },
+                        x: { 
+                            grid: { display: false }, 
+                            ticks: { color: '#9CA3AF' } 
+                        }
+                    }
+                }
+            });
+        }, 100);
+        
+        const getAnswerText = (q, answer) => {
+            if (answer === -1) return '未作答';
+            if (['计算题', '简答题', '论述题'].includes(q.module)) {
+                return answer.length > 30 ? answer.substring(0, 30) + '...' : answer;
+            }
+            if (q.module === '判断题') return q.options[answer];
+            if (q.module === '多选题') {
+                if (typeof answer === 'number') return String.fromCharCode(65 + answer);
+                return answer.map(a => String.fromCharCode(65 + a)).join('、');
+            }
+            return String.fromCharCode(65 + answer);
+        };
+        
+        const errorContainer = Utils.$('testErrorListContainer');
+        if (errorList.length === 0) {
+            errorContainer.innerHTML = `<div class="glass-card p-5 text-center text-green-400"><i class="fa fa-trophy text-2xl mb-2"></i><p>太棒了！全部答对！</p></div>`;
+        } else {
+            errorContainer.innerHTML = `
+                <p class="text-[14px] text-gray-400 mb-3">本次考试错题（共${errorList.length}题）：</p>
+                ${errorList.map(item => `
+                    <div class="glass-card p-4 mb-3">
+                        <span class="inline-block px-2 py-1 bg-red-500/20 text-red-300 text-[12px] rounded-full mb-2">${item.module}</span>
+                        <p class="text-[14px] leading-relaxed mb-2">${item.title}</p>
+                        <p class="text-[13px] text-gray-400">你的答案: ${getAnswerText(item, item.userAnswer)}</p>
+                        <p class="text-[13px] text-green-400">正确答案: ${getAnswerText(item, item.answer)}</p>
+                    </div>
+                `).join('')}
+            `;
+        }
+        
+        UI.switchPage('testResultPage');
+    },
+    
+    viewErrors() {
+        Utils.$('errorBookPage').classList.add('active');
+        Utils.$$('.nav-item').forEach(n => n.classList.remove('active'));
+    },
+    
+    backHome() {
+        UI.switchPage('homePage');
+        UI.updateStats();
+        UI.drawChart();
+    }
+};
+
+// ==================== 初始化 ====================
+document.addEventListener('DOMContentLoaded', () => {
+    const nav = document.querySelector('nav');
+    if (nav) nav.classList.add('hide-nav');
+    
+    Utils.$('loginTab').onclick = () => Auth.showLoginTab();
+    Utils.$('regTab').onclick = () => Auth.showRegTab();
+    
+    Utils.$('loginUser').onkeyup = (e) => { if(e.key === 'Enter') Auth.login(); };
+    Utils.$('loginPwd').onkeyup = (e) => { if(e.key === 'Enter') Auth.login(); };
+    Utils.$('regUser').onkeyup = (e) => { if(e.key === 'Enter') Auth.register(); };
+    Utils.$('regPwd').onkeyup = (e) => { if(e.key === 'Enter') Auth.register(); };
+    
+    UI.drawChart();
+});
+</script>
+
+<!-- 版权信息 -->
+<footer class="py-6 text-center text-[12px] text-gray-400">
+    <p>© 2026 拾野纪科技. 保留所有权利.</p>
+</footer>
+</body></html>
