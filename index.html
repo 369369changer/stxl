@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>智学刷题</title>
+    <title>智学刷题｜手机高级版</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -244,31 +244,93 @@
 
 <!-- 登录注册页面 -->
 <div id="loginPage" class="page active px-5 pt-16">
-    <div class="text-center mb-10">
-        <h1 class="text-[30px] font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">智学刷题</h1>
-        <p class="text-gray-400 mt-2">私密本地账号 · 数据永久保存在本机</p>
+    <div class="text-center mb-12">
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 shadow-lg shadow-purple-500/25 mb-4">
+            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+            </svg>
+        </div>
+        <h1 class="text-[32px] font-bold bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">智学刷题</h1>
+        <p class="text-gray-400 mt-3">私密本地账号 · 数据永久保存在本机</p>
     </div>
 
-    <div class="glass-card p-6">
-        <div class="flex gap-4 mb-6">
-            <span id="loginTab" class="font-medium text-purple-400 border-b-2 border-purple-400 pb-1">登录</span>
-            <span id="regTab" class="font-medium text-gray-400">注册</span>
+    <div class="glass-card p-8 max-w-md mx-auto border border-white/10 rounded-2xl shadow-xl">
+        <div class="flex gap-6 mb-8">
+            <span id="loginTab" class="flex-1 text-center font-medium text-purple-400 border-b-2 border-purple-400 pb-2 transition-all duration-300 cursor-pointer">登录</span>
+            <span id="regTab" class="flex-1 text-center font-medium text-gray-400 pb-2 transition-all duration-300 cursor-pointer hover:text-gray-300">注册</span>
         </div>
 
         <div id="loginBox">
-            <input type="text" id="loginUser" placeholder="请输入账号" class="w-full mb-4">
-            <input type="password" id="loginPwd" placeholder="请输入密码" class="w-full mb-6">
-            <button onclick="Auth.login()" class="btn-gradient w-full py-4">立即登录</button>
+            <div class="relative mb-5">
+                <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+                <input type="text" id="loginUser" placeholder="请输入账号" class="w-full pl-12 pr-4 py-4 bg-gray-800/50 border border-gray-700 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 outline-none transition-all duration-300 text-white">
+            </div>
+            
+            <div class="relative mb-6">
+                <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                </svg>
+                <input type="password" id="loginPwd" placeholder="请输入密码" class="w-full pl-12 pr-4 py-4 bg-gray-800/50 border border-gray-700 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 outline-none transition-all duration-300 text-white">
+            </div>
+
+            <div class="flex items-center justify-between mb-6">
+                <label class="flex items-center gap-2 text-gray-400 text-sm cursor-pointer">
+                    <input type="checkbox" id="rememberMe" class="w-4 h-4 rounded border-gray-600 bg-gray-700 text-purple-500 focus:ring-purple-500">
+                    <span>记住密码</span>
+                </label>
+                <span class="text-purple-400 text-sm cursor-pointer hover:text-purple-300 transition-colors" onclick="showForgotPwd()">忘记密码?</span>
+            </div>
+
+            <button onclick="Auth.login()" class="btn-gradient w-full py-4 rounded-xl font-medium text-lg shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300">立即登录</button>
         </div>
 
         <div id="regBox" class="hidden">
-            <input type="text" id="regUser" placeholder="设置账号" class="w-full mb-4">
-            <input type="password" id="regPwd" placeholder="设置密码" class="w-full mb-6">
-            <button onclick="Auth.register()" class="btn-gradient w-full py-4">创建账号</button>
+            <div class="relative mb-5">
+                <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+                <input type="text" id="regUser" placeholder="设置账号" class="w-full pl-12 pr-4 py-4 bg-gray-800/50 border border-gray-700 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 outline-none transition-all duration-300 text-white">
+            </div>
+
+            <div class="relative mb-6">
+                <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                </svg>
+                <input type="password" id="regPwd" placeholder="设置密码" class="w-full pl-12 pr-4 py-4 bg-gray-800/50 border border-gray-700 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 outline-none transition-all duration-300 text-white">
+            </div>
+
+            <button onclick="Auth.register()" class="btn-gradient w-full py-4 rounded-xl font-medium text-lg shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300">创建账号</button>
         </div>
     </div>
 
-    <p class="text-center text-gray-500 text-xs mt-6">所有错题 & 记录仅保存在你手机本地</p>
+    <p class="text-center text-gray-500 text-xs mt-8">所有错题 & 记录仅保存在你手机本地</p>
+</div>
+
+<!-- 忘记密码弹窗 -->
+<div id="forgotPwdModal" class="fixed inset-0 bg-black/60 flex items-center justify-center px-4 z-50 hidden">
+    <div class="glass-card p-6 max-w-sm w-full rounded-xl border border-white/10 shadow-xl">
+        <div class="flex items-center justify-between mb-6">
+            <h3 class="text-lg font-semibold text-white">忘记密码</h3>
+            <button onclick="Utils.$('forgotPwdModal').classList.add('hidden')" class="text-gray-400 hover:text-white transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="relative mb-5">
+            <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+            </svg>
+            <input type="text" id="forgotUser" placeholder="请输入账号" class="w-full pl-12 pr-4 py-3 bg-gray-800/50 border border-gray-700 rounded-lg focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 outline-none transition-all duration-300 text-white">
+        </div>
+        
+        <p class="text-gray-400 text-sm mb-5">密码将显示在弹窗中（本地存储）</p>
+        
+        <button onclick="Auth.forgotPassword()" class="btn-gradient w-full py-3 rounded-lg font-medium">找回密码</button>
+    </div>
 </div>
 
 <!-- 首页 -->
@@ -357,11 +419,20 @@
     <button class="btn-gradient w-full py-3 mt-4 text-[15px] hidden" onclick="Exam.confirmMultiAnswer()" id="confirmMultiBtn">确认答案</button>
 
     <div class="glass-card p-5 mt-5 hidden" id="answerAnalyze">
+        <!-- 用户选择的答案 -->
+        <div class="flex items-center gap-2 mb-3">
+            <i class="fa fa-user-circle text-blue-400"></i>
+            <p class="font-medium text-blue-300" id="userAnswerTip">你的答案：</p>
+        </div>
+        <p class="text-[15px] mb-4" id="userAnswerContent"></p>
+        
+        <!-- 正确答案 -->
         <div class="flex items-center gap-2 mb-3">
             <i class="fa fa-check-circle text-green-400"></i>
             <p class="font-medium text-green-300" id="correctAnswerTip">正确答案：</p>
         </div>
         <p class="text-[15px] mb-4" id="correctAnswerContent"></p>
+        
         <p class="text-gray-300 text-[14px] leading-relaxed mb-4">
             <span class="font-medium text-white">解析：</span>
             <span id="answerExplain"></span>
@@ -402,6 +473,14 @@
     <div class="space-y-3 px-1" id="testAnswerOptions"></div>
 
     <div class="glass-card p-5 mt-5 hidden" id="testAnswerAnalyze">
+        <!-- 用户选择的答案 -->
+        <div class="flex items-center gap-2 mb-3">
+            <i class="fa fa-user-circle text-blue-400"></i>
+            <p class="font-medium text-blue-300">你的答案：</p>
+        </div>
+        <p class="text-[15px] mb-4" id="testUserAnswerContent"></p>
+        
+        <!-- 正确答案 -->
         <div class="flex items-center gap-2 mb-3">
             <i class="fa fa-check-circle text-green-400"></i>
             <p class="font-medium text-green-300">正确答案：</p>
@@ -720,114 +799,493 @@ const DataStore = {
 // ==================== 题库模块 ====================
 const QuestionBank = {
     data: [
-        // 单选题
-        {"title":"1. 职业守则是：（ ）职业技能标准的核心要素","options":["爱岗敬业","精益求精","遵纪守法","诚实守信"],"answer":2,"module":"单选题","explain":"职业技能标准核心要素：遵纪守法。"},
-        {"title":"2. 职业技能是：（ ）职业技能标准的核心要素","options":["遵纪守法","爱岗敬业","精益求精","诚实守信"],"answer":1,"module":"单选题","explain":"职业技能标准核心要素：爱岗敬业。"},
-        {"title":"3. 泵站职业技能的方针是：（ ）","options":["安全第一","预防为主","安全第一预防为主","安全第一预防为了生产"],"answer":2,"module":"单选题","explain":"泵站职业技能方针：安全第一预防为主。"},
-        {"title":"4. 规程的内容，是指在人和人、人和物以及物和物之间的相互关系时所做的（ ）","options":["时效性标准","技术性标准","规范性标准","适用范围性"],"answer":2,"module":"单选题","explain":"规程的核心是规范性标准。"},
-        {"title":"5. 水泵的工况点是：指（ ）的实际工况","options":["流量","扬程","功率","效率"],"answer":0,"module":"单选题","explain":"水泵工况点主要指流量的实际工况。"},
-        {"title":"6. 同一规格的零件，从一批中任取一个，不需任何挑选或修配就能装到机器上，并能满足其使用要求的性质称为（ ）","options":["互换性","配合","精度","尺寸偏差"],"answer":2,"module":"单选题","explain":"精度是指零件的加工质量。"},
-        {"title":"7. 我国的尺寸标注方法是：（ ）","options":["偏差=最大极限尺寸-基本尺寸","偏差=最小极限尺寸-最大极限尺寸","公差=最大极限尺寸-最小极限尺寸","公差=上偏差-下偏差"],"answer":1,"module":"单选题","explain":"偏差的计算方法。"},
-        {"title":"8. 80h8表示圆柱孔的基本尺寸为80mm，（ ）","options":["基本偏差为H，公差等级为8级","公差为8mm","偏差为8mm","基本偏差为h，公差等级为8级"],"answer":0,"module":"单选题","explain":"尺寸标注的含义。"},
-        {"title":"9. 在尺寸公差相同的情况下，IT01到IT18中，IT01的公差值（ ）","options":["最大","最小","较大","较小"],"answer":1,"module":"单选题","explain":"IT等级的含义。"},
-        {"title":"10. 比例尺的单位是（ ）单位。","options":["长度","面积","体积","重量"],"answer":1,"module":"单选题","explain":"比例尺的单位。"},
-        {"title":"11. 量块的使用要求是：应选择（ ）的量块组合尺寸。","options":["最多","最少","相同","较大"],"answer":1,"module":"单选题","explain":"量块使用原则。"},
-        {"title":"12. 水泵施工图的种类不包括（ ）","options":["轴测图","装配示意图","原理图","安装图"],"answer":2,"module":"单选题","explain":"水泵施工图的种类。"},
-        {"title":"13. 装配示意图的特点是：（ ）","options":["表达机器的工作原理","表达零件的结构形状","只表达机器中各零件的位置和装配关系","装配示意图不能作为零件图的依据"],"answer":1,"module":"单选题","explain":"装配示意图的特点。"},
-        {"title":"14. 泵站运行管理人员应按规定参加培训，并（ ）持证上岗。","options":["经专业院校毕业","经考试合格","经单位批准","经注册"],"answer":3,"module":"单选题","explain":"泵站运行管理人员的要求。"},
-        {"title":"15. 技术规程的编写依据是：（ ）等有关技术标准。","options":["泵站设计规范","泵站更新改造技术规范","泵站运行管理规程","水泵及泵站设备安装技术规程"],"answer":2,"module":"单选题","explain":"技术规程的编写依据。"},
-        {"title":"16. 泵站效率应根据泵站类型和（ ）以及水源的可靠性等因素确定。","options":["平均扬程","最高扬程","最小扬程","泵站流量"],"answer":0,"module":"单选题","explain":"泵站效率的确定因素。"},
-        {"title":"17. 冷却系统应根据（ ）的规定。","options":["冷却系统规范","通风系统规范","水源情况确定","泵站规模"],"answer":2,"module":"单选题","explain":"冷却系统的规定。"},
-        {"title":"18. 一台水泵从一个较大的敞开式吸水池吸水，当水泵转动时，水泵叶轮进口处（ ）同时会影响水泵的扬程。","options":["绝对压力降低","相对压力降低","应该压力降低","没有变化"],"answer":0,"module":"单选题","explain":"水泵叶轮进口处的压力变化。"},
-        {"title":"19. 电动双位温度控制器应能根据温度变化自动进行控制和（ ）的动作。","options":["检测","调节","显示","报警"],"answer":2,"module":"单选题","explain":"电动双位温度控制器的功能。"},
-        {"title":"20. 液位传感器根据（ ）原理制成。","options":["液体体积","液体质量","液体压力","液体密度"],"answer":2,"module":"单选题","explain":"液位传感器的原理。"},
-        {"title":"21. 压力变送器将（ ）转换为标准电流信号。","options":["压力变化","电压变化","电阻变化","频率变化"],"answer":0,"module":"单选题","explain":"压力变送器的工作原理。"},
-        {"title":"22. 闸阀的作用是（ ）。","options":["调节流量","截断流体","改变流向","调节压力"],"answer":1,"module":"单选题","explain":"闸阀的主要作用是截断流体。"},
-        {"title":"23. 其中（ ）是衡量水泵性能的重要指标。","options":["流量","扬程","功率","效率"],"answer":3,"module":"单选题","explain":"效率是衡量水泵性能的重要指标。"},
-        {"title":"24. 压力传感器应定期进行（ ）检查。","options":["示值","漏泄","损坏","灵敏度"],"answer":0,"module":"单选题","explain":"压力传感器应定期进行示值检查。"},
-        {"title":"25. 直流电动机的调速方法不包括（ ）。","options":["串电阻调速","改变电压调速","弱磁调速","改变频率调速"],"answer":3,"module":"单选题","explain":"直流电动机调速方法。"},
-        {"title":"26. 变频器转换成为小惯量电机设备的（ ）设备。","options":["调速","控制","保护","启动"],"answer":0,"module":"单选题","explain":"变频器是调速设备。"},
-        {"title":"27. 一通道直角坐标机器人出口处应安装（ ）。","options":["传感器","执行器","控制器","显示器"],"answer":0,"module":"单选题","explain":"直角坐标机器人出口处应安装传感器。"},
-        {"title":"28. 压力容器设计的使用寿命一般为（ ）年。","options":["5","10","15","20"],"answer":2,"module":"单选题","explain":"压力容器设计使用寿命一般为15年。"},
-        {"title":"29. 使用高压清洗机时应该（ ）进行操作。","options":["随意","单人","两人配合","多人"],"answer":2,"module":"单选题","explain":"高压清洗机应两人配合操作。"},
-        {"title":"30. 意味着该设备（ ）超出规定范围。","options":["温度","压力","流量","转速"],"answer":1,"module":"单选题","explain":"压力超出规定范围的含义。"},
-        {"title":"31. 用户停止使用时应该（ ）设备。","options":["开启","关闭","维修","保养"],"answer":1,"module":"单选题","explain":"停止使用时应关闭设备。"},
-        {"title":"32. 调节阀门的口径应按（ ）计算确定。","options":["流量","压力","温度","功率"],"answer":0,"module":"单选题","explain":"调节阀门口径按流量计算。"},
-        {"title":"33. 管道系统存在（ ）时会产生水击现象。","options":["流量变化","压力变化","温度变化","流速变化"],"answer":3,"module":"单选题","explain":"流速变化会产生水击现象。"},
-        {"title":"34. 蝶阀的特点是（ ）。","options":["结构复杂","体积大","操作简便","价格高"],"answer":2,"module":"单选题","explain":"蝶阀的特点是操作简便。"},
-        {"title":"35. 液压系统蓄能器的作用是（ ）。","options":["储油","储能","过滤","冷却"],"answer":1,"module":"单选题","explain":"蓄能器的作用是储能。"},
-        {"title":"36. 决策液压系统切换时应（ ）安装。","options":["水平","垂直","倾斜","任意"],"answer":1,"module":"单选题","explain":"液压系统切换时应垂直安装。"},
-        {"title":"37. 定量式蓄能器在（ ）时需要安装固定装置。","options":["运行","检修","清洗","充气"],"answer":0,"module":"单选题","explain":"定量式蓄能器运行时需要固定装置。"},
-        {"title":"38. 皮囊式蓄能器保养的重要内容是（ ）皮囊。","options":["清洗","检查","更换","充气"],"answer":2,"module":"单选题","explain":"皮囊式蓄能器需要更换皮囊。"},
-        {"title":"39. 自动化系统监控的主要参数不包括（ ）。","options":["温度","压力","流量","颜色"],"answer":3,"module":"单选题","explain":"自动化系统监控的主要参数。"},
-        {"title":"40. 泵站管理系统的远动终端设备应安装在（ ）的环境中。","options":["高温","潮湿","干燥","腐蚀"],"answer":2,"module":"单选题","explain":"远动终端设备应安装在干燥环境中。"},
-        {"title":"41. PLC是指：（ ）。","options":["可编程控制系统","可编程控制器","过程控制器","程序逻辑控制器"],"answer":1,"module":"单选题","explain":"PLC是可编程控制器。"},
-        {"title":"42. 自动化系统监控的主要数据采集周期一般应小于（ ）秒。","options":["1","2","5","10"],"answer":0,"module":"单选题","explain":"数据采集周期一般小于1秒。"},
-        {"title":"43. 自动化系统的安全防护不包括（ ）。","options":["设备安全","通信安全","信息安全","人身安全"],"answer":3,"module":"单选题","explain":"安全防护不包括人身安全。"},
-        {"title":"44. 泵站自动化系统可根据（ ）调节运行参数。","options":["时间","季节","需求","经验"],"answer":2,"module":"单选题","explain":"可根据需求调节运行参数。"},
-        {"title":"45. 模拟量信号传输时需要使用（ ）设备。","options":["放大器","调制解调器","转换器","滤波器"],"answer":1,"module":"单选题","explain":"模拟量信号传输需要调制解调器。"},
-        {"title":"46. 使用的液压油的形式有（ ）等多种形式。","options":["压力式","容积式","速度式","功率式"],"answer":0,"module":"单选题","explain":"液压油的形式有压力式等。"},
-        {"title":"47. 自动化系统与技术创新之间的关系是（ ）。","options":["无关系","促进","阻碍","替代"],"answer":1,"module":"单选题","explain":"自动化系统促进技术创新。"},
-        {"title":"48. 自动化系统通讯接口常用的有（ ）。","options":["RS232","RS485","RJ45","USB"],"answer":1,"module":"单选题","explain":"常用通讯接口有RS485。"},
-        {"title":"49. 培训计划一般由（ ）组织人员制定。","options":["领导","专家","员工","培训机构"],"answer":0,"module":"单选题","explain":"培训计划由领导组织制定。"},
-        {"title":"50. （ ）需要明确人员培训需求及培训目标。","options":["培训计划","培训内容","培训方式","培训时间"],"answer":0,"module":"单选题","explain":"培训计划需要明确需求和目标。"},
-        {"title":"51. 下列关于继续教育的方式，说法正确的是（ ）。","options":["自学","面授","网络","以上都可以"],"answer":3,"module":"单选题","explain":"继续教育方式包括以上都可以。"},
-        {"title":"52. 标准作业指导书主要依据（ ）编写。","options":["理论","经验","标准作业流程","设备说明书"],"answer":2,"module":"单选题","explain":"标准作业指导书依据标准作业流程。"},
-        {"title":"53. 编写培训指导书应依据（ ）职业标准。","options":["高级工","技师","高级技师","工程师"],"answer":1,"module":"单选题","explain":"培训指导书依据技师职业标准。"},
-        {"title":"54. 安全生产责任制的落实需要（ ）。","options":["领导","员工","全员","第三方"],"answer":2,"module":"单选题","explain":"安全生产责任制需要全员落实。"},
-        {"title":"55. 泵站机电设备通常包括（ ）等机电设备。","options":["主机","辅机","电气设备","以上都是"],"answer":3,"module":"单选题","explain":"泵站机电设备包括以上都是。"},
-        {"title":"56. 电机选择正确与否直接影响泵站的（ ）。","options":["运行效率","安全","寿命","以上都是"],"answer":3,"module":"单选题","explain":"电机选择影响以上都是。"},
-        {"title":"57. 安装前对电机进行（ ）检查。","options":["绝缘","外观","性能","振动"],"answer":0,"module":"单选题","explain":"安装前检查电机绝缘。"},
-        {"title":"58. 滚动轴承的（ ）时，应考虑使用刮研方法修理。","options":["磨损","尺寸","结构","间隙"],"answer":3,"module":"单选题","explain":"滚动轴承间隙时应刮研修理。"},
-        {"title":"59. 检修更换水泵轴时，应考虑轴的（ ）以及强度要求。","options":["长度","直径","材料","形状"],"answer":2,"module":"单选题","explain":"更换水泵轴要考虑材料。"},
-        {"title":"60. 电机运行时应该监视电机运行电流保持在（ ）范围内。","options":["额定电流","最大电流","最小电流","启动电流"],"answer":0,"module":"单选题","explain":"电机运行电流应保持在额定电流范围内。"},
-        // 多选题（答案格式为数组）
-        {"title":"61. 液压系统滤清器的主要作用包括：（ ）","options":["过滤液压油中的杂质","保持液压油清洁","减少液压系统故障","以上都是"],"answer":[0,1,2,3],"module":"多选题","explain":"滤清器的作用包括以上所有。"},
-        {"title":"62. 下列属于泵站安全保护装置的有：（ ）","options":["安全阀","溢流阀","减压阀","泄压阀"],"answer":[0,1,3],"module":"多选题","explain":"安全保护装置包括安全阀、溢流阀、泄压阀。"},
-        {"title":"63. 水泵的并联运行适用于：（ ）","options":["流量变化大","扬程变化大","需要提高供水可靠性","需要调节扬程"],"answer":[0,2],"module":"多选题","explain":"并联运行适用于流量变化大、需要提高供水可靠性的情况。"},
-        {"title":"64. 泵站自动化系统的主要通讯方式包括：（ ）","options":["RS232","RS485","RJ45","USB"],"answer":[0,1,2],"module":"多选题","explain":"常用通讯方式有RS232、RS485、RJ45。"},
-        {"title":"65. 培训工作的基本环节包括：（ ）","options":["需求分析","计划制定","实施培训","效果评估"],"answer":[0,1,2,3],"module":"多选题","explain":"培训工作包括以上所有环节。"},
-        {"title":"66. 液压系统的主要元件包括：（ ）","options":["液压泵","液压缸","液压阀","液压油箱"],"answer":[0,1,2,3],"module":"多选题","explain":"液压系统包括以上所有元件。"},
-        {"title":"67. 水泵的常见故障包括：（ ）","options":["气蚀","轴承发热","密封泄漏","流量不足"],"answer":[0,1,2,3],"module":"多选题","explain":"水泵常见故障包括以上所有。"},
-        {"title":"68. 泵站运行管理的基本要求包括：（ ）","options":["安全运行","经济运行","高效运行","环保运行"],"answer":[0,1,2,3],"module":"多选题","explain":"泵站运行管理要求包括以上所有。"},
-        {"title":"69. 下列属于泵站节能措施的有：（ ）","options":["变频调速","叶片调节","合理选型","优化运行"],"answer":[0,1,2,3],"module":"多选题","explain":"节能措施包括以上所有。"},
-        {"title":"70. 泵站自动化系统的主要功能包括：（ ）","options":["数据采集","远程监控","故障报警","自动控制"],"answer":[0,1,2,3],"module":"多选题","explain":"自动化系统功能包括以上所有。"},
-        {"title":"71. 职业道德的基本要求包括：（ ）","options":["爱岗敬业","诚实守信","办事公道","奉献社会"],"answer":[0,1,2,3],"module":"多选题","explain":"职业道德基本要求包括以上所有。"},
-        {"title":"72. 泵站机电设备的日常维护包括：（ ）","options":["清洁","润滑","检查","紧固"],"answer":[0,1,2,3],"module":"多选题","explain":"日常维护包括以上所有内容。"},
-        {"title":"73. 水泵的运行参数包括：（ ）","options":["流量","扬程","功率","效率"],"answer":[0,1,2,3],"module":"多选题","explain":"水泵运行参数包括以上所有。"},
-        {"title":"74. 下列属于培训效果评估方法的有：（ ）","options":["理论考试","实际操作","问卷调查","跟踪观察"],"answer":[0,1,2,3],"module":"多选题","explain":"培训效果评估方法包括以上所有。"},
-        {"title":"75. 泵站安全生产管理制度包括：（ ）","options":["安全生产责任制","安全操作规程","应急预案","安全培训制度"],"answer":[0,1,2,3],"module":"多选题","explain":"安全生产管理制度包括以上所有。"},
-        // 判断题
-        {"title":"76. 职业道德是指从事一定职业的人们在职业活动中应遵循的行为准则。（ ）","options":["正确","错误"],"answer":0,"module":"判断题","explain":"职业道德是职业活动的行为准则。"},
-        {"title":"77. 水泵的效率越高，能量损失越小。（ ）","options":["正确","错误"],"answer":0,"module":"判断题","explain":"水泵效率越高说明能量损失越小。"},
-        {"title":"78. 液压系统中的液压油不需要定期更换。（ ）","options":["正确","错误"],"answer":1,"module":"判断题","explain":"液压油需要定期更换以保证系统正常运行。"},
-        {"title":"79. 泵站运行管理人员不需要持证上岗。（ ）","options":["正确","错误"],"answer":1,"module":"判断题","explain":"泵站运行管理人员需要持证上岗。"},
-        {"title":"80. 自动化系统可以提高泵站的运行效率。（ ）","options":["正确","错误"],"answer":0,"module":"判断题","explain":"自动化系统确实可以提高运行效率。"},
-        {"title":"81. 水泵的工况点是指水泵的实际运行点。（ ）","options":["正确","错误"],"answer":0,"module":"判断题","explain":"水泵工况点是指实际运行点。"},
-        {"title":"82. 泵站可以随意排放污水。（ ）","options":["正确","错误"],"answer":1,"module":"判断题","explain":"泵站不能随意排放污水。"},
-        {"title":"83. 变频器可以降低水泵的能耗。（ ）","options":["正确","错误"],"answer":0,"module":"判断题","explain":"变频器可以调节水泵转速，降低能耗。"},
-        {"title":"84. 液压系统不需要进行日常维护。（ ）","options":["正确","错误"],"answer":1,"module":"判断题","explain":"液压系统需要进行日常维护。"},
-        {"title":"85. 泵站运行记录不需要保存。（ ）","options":["正确","错误"],"answer":1,"module":"判断题","explain":"泵站运行记录需要保存以备查阅。"},
-        {"title":"86. 水泵启动前需要先灌水。（ ）","options":["正确","错误"],"answer":0,"module":"判断题","explain":"水泵启动前需要灌水以防止气蚀。"},
-        {"title":"87. 轴承温度过高会影响水泵正常运行。（ ）","options":["正确","错误"],"answer":0,"module":"判断题","explain":"轴承温度过高会影响正常运行。"},
-        {"title":"88. 泵站的电气设备不需要接地保护。（ ）","options":["正确","错误"],"answer":1,"module":"判断题","explain":"电气设备需要接地保护以确保安全。"},
-        {"title":"89. 自动化系统可以实现泵站的远程监控。（ ）","options":["正确","错误"],"answer":0,"module":"判断题","explain":"自动化系统可以实现远程监控。"},
-        {"title":"90. 水泵并联运行可以增加流量。（ ）","options":["正确","错误"],"answer":0,"module":"判断题","explain":"水泵并联运行可以增加流量。"},
-        {"title":"91. 液压油粘度越高越好。（ ）","options":["正确","错误"],"answer":1,"module":"判断题","explain":"液压油粘度要适宜，不是越高越好。"},
-        {"title":"92. 泵站节能改造可以降低运行成本。（ ）","options":["正确","错误"],"answer":0,"module":"判断题","explain":"节能改造可以降低运行成本。"},
-        {"title":"93. 水泵电机可以使用变频器调速。（ ）","options":["正确","错误"],"answer":0,"module":"判断题","explain":"水泵电机可以使用变频器调速。"},
-        {"title":"94. 培训只是为了满足法规要求。（ ）","options":["正确","错误"],"answer":1,"module":"判断题","explain":"培训不仅是为了满足法规要求，更是提高员工技能。"},
-        {"title":"95. 泵站的安全阀需要定期校验。（ ）","options":["正确","错误"],"answer":0,"module":"判断题","explain":"安全阀需要定期校验以确保安全功能正常。"},
-        // 计算题
-        {"title":"96. 一皮带轮传动，已知主动轮转速n1=960r/min，主动轮直径为30mm，从动轮直径为60mm，求从动轮转速n2。","options":[],"answer":"480r/min","module":"计算题","explain":"解析：n2 = n1 × (D1/D2) = 960 × (30/60) = 480r/min"},
-        {"title":"97. 视频监控存储计算：某泵站使用小码流压缩方式，共12路，每24小时每路需要15帧，计算所需硬盘容量。","options":[],"answer":"1476.5G","module":"计算题","explain":"解析：G = 24 × 12 × 15 × 350 / 1024 = 1476.5G"},
-        // 简答题
-        {"title":"98. 简述传感器检定的步骤和数据。","options":[],"answer":"传感器检定步骤包括：外观检查、零点调整、量程调整、重复性测试、稳定性测试等。数据记录包括：检定日期、环境条件、标准值、测量值、误差值等。","module":"简答题","explain":"传感器检定是确保传感器测量准确性的重要环节，需要按照标准流程进行。"},
-        {"title":"99. 电机启动时，泵站运行人员应做哪些检查？","options":[],"answer":"检查项目包括：电源电压是否正常、电机绕组绝缘是否良好、轴承润滑是否充足、冷却系统是否正常、负载是否正常、启动装置是否可靠等。","module":"简答题","explain":"电机启动前的检查是确保设备安全运行的重要环节。"},
-        // 论述题
-        {"title":"100. 试述泵站运行专业技能知识培训要点。","options":[],"answer":"培训要点包括：机械基础和识图知识、水泵知识、泵站运行管理知识、泵站安全管理知识、自动化知识、计算机知识等。","module":"论述题","explain":"专业技能培训是提高泵站运行人员素质的重要手段。"},
-        {"title":"101. 试述双速异步电机节能的技术方案。","options":[],"answer":"双速异步电机节能方案包括：合理选择电机类型、优化运行方式、采用变频调速技术、定期维护保养等。通过这些措施可以显著提高电机运行效率，降低能耗。","module":"论述题","explain":"节能是泵站运行管理的重要目标，双速异步电机是实现节能的有效手段。"}
-    ],
+        {"title":"1. 碳刷调试安装时应注意问题说法不正确的是","options":["应注意碳刷的工作弯曲面方向,在更换新炭刷时,首先磨出园弧状工作曲面,使 80%以上的碳刷工作面与集电环表面接触","在碳刷架内应伸缩自由,不顺畅时,调整压力","碳刷弹簧要符合要求,压力过小,碳刷会跳动过大,产生火花,压力过大,则磨损 加快｡另外碳刷应在碳刷架正中,防止受力不均匀发生偏磨","集电环表面要保持清洁干净,无油污,保证与碳刷的良好接触"],"answer":1,"module":"单选题","explain":""},
+        {"title":"2. 电动机推力轴承安装完毕后,需用500V 摇表检查,要求轴承对地绝缘不低于","options":["0.1","0.3","0.5","0.7"],"answer":2,"module":"单选题","explain":""},
+        {"title":"3. 制动器装置输入的压力为","options":["0.1~0.3","0.4~0.6","0.6~0.8","0.8~1.0"],"answer":2,"module":"单选题","explain":""},
+        {"title":"4. 泵站水系统分为供水系统和","options":["润滑水","冷却水","排水","消防水"],"answer":2,"module":"单选题","explain":""},
+        {"title":"5. 设备在安装前应进行清洗,需要试压的部件应按规定试压一般方法有","options":["水压","组装","运行","破坏性"],"answer":0,"module":"单选题","explain":""},
+        {"title":"6. 轴流泵中的导轴承承受转动部件的","options":["径向力","轴向力","振动","跳动"],"answer":0,"module":"单选题","explain":""},
+        {"title":"7. 确定水泵是否同一轮系,应以","options":["扬程","叶轮直径","比转数","进水口口径"],"answer":2,"module":"单选题","explain":""},
+        {"title":"8. 根据试验部件的试验性质不同,给定的试验压力也不同,一般是设各全负荷时压力的","options":["1.0~1.25","1.25~1.5","1.5~2.5","2.5~3.5"],"answer":1,"module":"单选题","explain":""},
+        {"title":"9. 用于绝缘､散热､消弧的油是","options":["透平油","润滑油","绝缘油","机械油"],"answer":2,"module":"单选题","explain":""},
+        {"title":"10. 泵站油系统上的阀门应","options":["垂直","横向","垂直横向都可以","任何方向"],"answer":1,"module":"单选题","explain":""},
+        {"title":"11. 油冷却器铜管内结垢,可造成","options":["传热增强､管壁温度升高","传热减弱,管壁温度降低","传热增强,管壁温度降低","传热减弱,管壁温度升高"],"answer":3,"module":"单选题","explain":""},
+        {"title":"12. 水泵轴上只安装一个叶轮的泵叫","options":["单级","双级","单吸","双吸"],"answer":0,"module":"单选题","explain":""},
+        {"title":"13. 全调节泵开机前应将叶片角度调至","options":["最大正角度","零角度","最大负角度","任意角度"],"answer":2,"module":"单选题","explain":""},
+        {"title":"14. 一台水泵运行时,其真空表读数为380mm 汞柱,压力表读数为2.0kg/cm²,则其总扬程约为","options":["20","25","38","40"],"answer":1,"module":"单选题","explain":""},
+        {"title":"15. 水泵出水量的大小与转速","options":["相等","成正比","平方成正比","立方成正比"],"answer":1,"module":"单选题","explain":""},
+        {"title":"16. 水泵的扬程与转速的","options":["1/2 次方","平方","立方","四次方"],"answer":1,"module":"单选题","explain":""},
+        {"title":"17. 水泵的功率与转速的","options":["1/2 次方","平方","立方","四次方"],"answer":2,"module":"单选题","explain":""},
+        {"title":"18. 水泵净扬程(即实际扬程)和进､出水池压力差是","options":["随流量而改变的变数","不随流量而改变的常数","随流量的增大而增大","随流量变小而变小"],"answer":1,"module":"单选题","explain":""},
+        {"title":"19. 轴流泵叶片零度角是","options":["安装角","临界角","设计安装角","基准角"],"answer":2,"module":"单选题","explain":""},
+        {"title":"20. 水泵效率曲线上最高效率点附近的一定范围是水泵的","options":["工作区","工况区","运行区","高效区"],"answer":3,"module":"单选题","explain":""},
+        {"title":"21. 轴流泵导叶体的主要作用是把叶轮流出的水流的旋转运动转变为","options":["径向","轴向","侧向","斜向"],"answer":1,"module":"单选题","explain":""},
+        {"title":"22. 在绘制水泵性能曲线时,一般都用","options":["流量Q","扬程H","功率P","效率 η"],"answer":0,"module":"单选题","explain":""},
+        {"title":"23. 衡量水泵机组工作性能的重要指标是运行的","options":["效率","可靠性","稳定性","安全性"],"answer":2,"module":"单选题","explain":""},
+        {"title":"24. 装置效率是衡量","options":["水泵","电机","水泵机组","抽水装置"],"answer":3,"module":"单选题","explain":""},
+        {"title":"25. 改变水泵叶片安装角的目的是获得","options":["安全运行","稳定运行","最高流量","最高效率"],"answer":3,"module":"单选题","explain":""},
+        {"title":"26. 水泵叶轮切削前后流量之比,等于切削前后叶轮外径","options":["一次方","二次方","三次方","四次方"],"answer":0,"module":"单选题","explain":""},
+        {"title":"27. 切削前后水泵扬程之比,等于切削前后水泵叶轮外径","options":["一次方","二次方","三次方","四次方"],"answer":1,"module":"单选题","explain":""},
+        {"title":"28. 切削前后水泵功率之比,等于切削前后水泵叶轮外径","options":["一次方","二次方","三次方","四次方"],"answer":2,"module":"单选题","explain":""},
+        {"title":"29. 立式全调节轴流泵的调节装置底座与电机罩壳之间加垫的目的是","options":["防止产生震动","消除高程偏差","消除倾斜","防止产生轴电流"],"answer":3,"module":"单选题","explain":""},
+        {"title":"30. 叶片上下部间隙不均匀,上部大,表明定子高程","options":["偏高","偏低","偏大","偏小"],"answer":1,"module":"单选题","explain":""},
+        {"title":"31. 水泵的临界气蚀余量小,说明其吸水性能越好,也就是水泵的抗汽蚀性能","options":["越坏","越好","变化大","变化小"],"answer":1,"module":"单选题","explain":""},
+        {"title":"32. 泵入口处的实际汽蚀余量称为","options":["装置","允许","最小","最大"],"answer":0,"module":"单选题","explain":""},
+        {"title":"33. 小型拍门的安装角度约为","options":["3°","10°","20°","30°"],"answer":1,"module":"单选题","explain":""},
+        {"title":"34. 直接传动是用","options":["联轴器","一对齿轮","离合器","链条"],"answer":0,"module":"单选题","explain":""},
+        {"title":"35. 大型水泵机组电动机主轴与水泵主轴多采用","options":["联轴器","外法兰","套管","十字块"],"answer":1,"module":"单选题","explain":""},
+        {"title":"36. 轴颈和巴氏合金轴瓦的磨损取决于:","options":["油压力","油膜深度","瓦面积","水质"],"answer":1,"module":"单选题","explain":""},
+        {"title":"37. 机组长期停机后,开机前电工需检查的项目是","options":["油缸油位","电机绝缘","空气间隙","配电装置"],"answer":1,"module":"单选题","explain":""},
+        {"title":"38. 单级单吸离心泵,叶轮后盖板上靠轴孔处四周开若干小孔的作用是","options":["提高效率","减少或平衡轴向力","减少负荷","冷却润滑填料"],"answer":1,"module":"单选题","explain":""},
+        {"title":"39. 水泵选配电机配套功率,一般取","options":["1~2","1.5~1.8","0.5~1","1.1~1.3"],"answer":3,"module":"单选题","explain":""},
+        {"title":"40. 镜板的不平度一般不得大于","options":["0.01","0.02","0.03","0.05"],"answer":2,"module":"单选题","explain":""},
+        {"title":"41. 泵站排水系统的排水泵一般都布置在集水廊道的","options":["顶板上","底板上","人孔层","电缆层"],"answer":0,"module":"单选题","explain":""},
+        {"title":"42. 电力排灌泵站设备完好率一般不应低于","options":["80","85","90","95"],"answer":2,"module":"单选题","explain":""},
+        {"title":"43. 机组某些零部件制造精度不够,运输保管不好,安装不符合要求,偏离设计工况运行, 这些都会造成轴线产生","options":["振动","噪声","摆动","位移"],"answer":2,"module":"单选题","explain":""},
+        {"title":"44. 水泵铭牌上的功率就是","options":["输出功率","有效功率","轴功率","配套功率"],"answer":2,"module":"单选题","explain":""},
+        {"title":"45. 润滑水质比较差而含砂量又较大,则水泵轴颈被磨损的可能性要","options":["小于","大于","不小于","不大于"],"answer":1,"module":"单选题","explain":""},
+        {"title":"46. Sh(S)型泵的叶轮是对称布置的,水从叶轮两侧流入,所以","options":["轴向推力","径向压力","跳动","震动"],"answer":0,"module":"单选题","explain":""},
+        {"title":"47. 机组停止运行48 小时后,重新启动应顶起转子,使","options":["镜板与推力头","推力头与推力瓦","镜板与推力瓦","推力头与轴颈"],"answer":2,"module":"单选题","explain":""},
+        {"title":"48. 异步电动机运行时,滚珠轴承温度不应超过","options":["100℃","90℃","80℃","70℃"],"answer":0,"module":"单选题","explain":""},
+        {"title":"49. 水泵机组运行中,B 级绝缘电机定子铁芯最高允许温度不得超过","options":["50","65","75","80"],"answer":2,"module":"单选题","explain":""},
+        {"title":"50. 泵站管理工作的前提是","options":["安全运行","工程完好","设备完好","规章制度"],"answer":0,"module":"单选题","explain":""},
+        {"title":"51. 设备完整无缺､技术状态良好､能保证安全运行的是","options":["一类","二类","三类","需更新"],"answer":0,"module":"单选题","explain":""},
+        {"title":"52. 泵站设备的技术状态基本完好,某些部件有一般性缺陷,定期可以修复,并能保证运行, 此种设备称为","options":["一类","二类","三类","报废"],"answer":1,"module":"单选题","explain":""},
+        {"title":"53. 泵站设备技术状态不好,主要部件有严重缺陷不能安全运行,此种设备称为","options":["一类","二类","三类","四类"],"answer":2,"module":"单选题","explain":""},
+        {"title":"54. 设备完好率是指泵站机电设备的完好台(套)数与","options":["一类设备台(套)数","二类设备台(套)数","三类设备台(套)","总台(套)数"],"answer":3,"module":"单选题","explain":""},
+        {"title":"55. 泵站主要设备评级标准中的一､二类设备是","options":["完好设备","不完好设备","勉强运行设备","需要检修设备"],"answer":0,"module":"单选题","explain":""},
+        {"title":"56. 技术档案工作是泵站","options":["规划","设计","建设","管理"],"answer":3,"module":"单选题","explain":""},
+        {"title":"57. 全调节轴流泵的调节装置有液压式和","options":["自动式","全调式","机械式","半调式"],"answer":2,"module":"单选题","explain":""},
+        {"title":"58. 顶车时需要提供","options":["4.0~6.0MPa","10.0~12.0MPa","6.0~8.0MPa","8.0~1.0MPa"],"answer":1,"module":"单选题","explain":""},
+        {"title":"59. 启闭机机件上的轴承,不论是滚动的还是滑动的,都应保持正常的","options":["位置","尺寸","润滑","清洁"],"answer":2,"module":"单选题","explain":""},
+        {"title":"60. 水泵机组的试运行工作,是在机组","options":["安装","中修","小修","检修"],"answer":0,"module":"单选题","explain":""},
+        {"title":"61. 大型立式轴流泵机组安装时,应定","options":["转轮体","电机定子","导叶体","进水喇叭口"],"answer":2,"module":"单选题","explain":""},
+        {"title":"62. 机组安装高程确定后,必须调整水泵电机各固定部位的平面位置,使各部件中心点重合 在同一条理想的铅垂线上,此项工序称为","options":["轴线测量调整","中心测量调整","垂直同心测量调整","水平测量调整"],"answer":2,"module":"单选题","explain":""},
+        {"title":"63. 空气间隙是否符合要求除设备本身缺陷外,还取决于安装质量的好坏,主要反映在","options":["垂直同心､中心","摆度","间隙","高程"],"answer":0,"module":"单选题","explain":""},
+        {"title":"64. 推力轴承受力调整应和机组","options":["磁场中心","垂直度","高程","中心"],"answer":1,"module":"单选题","explain":""},
+        {"title":"65. 螺杆启闭机螺杆压弯的原因不包括","options":["过载保护没有调节好,起不到作用","闸门摩阻过大","行程开关未调节好,使闸门到达底坎后继续下压","操作不当"],"answer":3,"module":"单选题","explain":""},
+        {"title":"66. 大泵机组的局部性检修是","options":["大修","中修","日常维护","定期检修"],"answer":3,"module":"单选题","explain":""},
+        {"title":"67. 机组定期检修,按内容不同共分为局部性检修､","options":["日常检查","维护性检查","解体检查","电工检修"],"answer":2,"module":"单选题","explain":""},
+        {"title":"68. 工程施工现场,安装水泵机组时,吊装必须由","options":["老职工操作","领导指挥","专人统一指挥","分班负责"],"answer":2,"module":"单选题","explain":""},
+        {"title":"69. 立式轴流泵的安装过程中,推力头与电机轴配合属:","options":["过盈配合","过渡配合","间隙配合","自由公差"],"answer":1,"module":"单选题","explain":""},
+        {"title":"70. 调整机组轴线摆度,常用的而又比较简单的方法是","options":["垫紫铜皮","升高推力瓦","垫推力头锁片","刮削绝缘垫"],"answer":3,"module":"单选题","explain":""},
+        {"title":"71. 机组转动部分对中的基准是水泵的","options":["泵壳中心","后导叶体中心","水导轴窝","底座"],"answer":2,"module":"单选题","explain":""},
+        {"title":"72. 水导轴承检查,属","options":["日常维护","定期","局部性","解体"],"answer":2,"module":"单选题","explain":""},
+        {"title":"73. 定子按水泵实际垂直中心找正时,各半径之差,不应超过设计空间间隙的","options":["±5","±l0","±l5","±20"],"answer":0,"module":"单选题","explain":""},
+        {"title":"74. 按规范要求:“定子铁芯平均中心线等于或高于转子磁极平均中心线,高出值不应超过 定子铁芯有效高度的","options":["0.5%","0.3%","0.2%","0.4%"],"answer":0,"module":"单选题","explain":""},
+        {"title":"75. 水泵机组进行检修工作时,必须建立相应的工作","options":["操作制","检查制","责任制","验收制"],"answer":2,"module":"单选题","explain":""},
+        {"title":"76. 把水泵机组转动部分全部拆卸､处理,然后再安装起来的全过程,称为","options":["局部检修","机组大修","扩大性大修","定期检修"],"answer":1,"module":"单选题","explain":""},
+        {"title":"77. 根据部颁标准,主水泵大修周期为","options":["1-3","2-4","3-5","4-6"],"answer":2,"module":"单选题","explain":""},
+        {"title":"78. 根据部颁标准,主电动机大修周期为","options":["1-3","2-6","3-8","4-10"],"answer":2,"module":"单选题","explain":""},
+        {"title":"79. 水泵机组拆下的零部件,除接触面和","options":["加工面","摩擦面","哈呋面","法兰面"],"answer":1,"module":"单选题","explain":""},
+        {"title":"80. 利用高速气流将熔化的金属液体喷射到被磨损的水泵轴颈的表面以填补的方法称为","options":["电焊","气焊","喷镀","缝焊"],"answer":2,"module":"单选题","explain":""},
+        {"title":"81. 下列关于电气设备直流电阻测量的表述有误的是","options":["通过测量可判断电气设备线圈､绕组的质量，线圈的引线有无折断","通过测量可判断并联支路是否正确，有无短路现象","判断电气设备动､静触头通断状况","在交接预试､大修或有必要时，均需进行此项试验"],"answer":2,"module":"单选题","explain":""},
+        {"title":"82. 关于直流电阻测量的基本方法的下列表述中错误的是","options":["有电桥法和电压降法","电桥法是用单､双臂电桥测量，可以直接读取数值，准确度较高","电桥法在测量感抗值较大的设备绕组的直流电阻时，很快测出直流电阻值","电压降法需要通过计算才能得出直流电阻值"],"answer":2,"module":"单选题","explain":""},
+        {"title":"83. 关于直流电阻测试仪的下列表述中不正确的是","options":["采用先进的开关电源技术","在阳光下不可直接读数，具备手动消弧功能","精度高，速度快，交直流两用便于现场和野外两用","抗干扰能力强，保护功能完善"],"answer":1,"module":"单选题","explain":""},
+        {"title":"84. 3kV 及100kW 以上的交流电动机中性点未引出的，可测量线间电阻，其相互差别不应超过","options":["1%","2%","0.5%","4%"],"answer":0,"module":"单选题","explain":""},
+        {"title":"85. 3kV 及100kW 以上的交流电动机各相绕组的直流电阻值相互差别不应超过最小值的","options":["0.5%","1%","2%","4%"],"answer":2,"module":"单选题","explain":""},
+        {"title":"86. 开关设备应每","options":["3~5","2~4","1~3","1~2"],"answer":2,"module":"单选题","explain":""},
+        {"title":"87. 用直流降压法测量开关设备导电回路接触电阻，电流不小于","options":["10A","20A","50A","100A"],"answer":3,"module":"单选题","explain":""},
+        {"title":"88. 变压器规程规定：1.6MVA 以上变压器各相绕组电阻相互间的差别不应大于三相平均值的","options":["1%","2%","3%","4%"],"answer":1,"module":"单选题","explain":""},
+        {"title":"89. 变压器在不同温度下电阻值换算公式为","options":["R₂=R₁(T+t₂/T+t₁)","R₂=R₁(T-t₂/T-t₁)","R₂=R₁(T-t₂/T+t₁)","R₂=R₁(T+t₂/T-t₁)"],"answer":0,"module":"单选题","explain":""},
+        {"title":"90. 变压器在交接､大修和改变分接头开关位置时，必须测量直流电阻｡规程规定：1.6MVA 以上变压器各相绕组电阻相互间的差别不应","options":["大于，2%，大于，1%","大于，1%，大于，2%","小于，2%，小于，1%","小于，1%，小于，2%"],"answer":0,"module":"单选题","explain":""},
+        {"title":"91. 变压器在交接､大修和改变分接头开关位置时，必须测量直流电阻｡规程规定：1.6MVA 以下变压器各相绕组电阻相互间的差别不应","options":["大于，4%，不大于，2%","大于，2%，不大于，4%","小于，4%，不小于，2%","小于，2%，不小于，4%"],"answer":0,"module":"单选题","explain":""},
+        {"title":"92. 交流电动机《规程》规定：3kV 及以上或100kW 及以上的交流电动机，1 年或大修时或认为必要时，要测量绕组直流电阻｡3kV 及100kW 以上电动机各相绕组的直流电阻值相互差别不应超过最小值的","options":["2%，1%","1%，2%","3%，5%","5%，3%"],"answer":0,"module":"单选题","explain":""},
+        {"title":"93. 下列关于ZC-8 型接地电阻测试仪的特点的表述中有误的是","options":["仪器本身自备电源，不需另外配电源设备","携带方便，操作简单，可以直接从仪表上读取数值","配套齐全，不需另行制作，简化了准备工作","抗干扰能力较差，能用来测大面积接地网接地电阻"],"answer":3,"module":"单选题","explain":""},
+        {"title":"94. 选用ZC-8 型接地电阻测试仪测量输､配电杆塔､独立避雷针等小型接地装置工频接地电阻时，需配用辅助接地棒和下列导线","options":["5m､20m､40m","3m､10m､20m","2m､5m､10m","1m､2m､5m"],"answer":0,"module":"单选题","explain":""},
+        {"title":"95. 接地系统接地电阻的下列判断标准中","options":["交流工作接地，接地电阻不应大于4Ω","安全工作接地，接地电阻不应大于4Ω","直流工作接地，接地电阻不应大于5Ω","防雷保护接地，接地电阻不应大于10Ω"],"answer":2,"module":"单选题","explain":""},
+        {"title":"96. 下列关于接地电阻判定标准表述正确的是","options":["交流工作接地：接地电阻不应大于0.5Ω","安全工作接地，接地电阻不应大于5Ω","直流工作接地，接地电阻应按计算机系统具体要求确定，一般不应大于5Ω","防雷保护接地，接地电阻不应大于10Ω"],"answer":3,"module":"单选题","explain":""},
+        {"title":"97. ZC-8 型接地电阻测试仪，是测量输､配电杆塔､独立避雷针等小型接地装置工频接地电阻专用仪器，其优点不包括","options":["测量精度高､范围宽､数据稳定､重复性好､保护功能完善","仪器本身自备电源，不需要另外配电源设备","配套齐全，不需另行制作，简化了测量准备工作","抗干扰能力较好"],"answer":0,"module":"单选题","explain":""},
+        {"title":"98. 按接地电阻判定标准：交流工作接地，接地电阻不应","options":["大于4Ω","小于4Ω","大于5Ω","小于5Ω"],"answer":0,"module":"单选题","explain":""},
+        {"title":"99. 按接地电阻判定标准：安全工作接地，接地电阻不应","options":["大于4Ω","小于4Ω","大于5Ω","小于5Ω"],"answer":0,"module":"单选题","explain":""},
+        {"title":"100. 按接地电阻判定标准，直流工作接地，接地电阻应按计算机系统具体要求确定，一般不应","options":["小于0.5Ω","小于0.1Ω","大于0.5Ω","小于0.1Ω"],"answer":2,"module":"单选题","explain":""},
+        {"title":"101. 按接地电阻判定标准：防雷保护接地，接地电阻不应","options":["小于5Ω","小于10Ω","大于5Ω","大于10Ω"],"answer":3,"module":"单选题","explain":""},
+        {"title":"102. 按接地电阻判定标准：对于屏蔽系统，如果采用联合接地，接地电阻不应","options":["大于1Ω","小于5Ω","大于5Ω","小于1Ω"],"answer":0,"module":"单选题","explain":""},
+        {"title":"103. 直流电源系统作为独立电源，为泵站的","options":["测量､控制､保护","测量､保护､信号","保护､控制､信号回路､事故照明","测量､控制､事故照明"],"answer":2,"module":"单选题","explain":""},
+        {"title":"104. 下列关于直流电源系统作用的表述有误的是","options":["直流电源系统作为独立电源，为泵站的保护､控制､信号回路､事故照明等负荷提供电源","较为重要､容量较大的泵站，一般采用固定独立的交流供电系统作为操作电源","直流电源系统不受交流系统电源的影响","保证泵站工程安全的同时还保证事故照明"],"answer":1,"module":"单选题","explain":""},
+        {"title":"105. 选择直流电源容量，时间按不少于","options":["30min","50min","20min","10min"],"answer":0,"module":"单选题","explain":""},
+        {"title":"106. 与镉镍电池相比较，铅酸蓄电池的主要优点是","options":["维护工作量小","使用寿命长","体积小","价格低"],"answer":3,"module":"单选题","explain":""},
+        {"title":"107. 与蓄电池使用寿命的长短无关的因素是","options":["初充电状况","平时运行和充放电状况","日常维护检查状况","使用频繁"],"answer":3,"module":"单选题","explain":""},
+        {"title":"108. 泵房系统的接地电阻不应大于","options":["1Ω","4Ω","5Ω","10Ω"],"answer":1,"module":"单选题","explain":""},
+        {"title":"109. 在电气设备上检修维护施工结束后，应按《安规》的要求执行下列相关工作，其中不包括","options":["拆除临时挂设的接地线","移走临时架设的遮拦或围栏","取下临时挂放的警示牌､维修器具，检查维修记录，查验试验报告，打扫场地等","核对现场一次设备和实际运行方式相符的一次系统模拟图"],"answer":3,"module":"单选题","explain":""},
+        {"title":"110. 在电气设备上检修维护时，按照《国家电网公司电力安全工作规程》，安全技术措施应按要求进行准备，其中不包括","options":["停电","验电","接地","拆除违章建筑"],"answer":3,"module":"单选题","explain":""},
+        {"title":"111. 泵房接地系统的接地电阻，不应","options":["小于4Ω，大于4Ω","大于4Ω，小于4Ω","小于4Ω，小于4Ω","大于4Ω，大于4Ω"],"answer":1,"module":"单选题","explain":""},
+        {"title":"112. 为防止人身伤亡事故，应依据国家相关法律法规结合泵站实际制定切实可行的安全规章制度，下列表述错误的是","options":["定期对人员进行安全技术培训，提高安全技术防护水平","定期进行安全制度培训，使运行人员熟练掌握有关安全措施和要求，明确职责，严把质量关","严格执行安全操作规程，杜绝违章作业，违章指挥","不断改善和完善生活设施，减少事故机率"],"answer":3,"module":"单选题","explain":""},
+        {"title":"113. 下列防止人身伤亡事故的措施中，表述有误的是","options":["不断改善和完善安全设施","提高人员在生产活动中的安全性","减少人身事故发生的机率","完善消防安全设施，经常更换消防器材"],"answer":3,"module":"单选题","explain":""},
+        {"title":"114. 防止人身触电伤亡，最根本的是对电气工作人员或用电人员进行","options":["安全教育和管理","技术考核","学历教育","安全用具装备"],"answer":0,"module":"单选题","explain":""},
+        {"title":"115. 检修工作地点，在临近其他可能误登的带电构架上应悬挂","options":["从此上下","在此工作","止步，高压危险","禁止攀登，高压危险"],"answer":3,"module":"单选题","explain":""},
+        {"title":"116. 依据国家相关法律法规的规定，结合泵站实际制定本站切实可行安全规章制度，其中关于防止人身伤亡事故的规定不包含下列","options":["定期对人员进行安全技术培训，提高安全技术防护水平","在技术管理上应采取有效措施，改善变压器的运行条件","定期进行安全制度培训，使运行人员熟练掌握有关安全措施和要求，明确职责，严把安全关","严格按安规行事，杜绝违章作业､违章指挥，提高人员在生产活动中的安全性，减少人身事故发生的机率"],"answer":1,"module":"单选题","explain":""},
+        {"title":"117. 为防止人身伤亡事故，应依据国家相关法律法规的规定，结合泵站实际制定本站切实可行的安全规章制度，下列表述有误的是","options":["定期对人员进行安全技术培训，提高安全技术防护水平","定期进行安全制度培训，使运行人员熟练掌握有关安全措施和要求，明确职责，严把安全关","严格按安规行事，杜绝违章作业､违章指挥，提高人员在生产活动中的安全性，减少人身事故发生的机率","建立健全电缆维护､检查､防火及报警管理等各项规章制度，运行中坚持各项规章制度的执行"],"answer":3,"module":"单选题","explain":""},
+        {"title":"118. 为防止火灾事故发生，应依据国家法规结合泵站实际制定切实可行的消防安全制度，下列相关表述有误的是","options":["电缆不得与易引起火灾的管道同处一室或相近布设，以免引起火灾","电缆室､电缆廊道及电缆向外部连通的通道必须用防火材料封堵","在电缆廊道内每隔50m，充油电缆每隔100m，电缆沟每隔20m，设一个防火分隔物","在电气设备维修时，必须严格执行相关安全制度"],"answer":2,"module":"单选题","explain":""},
+        {"title":"119. 下列防止火灾事故发生的表述中不正确的是","options":["不断改善和完善消防安全设施设备","定期检查和更换消防器材","建立健全电缆维护､检查，防火及报警管理等各项规章制度","运行中不定期进行巡查"],"answer":3,"module":"单选题","explain":""},
+        {"title":"120. 下列在电缆廊道设防火隔物的规定表述有误的是","options":["电缆廊道内每隔150m","充油电缆每隔120m","电缆沟每隔20m","干式电缆每隔100m"],"answer":3,"module":"单选题","explain":""},
+        {"title":"121. 依据国家相关法律法规的规定，结合泵站实际制定本站切实可行安全规章制度，下列关于防止火灾发生事故的规定正确的是","options":["在有电缆的地方工作，不得与其他易引起火灾的管道同处一室或相近布设，以免引起火灾","电缆室､电缆廊道及电缆沟与外部联通的通道必须用防火堵料封堵｡在电缆廊道内每隔1500m，充油电缆每隔1200m，电缆沟每隔200m 设一个防火分隔物","建立健全电缆维护､检查､防火及报警管理等各项规章制度，运行中坚持定期巡查","严格执行操作票､工作票制度，并使两票制度标准化､规范化"],"answer":2,"module":"单选题","explain":""},
+        {"title":"122. 关于恶性电气误操作的下列表述中错误的是","options":["带负荷误拉(合)隔离开关","带电挂(合)接地线(接地刀闸)","带接地线(接地刀闸)合断路器(隔离开关)","误入不带电间隔"],"answer":3,"module":"单选题","explain":""},
+        {"title":"123. 为防止电气误操作事故的发生，必须严格执行《国家电网公司电力安全工作规程》的相关要求，结合泵站实际制定操作规程，下列相关表述有误的是","options":["严格执行操作票､工作票制度，并使两票制度标准化、管理规范化","严格执行调度命令，不允许改变操作顺序","加强防误闭锁装置运行维护管理，确保已装设的防误闭锁装置正常运行","户外防误装置应采取防火､防高温措施"],"answer":3,"module":"单选题","explain":""},
+        {"title":"124. 关于防止电气误操作事故发生的下列措施中不正确的是","options":["采用计算机监控系统的远方就地操作系统要装设电气闭锁装置","规定设置临时地线的地点，不得随意变更","户外设置的接地线端子应在隐蔽处","断路器､隔离开关闭锁回路严禁用重动继电器，应直接用相应设备的辅助触点"],"answer":2,"module":"单选题","explain":""},
+        {"title":"125. 防止电气误操作的措施包括组织措施和","options":["安全措施","绝缘措施","接地措施","技术措施"],"answer":3,"module":"单选题","explain":""},
+        {"title":"126. 下列防止变压器损坏事故的注意事项中表述有误的是","options":["变压器的密封装置应可靠，不得有渗漏，防止水汽进入受潮","加强对变压器瓦斯继电器的巡视","变压器套管渗油时，应及时处理，防止内部受潮损坏","观察油气､油质是否标准"],"answer":3,"module":"单选题","explain":""},
+        {"title":"127. 为防止变压器损坏事故，在巡视检查时应注意的事项中下列表述有误的是","options":["观察油标，油位与油色是否正常","变压器套管渗油时，应及时处理，防止内部受潮损坏","加强对瓦斯继电器的巡视","解除轻瓦斯信号，需经上级主管部门批准｡"],"answer":3,"module":"单选题","explain":""},
+        {"title":"128. 变压器正常运行时的声音是","options":["“嗞嗞”放电声","“啪啪”声","均匀的“嗡嗡”声","强烈的不均匀噪声"],"answer":2,"module":"单选题","explain":""},
+        {"title":"129. 变压器内部受潮，会引起变压器油的电气绝缘强度降低，变压器油的电气绝缘强度的高低决定于油中所含杂质和","options":["酸性","水分","内点","粘度"],"answer":1,"module":"单选题","explain":""},
+        {"title":"130. 断路器是主要的开关设备，选用断路器时，不必考虑的技术参数有","options":["额定电压Uₑ","额定电流Iₑ","额定短路容量Shrn","额定频率fₙ"],"answer":3,"module":"单选题","explain":""},
+        {"title":"131. 下列关于额定断路电流Iᵦᵣ 表述正确的是","options":["它是断路器在额定电压下能正常开断的最大电流，它表明断路器的断路能力","设计时，根据系统断路电流计算值校核选定","当电压不等于额定电压时，断路器能可靠切断的最小的电流，称为该电压下的断路电流","当高于额定电压时，断路电流比额定电流大，但有一最大值，称为极限断路电流"],"answer":0,"module":"单选题","explain":""},
+        {"title":"132. 对断路器选择的基本要求不包括","options":["工作可靠","应具有足够的断路能力","具有尽可能短的切断时间和结构简单､价格低廉","不受环境影响"],"answer":3,"module":"单选题","explain":""},
+        {"title":"133. 开关设备的“五防”连锁功能是指","options":["防误分断路器，防误合断路器，防带电拉合隔离开关，防带电合接地刀闸，防带接地线合断路器","防误分合断路器，防带电拉隔离开关，防带电合接地刀闸，防带接地线合断路器，防误入带电间隔","防误分合断路器，防带电拉隔离开关，防带电合隔离开关，防带电合接地刀闸，防带接地线合断路器","防误分合断路器，防带电拉隔离开关，防带电合隔离开关，防带电合接地刀闸，防误入带电间隔"],"answer":1,"module":"单选题","explain":""},
+        {"title":"134. 下列防止开关设备事故的措施表述有误的是","options":["开关设备的“五防”装置必须可靠和运行正常","严禁使用“五防”装置功能不可靠的开关柜","杜绝在合闸位置推入手车","已投运的设备，“五防”功能不完善的以后再完善，避免事故"],"answer":3,"module":"单选题","explain":""},
+        {"title":"135. 防止发生开关设备事故的下列措施中表述不正确的是","options":["开关设备应按规定的周期检修，尤其加强对绝缘拉杆机构的检查与维修","隔离开关应按规定的周期检修，失修的刀闸必须以后报废，防止事故发生","对不同型号的断路器都应加强绝缘监测，注意预防性试验结果，发现问题及时处理","定期对手车开关本体上的销杆进行检查，防止压杆断裂，防护挡板落下造成三相短路"],"answer":1,"module":"单选题","explain":""},
+        {"title":"136. 高压断路器是配电装置中最重要的","options":["控制","测量","保护","控制和保护"],"answer":3,"module":"单选题","explain":""},
+        {"title":"137. 为防止开关设备事故，下列做法表述有误的是","options":["开关设备的“五防”装置必须经可靠运行正常，“五防”装置功能不可靠的开关柜严禁使用","已投运的设备“五防”功能不完善的尽快完善，避免人身及设备事故；手车每次推入柜内之前，必须检查开关设备的位置，应在合闸位置推入手车，手车操作进柜时应保护平稳，防止猛烈撞击而变形","对不同型号的断路器都应加强绝缘监测，注意预防性试验结果，发现问题及时处理","开关设备应按规定的周期检修，尤其加强对绝缘拉杆机构的检查与维修，防止断路器的绝缘拉杆拉断､拒分､拒合和误动作，以及灭弧室烧毁和爆炸"],"answer":1,"module":"单选题","explain":""},
+        {"title":"138. 为防止开关设备事故，下列做法有误的一项是","options":["隔离开关应按规定的周期检修，对失修的刀闸立即维修，防止事故发生","根据电气预防性试验结果，加强对隔离开关转动部件､接触部件､操作机构､机械及电气闭锁装置的检查和润滑，并进行操作试验，防止机械卡涩､触头过热､绝缘子断裂等事故发生，确保隔离开关操作运行可靠","定期对手车开关本体上的销杆进行检查，防止压杆断裂，防护挡板落下造成三相短路","运行中的设备应保持清洁，应定期清扫，防止污秽"],"answer":0,"module":"单选题","explain":""},
+        {"title":"139. 下列手车断路器的基本操作方法和注意事项表述有误的是","options":["改变手车位置时，必须先检查确认手车断路器在合闸位置","手车位置改变后要观察位置指示器(灯)的变化，防止手车不到位而影响指示和控制","手车不允许停留在运行位置和试验位置之间的任何中间位置，并且必须确保到位并定位锁死","手车拉出后，应观察静触头隔离挡板是否已落下"],"answer":0,"module":"单选题","explain":""},
+        {"title":"140. 关于手车断路器的基本操作方法和注意事项的下列表述中有误的是","options":["接地开关处于合闸位置时，手车不能从检修或试验位置移至运行位置","仅当手车处于试验或检修位置时，接地开关才能操作","只有后柜门关闭时，方可操作接地开关","手车控制线插头插上前，先送上手车断路器的储能电源"],"answer":3,"module":"单选题","explain":""},
+        {"title":"141. KYN-10 型高压开关柜利用","options":["电磁锁","程序锁","机械联锁","电气互锁"],"answer":0,"module":"单选题","explain":""},
+        {"title":"142. 真空断路器主要用于泵站","options":["3~10kV","0.4~1kV","35~110kV","110~220kV"],"answer":0,"module":"单选题","explain":""},
+        {"title":"143. 下列防止直流系统故障的方法中错误的是","options":["严格控制浮充电运行方式和参数，保证蓄电池组的电压","对仅有一台浮充电装置的，发现问题后应及时处理，确保充电装置运行状态良好","充电装置应不定期检查其稳流程度","直流系统的报警检测信号引至中控室"],"answer":2,"module":"单选题","explain":""},
+        {"title":"144. 下列为防止直流系统故障的措施中表述错误的是","options":["熟悉直流系统图，防止误操作","直流系统的各种设备铭牌及标志牌应清晰","直流系统熔断器容量选择要合理，防止越级熔断，扩大事故范围","停运保护装置电源的供电母线，必须经运行值班员同意"],"answer":3,"module":"单选题","explain":""},
+        {"title":"145. 为防止直流系统故障，下列做法不正确的是","options":["加强对蓄电池组的维护与管理，确保蓄电池组能提供可靠的供电电源｡严格控制浮充电运行方式和参数，保证蓄电池组的电压","保证充电装置的安全稳定运行，对仅有一台充电装置发现问题及时处理，确保装置运行状态良好","充电装置在发现冲击掉闸时，分别检查充电装置过流保护定值和蓄电池是否有异常，发现问题及时处理","直流系统设置要合理，控制､保护､合闸母线不应分开运行"],"answer":3,"module":"单选题","explain":""},
+        {"title":"146. 为防止直流系统故障，下列做法不正确的是","options":["直流系统的报警检测信号引至中控室","直流系统熔断器容量选择要合理，防止越级熔断，扩大事故范围","直流系统设置要合理，控制､保护､合闸母线应分开运行，防误闭锁装置的直流操作电源必须单独设置","直流系统通过绝缘监察装置检测发现绝缘电阻下降或发现接地现象，要立即检查处理先停运保护母线，然后向站技术负责人汇报"],"answer":3,"module":"单选题","explain":""},
+        {"title":"147. 下列泵站系统高压母线装设的保护中不应包括","options":["带时限的电流速断保护，动作时，断开进线断路器","低电压保护，动作时，断开进线断路器","单相接地故障监视，动作时，发信号","功率方向保护，动作时，断开进线断路器"],"answer":3,"module":"单选题","explain":""},
+        {"title":"148. 下列进行微机继电保护装置检验注意事项中，不应包括","options":["应充分利用其自检功能","断安装，全部和部分检验的重点应放在微机继电保护装置的外部接线和二次回路","保护装置的检验工作宜与被保护的一次设备检修同时进行","一次系统运行方式变化，继电保护定植应重新核算"],"answer":3,"module":"单选题","explain":""},
+        {"title":"149. 关于泵站继电保护选择的基本要求中，不包括","options":["可重复性","灵敏性","选择性","速动性"],"answer":0,"module":"单选题","explain":""},
+        {"title":"150. 下列关于系统电压母线装设的保护正确的是","options":["直流系统通过绝缘监测装置检测发现绝缘电阻下降或发现接地现象要立即检查处理，经停运保护母线必须经站技术负责人同意","装设电动机过负荷保护，分二个时限设定，第一时限发信号，第二时限动作跳开断路器，其动作时限整定应大于机组启动时间","带时限电流速断保护，动作时，断开进线断路器","同步电动机应装设失步､失磁保护｡失磁保护瞬时段开，失步保护带时限断开"],"answer":2,"module":"单选题","explain":""},
+        {"title":"151. 下列对于微机保护装置表述不正确的是","options":["电动机软启动设置于一个综合保护单元内","对于常规保护如过电流保护､过负荷带时限保护､低电压保护等每台机组均设置于一个综合保护单元内","纵联差动保护设置于一个综合保护单元内","非电量参数采集､控制集中于一个综合保护单元内"],"answer":0,"module":"单选题","explain":""},
+        {"title":"152. 根据《微机继电保护装置运行管理规程》要求，关于工程管理下列注意事项中表述正确的是","options":["继电保护设备订货合同中的技术要求应明确微机保护软件版本，制造厂商提供的微机保护装置软件版本及说明书应与订货合同中的技术要求一致","新微机保护装置投入运行后，应按照继电保护部门下发的微机保护条例通知，核对微机保护装置版本，结果注意记录","新建､扩建､改建工程使用微机继电保护装置，发现损坏，请维修人员修理后才可投入使用","对于基建､技改工程，应配置必要的继电保护运输设备"],"answer":0,"module":"单选题","explain":""},
+        {"title":"153. 下列不属于系统电压母线装设的保护是","options":["带时限电流速断保护，动作时，断开进线断路器","过电压保护，动作时，断开进线断路器","单相接地故障监视，动作时，发信号","低电压保护，动作时，断开进线断路器"],"answer":1,"module":"单选题","explain":""},
+        {"title":"154. 下列对于电动机相间短路保护类型的表述有误的是","options":["2000kW 以下采用两相式电流速断保护装置，2000kW 及以上采用纵联差动保护装置","装设低电压保护，动作时限宜整定为30s，动作于断开电动机断路器","装设单相接地保护，当接地电流低于10A，可动作于跳开断路器，也可动作于发信号；当接地电流等于或大于10A 时，动作于跳开断路器","装设过负荷保护，分二个时限设定：第一时限发信号，第二时限动作跳开断路器，其动作时限整定应大于机组起动时间"],"answer":1,"module":"单选题","explain":""},
+        {"title":"155. 下列对选择保护装置的原则表述有误的一项是","options":["选择性：在故障情况下，使距离故障点最远的开关首先断开","灵敏性：装置保护范围内发生不正常工作状态时，保护装置根据设定要求的反应能力｡主保护灵敏度高，二级保护相对次之","可靠性：保护装置必须可靠工作，且接线要简单，触电回路要少，尽量减少装置在发生故障时，拒动或不发生故障时的误动","速动性：根据保护类型的不同，无论是哪种类型装置在其工作范围内都必须迅速执行设置命令"],"answer":0,"module":"单选题","explain":""},
+        {"title":"156. 根据《微机继电保护装置运行管理规程》要求，下列对工程管理要求表述有误的是","options":["继电保护设备订货合同中的技术要求应明确微机保护软件版本｡制造厂商提供的微机保护装置软件版本及说明书应与订货合同中的技术要求一致","新微机继电保护装置投入运行前，应按照继电保护部门下发的微机保护软件版本通知，核对微机保护装置版本，并将结果上报继电保护部门","新设备投入运行前，基建单位应按继电保护竣工验收有关规定与运行单位进行图样､仪器仪表､调试专用工具､备品备件和试验报告等移交工作","现场微机继电保护装置定值的变更，应按上级通知的要求执行，并依照规定日期完成｡如根据二次系统运行方式的变化，需要变更运行中保护装置的整定值时，应在值班记录上说明"],"answer":3,"module":"单选题","explain":""},
+        {"title":"157. 根据《微机继电保护装置运行管理规程》要求，下列对定值管理要求表述正确的是","options":["现场微机继电保护装置定值的变更，应按上级通知的要求执行，并依照规定日期完成｡如根据二次系统运行方式的变化，需要变更运行中保护装置的整定值时，应在值班记录上说明","对新安装的微机继电保护装置进行验收时，应以订货合同､技术协议､设计图样和技术说明书等有关规定为依据，按有关规程和规定进行调试，并按上级通知进行整定｡检验整定完毕方允许投入运行","新微机继电保护装置投入运行前，应按照继电保护部门下发的微机保护软件版本通知，核对微机保护装置软件版本，并将结果记录","定值通知单应有计算人､审核人签字并加盖“继电保护专用章”方能有效"],"answer":3,"module":"单选题","explain":""},
+        {"title":"158. 根据《微机继电保护装置运行管理规程》要求，下列对检验管理要求表述正确的是","options":["新建､扩建､改建工程使用微机继电保护装置，发现质量不合格的，应由检验方负责处理","新安装､全部和部分检验的重点应放在微机继电保护装置的外部接线盒回路","进行微机继电保护装置的检验时，应充分利用采集功能，主要检验自检功能检测的项目","微机继电保护装置检验工作宜与被保护的一次设备检修同时进行"],"answer":3,"module":"单选题","explain":""},
+        {"title":"159. 产生断路器跳合闸回路故障的主要原因中，下列","options":["断路器机构传输不灵活","弹簧储能机构未储能","蓄电池电压过高","合闸电磁铁故障"],"answer":2,"module":"单选题","explain":""},
+        {"title":"160. 二次操作回路维护工作，除必须遵守《电业安全工作规程》外，还应遵循以下","options":["清扫柜(屏)及端子排内的积尘，保持端子及屏柜清洁，检查屏柜上的各种元件的标志是否齐全，不应有脱落等现象","断路器的辅助触点应无烧伤､氧化､卡涩等现象","继电器接点应无烧伤，线圈外观无异常，运行正常","至少有两人进行工作，且必须有明确的工作目的和工作方法"],"answer":3,"module":"单选题","explain":""},
+        {"title":"161. 断路器跳合闸回路常见故障是，合闸线圈或合闸接触线圈长时间带电流，导致合闸线圈或合闸接触线圈､合闸保持继电器､合闸接触器接点等烧毁或烧坏等｡产生这些故障的主要原因最可能是","options":["二次中性点未接地或多点接地","二次回路绝缘材料不合格，绝缘性能低，或年久失修，严重老化","蓄电池能量不足，断路器机构传动失灵，弹簧储能机构失灵，合闸电磁铁故障等","小动物爬入或小金属零件掉落元件上"],"answer":2,"module":"单选题","explain":""},
+        {"title":"162. 下列控制保护回路潜在故障查找常用方法中表述错误的是","options":["替换法","参照法","断接法","直观法和逐项排除法"],"answer":2,"module":"单选题","explain":""},
+        {"title":"163. 对于二次线路检修及巡查的内容表述有误的是","options":["清扫柜(屛)及端子排内的积尘，保持端子及柜(屛)清洁，检查屏柜上的各种元件的标志是否齐全，不应有脱落现象","各指示灯具､仪表应完好，无破损，保护压板在要求的位置上","断路器的辅助触点断开完好，部件完整，应无烧伤，有氧化､卡涩等现象，线圈外观异常，运行正常","所有接线端子､压板应无松动､锈蚀，配线固定卡子无脱落"],"answer":2,"module":"单选题","explain":""},
+        {"title":"164. 关于二次线路检修及巡查的内容下列说法有误的是","options":["清扫柜(屛)及端子排内的积尘，保持端子及柜(屛)清洁，检查屏柜上的各种元件的标志不应齐全，应有脱落､烧伤､现象､氧化等现象","各指示灯具､仪表应完好，无破损，保护压板在要求的位置上","电压､电流互感器二次侧接地完好，二次侧交直流控制回路及电压互感器的熔断器应良好","信号继电器是否掉牌，以及掉牌后是否能复位；警铃､蜂鸣器是否良好"],"answer":0,"module":"单选题","explain":""},
+        {"title":"165. 对于二次操作回路维护必须遵循的原则下列表述不正确的是","options":["如果进行整组试验，应事先查明是否与断路器有关；对变压器进行试验，应先切除对应的电源回路，以免影响机组运行","在运行中测量电源回路上的电流时，应事先检查接头及引线是否良好，并应防止电流回路开路发生人身和设备事故｡通常应通过试验端子测量电流，测量仪表应用螺钉连接，操作人员站在绝缘垫上进行","在机组运行时，只有在必须停用保护装置时，才允许停用保护装置，且停用的时间应尽量短，雷雨天气不得将保护装置退出","如果需连接短路，如拧动螺栓､拆动二次线或松动压板，必须先核对图纸，并做好记录和标志，工作结束后应立即结束，并做全面检查"],"answer":0,"module":"单选题","explain":""},
+        {"title":"166. 下列不是保护回路常见故障的是","options":["电压互感器开口三角回路故障","互感器二次失压","微机保护装置接地故障","断路器跳合闸回路故障"],"answer":2,"module":"单选题","explain":""},
+        {"title":"167. 下列不是产生断路器跳合闸回路故障的主要原因的是","options":["断路器机构传输不灵活","弹簧储能机构未储能","合闸保险熔断未合或接触不良","二次回路绝缘材料不合格"],"answer":3,"module":"单选题","explain":""},
+        {"title":"168. 下列关于直流系统接地故障产生的原因表述错误的是","options":["二次回路绝缘材料不合格，绝缘性能低，或年久失修，严重老化","二次回路及二次设备严重污秽和受潮，接线盒进水，使绝缘严重下降","小动物爬入或小金属零件掉落元件上造成直流接地故障","直流系统接地装置传输不灵活"],"answer":3,"module":"单选题","explain":""},
+        {"title":"169. 规程规定，直流接地达到下述","options":["直流电源为220V，接地电压50V 以上；直流电源为24V，接地电压6V 以上","直流电源为220V，接地电压500V 以上；直流电源为50V，接地电压10V 以上","直流电源为220V，接地电压50V 以上；直流电源为50V，接地电压6V 以上","直流电源为380V，接地电压100V 以上；直流电源为24V，接地电压6V 以上"],"answer":0,"module":"单选题","explain":""},
+        {"title":"170. 下列对于控制保护回路故障逐项拆除法的表述有误的是","options":["先将并联在一起的二次回路顺序分开，然后再一次投入，一旦故障出现，就表明故障存在哪路，再在这一路内用同样的方法查找更小的分支回路，直至找到故障点","主要用于查找直流接地，交流电源熔丝投不上等故障","如查找电压互感器二次熔丝熔断，回路存在短路故障，或二次交流电压互串等，可以从电压互感器二次短路相的总引出处端子分离，此时故障消除，然后逐个恢复，直至故障出现，再分支路排查","查找时，切断各直流支路电源时间要短，一般不要超过10 秒"],"answer":3,"module":"单选题","explain":""},
+        {"title":"171. 运用控制保护回路故障逐项拆除法查找故障点时切断各直流支路电源时间要短，一般不超过","options":["1 秒","3 秒","5 秒","7 秒"],"answer":1,"module":"单选题","explain":""},
+        {"title":"172. 下列关于造成隔离开关操作机构失灵的原因的表述有误的是","options":["机构箱进水","各部轴销､连杆､拐臂､底架甚至底座不灵活，造成拒分拒合或分合不到位","连杆､传动连接部位､闸刀触头架支撑件等强度不足断裂，造成分合闸不到位","保险丝熔断，二次元件老化损坏"],"answer":1,"module":"单选题","explain":""},
+        {"title":"173. 对于隔离开关操作机构失灵处理措施下列表述不正确的是","options":["对机构及锈蚀部分进行解体检修，更换不合格元件","加润滑剂､加装防雨罩｡机构存在的问题严重或有先天缺陷，应更换新机型","对于电动机构出现隔离开关拒动等故障时，首先是检查各相关元件，然后再检查操作电源是否完好，熔断器是否熔断","发现元件损坏时应更换，并查明原因"],"answer":2,"module":"单选题","explain":""},
+        {"title":"174. 下列对故障查找及处理方法表述有误的是","options":["替换法｡用好的或认为是正常的相同元件代替被怀疑的或认为有故障的元件，来判断它的好坏，可以快速缩小查找范围","参照法｡通过正常与非正常设别技术参数参照，从不同处找出不正常设备的故障点","短接法｡将回路某一段或某一部分用短接线短接，来判断故障时存在短接范围内，还是在其他地方，以此来缩小故障判断范围","直观法｡主要用于电磁锁失灵､电流回路开路､切换继电器不动作，判断转换开关接点是否良好"],"answer":3,"module":"单选题","explain":""},
+        {"title":"175. 在机组运行中，对发现异常现象的电压互感器进行处理时，首先应退出响应的保护装置，以免引起误动作｡下面对其常见故障描述有误的是","options":["高､低熔丝熔断｡现象为光字牌灯亮､电压表指示不正常，甚至会导致低电压继电器动作","互感器表面闪络｡闪络是由于表面龟裂､受热､绝缘下降引起的｡需清理绝缘","发热､油温高，可能是内部局部短路或接地造成的","油色变质，油位下降，可能是渗油､进水等原因导致"],"answer":1,"module":"单选题","explain":""},
+        {"title":"176. 在机组运行中，对发现异常现象的电压互感器进行处理时，首先应退出相应的保护装置，以免引起误动作｡下面对其常见故障处理有误的是","options":["高､低侧熔丝熔断｡高压侧，应检查电压互感器是否被击穿，绝缘是否合格，然后更换熔丝；低压侧，应检查二次回路是否短路､二次回路绝缘是否下降或损坏，处理好，更换熔丝","发热､温度高｡如果是内部局部短路，需退出运行，查明原因并处理好再投运｡但如果内部发出焦味､冒烟着火，互感器可能会爆炸，应立即退出运行，更换互感器","油色变质､油位下降｡应检查绝缘(更换套管)，经检验合格再投运","若电压互感器运行时内部有异常声音(如放电)，应立即退出运行检测，处理后再投运"],"answer":2,"module":"单选题","explain":""},
+        {"title":"177. 电气设备的集中性缺陷，不包括下列","options":["绝缘子瓷质开裂","电动机局部磨损，挤压破裂","电气设备由于局部放电绝缘逐步损伤","电气设备整体绝缘性能下降"],"answer":3,"module":"单选题","explain":""},
+        {"title":"178. 一般情况下，下列哪些因素最可能造成电气设备的绝缘产生缺陷","options":["潮湿和过电压","天气干燥","气候受冷","清扫表面"],"answer":0,"module":"单选题","explain":""},
+        {"title":"179. 填写的电气预防性试验报告应规范，报告中一般不包括","options":["试验设备名称､重要试验仪器编号","详细的工作计划","主要试验人员､记录人､试验负责人签名","试验时间和大气环境条件､温度､湿度､气压，如油浸变压器还要注明上层油温等"],"answer":1,"module":"单选题","explain":""},
+        {"title":"180. 建立电气试验室，在交接验收后，日常管理要按照","options":["《电气设备预防性试验规程》(DL/T457-2000)标准","《电力设备预防性试验规程》(DL/T456-1996)标准","《电气设备预防性试验规程》(DL/T576-2000)标准","《电力设备预防性试验规程》(DL/T596-1996)标准"],"answer":3,"module":"单选题","explain":""},
+        {"title":"181. 对于泵站高压绝缘试验的方法，下列表述有误的是","options":["泵站高压绝缘试验的方法很多，大致可分为非破坏性试验和破坏性试验两类","非破坏性试验是指在较低的电压下测定电气设备的绝缘的某些特征(如绝缘电阻､介质损耗､局部放电､电压分布等)及其变化情况","破坏性试验是模仿设备绝缘在运行中实际可能碰到的危险的过电压状况，对绝缘加上与之等价的高电压来进行试验","为尽可能避免试验过程中损坏设备，常在破坏性试验之前先进行一系列的耐压试验作初步分析判断，发现问题及时处理"],"answer":3,"module":"单选题","explain":""},
+        {"title":"182. 对于非破坏性试验下列说法有误的是","options":["该项试验一般是在较高的电压(或者是高于额定电压)的情况下进行试验","试验项目主要有：测量设备绝缘电阻､泄露电流和介质损耗因数dtg､线圈直流电阻等项目","电力设备的绝缘电阻的测量是常规性试验中应用最广也是最直接与简单的试验方法","试验目的是判断设备绝缘状况好坏，及时发现可能的劣化现象"],"answer":0,"module":"单选题","explain":""},
+        {"title":"183. 对于破坏性试验下列表述中有误的一项是","options":["在高于工作电压情况下进行的试验成为破坏性试验","试验时在设备绝缘上施加规定的电压(逐次升高)，考验设备绝缘对此电压耐受能力，这种试验常叫耐压试验","在进行破坏性试验时，应先进行耐压试验，然后再进行非破坏性试验，破坏性试验结束，还应进行相关破坏性试验检查，以避免不应有的绝缘击穿事件发生","常规预试项目较多，但对于某一具体设备并不是每一项目都做，我们只需按《电力设备预防性试验规程》(DL/T 596-96)要求进行即可"],"answer":2,"module":"单选题","explain":""},
+        {"title":"184. 下列对试验人员的要求中表述有误的是","options":["必须具备良好素质，熟练的试验操作技术","了解泵站的电气主接线和相关辅助系统的接线","能正确完成试验接线，操作及测量，熟悉外界影响的因素，并加以消除","能对试验结果与参数交上级主管部门进行计算､分析､判断"],"answer":3,"module":"单选题","explain":""},
+        {"title":"185. 下列对试验工作要求表述有误的是","options":["制定详细的工作计划","做好周密的工作准备","合理的整理试验场地","改善和完善消防安全设施"],"answer":3,"module":"单选题","explain":""},
+        {"title":"186. 关于对试验工作要求的下列表述中错误的是","options":["改善和完善生活设施","合理的整理试验场地","试验接线清晰明了，没有错误","操作顺序有条不紊，连接恰当"],"answer":0,"module":"单选题","explain":""},
+        {"title":"187. 对试验报告规范填写内容的下列表述中错误的是","options":["填写试验名称､目的要求和采用的技术规范","填写被试验设备名称､运行编号和相关技术参数","填写试验时间和大气环境条件","填写电气设备和一次接线图"],"answer":3,"module":"单选题","explain":""},
+        {"title":"188. 下列关于试验报告规范填写的内容表述有误的是","options":["试验设备名称及重要试验仪器编号","试验结果必要时应换算到10℃值","试验接线及示意图､试验部位､试验项目及原始试验数据","主要试验人员､记录人､试验负责人签字"],"answer":1,"module":"单选题","explain":""},
+        {"title":"189. 下面哪项对规范的试验报告所必须项目的表述有误","options":["试验名称和目的要求､技术规范","试验接线及示意图､试验部位､试验项目及原始试验数据","试验时间和大气环境条件､温度､湿度､气压，如油浸变压器还要注明上层油温等","主要试验人员､记录人和生产厂家负责人签字"],"answer":3,"module":"单选题","explain":""},
+        {"title":"190. 下列关于试验工作中的安全措施表述有误的是","options":["现场必须执行工作票制度","现场必须装设遮拦或围栏，悬挂安全警示标牌，并派专人看守，被试验设备两端不在同一地点时，另一端应派专人看守","高压试验工作不得少于两人，负责人应由值班员担任","拆开电气设备接头，应做好标记，恢复连接后应作检查"],"answer":2,"module":"单选题","explain":""},
+        {"title":"191. 关于试验工作中的安全措施下列要求有误的是","options":["试验装置电源开关，应使用明显断开的双机开关，并保证有两个串联断开点和可靠的过载设施","加压前，必须认真检查系统接线，核对所用仪器仪表正确无误","变更接线或试验结束，应断开电源，验电，将升压装置低压部分接地","来装接地线的大电容试品，应作放电试验"],"answer":2,"module":"单选题","explain":""},
+        {"title":"192. 下列关于试验工作安全措施的表述中错误的是","options":["试验器具金属外壳应可靠接地","高压引线应尽量加长，必要时用绝缘物支撑牢固","拆开电气设备接头，应做好标记，恢复连接后应做检查","为了保证高压回路任何部分不对接地体放电，高压回路与接地体必须留有足够的距离"],"answer":1,"module":"单选题","explain":""},
+        {"title":"193. 下列哪项对试验人员在试验现场必须具备的安全措施表述不正确","options":["现场必须装设遮拦或围栏，悬挂安全警示标牌，并派专人看守；试品两端不在同一地点，另一端还应派人看守","高压试验工作不得少于两人，负责人应由有经验的人员担任｡试验前负责人应对主要试验人员详细布置安全事项","试验器具金属外壳应可靠接地，高压引线应尽量缩短，必要时用绝缘物支撑牢固，为了保证高压回路任何部分不对接地体放电，高压回路与接地体必须留有足够的距离","未装设接地线的大电容试品，应先放电试验，进行高压直流试验时，每告一段落或试验结束后，应将被试品放电数次后方可接触"],"answer":1,"module":"单选题","explain":""},
+        {"title":"194. 下列电气设备基本试验项目中不应包括","options":["直流电阻测量","绝缘电阻和吸收比测量","油色谱分析","交流耐压试验"],"answer":2,"module":"单选题","explain":""},
+        {"title":"195. 下列哪种型号的兆欧表属于低压兆欧表","options":["2500V","5000V","GJC-3000","ZC90"],"answer":3,"module":"单选题","explain":""},
+        {"title":"196. 电气预防性试验基本试验项目规定：需要测量设备的","options":["额定容量","直流电压","直流电流","直流电阻"],"answer":3,"module":"单选题","explain":""},
+        {"title":"197. 当直流电压作用于任何介质上时，通过它的电流不包含","options":["电导电流","电容电流","电感电流","吸收电流"],"answer":2,"module":"单选题","explain":""},
+        {"title":"198. 交流耐压试验中在选择试验变压器时应考虑因素的下列表述正确的是","options":["被试品试验电压高于试验变压器输出电压","试验变压器额定输出电流应小于被试品所需的电流，被试品电流可按其电容估算｡Iₛ=UₛωCₓ，其中，Cₓ 包括被试品和附加电容","任何被试品在耐压试验前，应测量直流电阻，合格后再做试验","试验变压器容量：根据试验变压器输出额定电流与额定电压，确定试验变压器的容量P=IU"],"answer":3,"module":"单选题","explain":""},
+        {"title":"199. 关于使用电桥测量直流电阻时的下列注意事项中表述正确的是","options":["连接线要拧紧，避免减小接触电阻，产生测量误差｡连接导线应尽量使用截面较大､较短､减少连接线电阻，提高测量准确度","测量时，先按电源按钮，操作时先粗调旋钮，调比例臂，待检流计接近零时，再细调，待检流计指零后读数","电桥电池电压不足会影响测量精度，需更换｡外接电源应注意其极性，并并联一个保护电阻","电桥使用，应先拆被测电阻，再拆除电源，再将检流计锁扣扣上，防止搬运中震断游丝"],"answer":1,"module":"单选题","explain":""},
+        {"title":"200. 以下对应用兆欧表测量绝缘电阻应注意的问题表述有误的是","options":["在测量中，应尽量选用最大输出电流为5mA 及以上的兆欧表，以使得到较准确的测量结果","兆欧表与被试品间的连线不能绞线或拖地，否则会产生测量误差","高压兆欧表在表壳玻璃上配接的铜导线，不要随意拆除","兆欧表的L 和E 端子的接线不能对调，否则对测量结果有影响"],"answer":0,"module":"单选题","explain":""},
+        {"title":"201. 用K=R60/R15 表示吸收比｡当K=1 时，绝缘严重受潮或有损坏，当κ 值远大于1 时，绝缘情况良好，规程规定一般情况下","options":["K ≤ 1.1","K ≤ 1.2","K ≥ 1.3","K ≥ 1.5"],"answer":2,"module":"单选题","explain":""},
+        {"title":"202. 在选择交流耐压试验的试验变压器时下列表述有误的是","options":["试验变压器输出电压应高于被试品试验电压","试验变压器额定输出电流应大于被试品所需的电流","试验变压器容量：根据试验变压器输出额定电流与额定电压，确定试验变压器的容量P=IU","试验变压器最大输出电流应小于被试品所需的电流"],"answer":3,"module":"单选题","explain":""},
+        {"title":"203. 交流耐压试验应注意事项的下列表述中错误的是","options":["试验时周围环境温度不宜低于+10℃.空气相对湿度不高于70%","试验时加到标准试验电压后的持续时间，无特殊说明均为1 分钟，其他按有关设备试验方法规定执行","升压必须从零开始，切不可冲击合闸","任何被试品在耐压试验前，应测量绝缘电阻，合格后再进行试验"],"answer":0,"module":"单选题","explain":""},
+        {"title":"204. 下列选项中，对交流耐压试验应注意事项表述有误的是","options":["试验接线一切接好后，经检查确认，然后开始试验","试验时加到标准试验电压后的持续时间，无特殊说明均为3 分钟，其他按有关设备试验方法规定执行","在75%试验电压之前，升压速度可以任意，自75%试验电压开始，升压速度应均匀，约按每秒2%试验电压升压｡耐压试验后，迅速均匀降压到零，然后切断电源","升高过程中应密切监视高压回路，监听被试品有何异响，升至试验电压，开始计时并读取相关数值，时间到后，迅速均匀降压并切断电源，试验中如无破坏性放电或击穿发生，则认为试验通过"],"answer":1,"module":"单选题","explain":""},
+        {"title":"205. 交流耐压试验时，升压必须从零开始，切不可冲击合闸｡在75%试验电压之前，升压速度可以任意，自75%试验电压开始，升压速度应均匀，约按","options":["每秒1%试验电压","每秒2%试验电压","每秒3%试验电压","每秒5%试验电压"],"answer":1,"module":"单选题","explain":""},
+        {"title":"206. 交流耐压试验时，试验回路中电流表指示突然上升，说明被试品已被击穿，但当Xc 与试验变压器漏抗X1 之比","options":["小于2","大于2","等于2","不大于2"],"answer":0,"module":"单选题","explain":""},
+        {"title":"207. 根据交流耐压试验中控制回路的状况来分析，下列表述有误的是","options":["如果过电流继电器整定值适当，当被试品击穿，过流继电器动作，自动控制开关跳闸","整定值过小，电容电流的充电作用就能使开关跳闸","整定值过大，即使被试品放电或小电流击穿都不会跳闸，过电流继电器的整定值一般整定为试验变压器额定电流的1.3~1.5 倍","整定值过大，电容电流的充电作用就能使开关跳闸"],"answer":3,"module":"单选题","explain":""},
+        {"title":"208. 电力设备局部放电试验是电力设备绝缘的主要试验项目，其参数是评价电力设备质量的重要指标｡对于电力设备局部放电试验下列选项中表述有误的是","options":["设备的局部放电是指设备绝缘系统中部分被击穿的电气放电，这种放电只能发生附近","视在放电量，是指在试品的两端注入一定电荷量，使试品端电压的变化量和局部放电时端电压的变化量相同，此时注入的电荷量即称的局部放电的视在电荷量｡以皮库(PC) 表示","局部放电起始电压Ui 是指试验电压从不产生局部放电的较低电压逐渐增加时，在试验中局部放电量超过某一规定值时的最低电压值","局部放电熄灭电压Ue：是指试验电压从超过局部放电起始电压的较高值逐渐下降时，在试验中局部放电量小于某一规定值时的最高电压值"],"answer":0,"module":"单选题","explain":""},
+        {"title":"209. 测量接地电阻只能用交流测量，因为土壤导电通常是经过水溶液，如果用直流测量，则会在正负电极上电解成气泡，","options":["减小，增加","增加，减小","减小，减小","增加，增加"],"answer":0,"module":"单选题","explain":""},
+        {"title":"210. 对于测量介质损耗因数dtg 的表述，下列选项中有误的是","options":["利用介质损失角dtg 的结果可判断电气设备绝缘状况，且比较灵敏","dtg 在测量中对比影响的因素有电磁干扰温度､试验电压､试品电容等","对于dtg 的分析，一是同每月测试结果比较，二是与同类设备比较，看它们之间有无明显差异","dtg 与试验电压关系曲线可判断绝缘介质中是否存在较多气隙"],"answer":2,"module":"单选题","explain":""},
+        {"title":"211. 关于测量设备的泄漏电流试验下列表述有误的是","options":["影响测量结果的重要因素是杂散电流，对于绝缘良好的被试品，内部泄露电流很小","据试验结果判断设备绝缘状态的好坏，将试验电压值保持规定的时间后，微安表的指针没有向下降的方向突然摆动，我们认为被试品有破坏性放电","测量泄露电流与测量设备的绝缘电阻原理相同，只是测量泄露电流时施压在被测设备上的直流电压比兆欧表的额定输出电压高，测量中所采用的微安表的准确度比兆欧表高，同时，还可以随时监测泄露电流变化，所以发现设备绝缘的缺陷较兆欧表测量更有效","测量泄露电流能发现电力设备绝缘贯通的集中缺陷，整体受潮或有贯通的部分受潮以及一些未完全贯通的集中性缺陷开裂､破损等"],"answer":1,"module":"单选题","explain":""},
+        {"title":"212. 互感器常规试验项目中不包括下列","options":["绝缘电阻测量","三相同期性测量","直流电阻测量","交流耐压试验"],"answer":1,"module":"单选题","explain":""},
+        {"title":"213. 关于电力电缆常规试验项目的下列表述中错误的是","options":["水分､机械杂质和游离碳测量","内点测量","水溶性炭和盐测量","电气强度试验"],"answer":2,"module":"单选题","explain":""},
+        {"title":"214. 高压断路器的常规试验项目中不包括下列","options":["三相同期性，最低分合闸动作电压试验","绝缘电阻､绕组直流电阻测量","极性和接线组别试验","交流耐压试验"],"answer":2,"module":"单选题","explain":""},
+        {"title":"215. 避雷器试验项目中不包含下列","options":["测量绝缘电阻","测量电容值","密封性检查","测量工频放点电压"],"answer":1,"module":"单选题","explain":""},
+        {"title":"216. 对于主要电器设备常规试验项目下列表述有误的是","options":["电力变压器绝缘试验包括绝缘电阻､吸收比､泄漏电流､介质损失角的正切值､绝缘油和交流耐压试验","互感器的试验项目分为绝缘试验和特性试验两大类","高压断路器试验有理化试验､电气特性试验，单相同期试验等机械方面试验","对电力电缆进行绝缘试验以及故障探测是保证其安全运行的重要措施｡试验项目有测量绝缘电阻､直流耐压试验和泄漏电流的测量，检查电缆相位，电缆故障探测"],"answer":2,"module":"单选题","explain":""},
+        {"title":"217. 固定卷扬启闭机起升机构主要由钢丝绳､滑轮组､制动器､联轴器､驱动传动机构和","options":["卷筒组","电动机","机架","限位开关"],"answer":0,"module":"单选题","explain":""},
+        {"title":"218. 固定卷扬启闭机起升机构主要由钢丝绳､卷筒组､滑轮组､","options":["电动机","制动器","安全保护装置","限位开关"],"answer":1,"module":"单选题","explain":""},
+        {"title":"219. 固定卷扬启闭机起升机构主要由钢丝绳､卷筒组､","options":["滑轮组","电动机","机架","限位开关"],"answer":0,"module":"单选题","explain":""},
+        {"title":"220. 滑轮组的作用是悬挂支承钢丝绳，并与钢丝绳一起组成一个机构，起","options":["减速和省力","加速和省力","减速和加力","加速和加力"],"answer":0,"module":"单选题","explain":""},
+        {"title":"221. 双联滑轮组必须有","options":["定滑轮","动滑轮","平衡轮","支架"],"answer":2,"module":"单选题","explain":""},
+        {"title":"222. 在实际工作中，闸门启闭机的钢丝绳主要承受以下三种力，下列属于钢丝绳受到的力是","options":["拉伸力","扭曲力","轴向压力","剪切力"],"answer":0,"module":"单选题","explain":""},
+        {"title":"223. 在实际工作中，闸门启闭机的钢丝绳主要承受以下三种力，下列属于钢丝绳受到的力是","options":["弯曲力","扭曲力","轴向压力","剪切力"],"answer":0,"module":"单选题","explain":""},
+        {"title":"224. 某启闭机的额定起重量为3000kN，采用双联滑轮组，其倍率为6，滑轮组效率为0.80，则钢丝绳的最大拉力为","options":["200 kN","312.5 kN","400 kN","625 kN"],"answer":1,"module":"单选题","explain":""},
+        {"title":"225. 螺杆启闭机螺旋机构按其螺纹间摩擦性质不同，可分为","options":["滑动摩擦","转动摩擦","平面摩擦","弧面摩擦"],"answer":0,"module":"单选题","explain":""},
+        {"title":"226. 螺杆启闭机起重螺杆和承重螺母的螺纹，普遍采用的螺纹类型为","options":["锯齿型","矩形","单线梯形","三角形"],"answer":2,"module":"单选题","explain":""},
+        {"title":"227. 螺杆启闭机起重螺杆承受扭矩的大小在启闭力和螺纹规格尺寸一定的情况下，只与螺纹间的","options":["滑动摩擦系数","滑动摩擦力","滚动摩擦系数","滚动摩擦力"],"answer":0,"module":"单选题","explain":""},
+        {"title":"228. 螺杆启闭机螺杆的损坏形式一般有：螺纹牙的磨损和折断､自锁能力不足而在重力作用下自行下落以及","options":["失去稳定弯曲变形","启门拉力过大断裂","与螺母的摩擦力过大而扭曲","严重锈蚀而折断"],"answer":0,"module":"单选题","explain":""},
+        {"title":"229. 在螺杆启闭机设计中，考虑到螺纹牙间的当量摩擦系数为","options":["0.02~0.04","0.05~0.07","0.08~0.1","0.12~0.15"],"answer":2,"module":"单选题","explain":""},
+        {"title":"230. 螺杆启闭机为了保证自锁性能，一般是考虑螺旋升角不大于","options":["1°~2°","2°~3°","3°10'~3°45'","4°~4°35'"],"answer":3,"module":"单选题","explain":""},
+        {"title":"231. 真空破坏阀断流方式适用于","options":["虹吸式","直管式","屈膝式","钟式"],"answer":0,"module":"单选题","explain":""},
+        {"title":"232. 下列属于泵站真空破坏阀断流方式特点的是","options":["结构简单","操作方便","体积小","造价低廉"],"answer":0,"module":"单选题","explain":""},
+        {"title":"233. 下列属于泵站真空破坏阀断流方式特点的是","options":["安全可靠","操作方便","流道断面简单","造价低廉"],"answer":0,"module":"单选题","explain":""},
+        {"title":"234. 下列属于泵站真空破坏阀断流方式特点的是","options":["体积小","流道出口损失大","流道流态好","造价低廉"],"answer":2,"module":"单选题","explain":""},
+        {"title":"235. 泵站采用拍门断流方式具有的特点之一是","options":["结构简单","水力损失小","停机时拍门撞击力小","检修方便"],"answer":0,"module":"单选题","explain":""},
+        {"title":"236. 泵站采用拍门断流方式具有的特点之一是","options":["水力损失小","安装方便","停机时拍门撞击力小","检修方便"],"answer":1,"module":"单选题","explain":""},
+        {"title":"237. 泵站采用拍门断流方式具有的特点之一是","options":["停机时拍门撞击力小","起动过程不稳定时间长","起动扬程较低","检修方便"],"answer":2,"module":"单选题","explain":""},
+        {"title":"238. 快速闸门断流的控制方式之一是","options":["卷扬机快速闸门断流","机械快速闸门断流","螺杆机快速闸门断流","移动启闭机快速闸门断流"],"answer":0,"module":"单选题","explain":""},
+        {"title":"239. 快速闸门断流控制方式具有的特点之一是","options":["出水阻力损失很小","进水阻力损失大","门在水中晃动明显","闭门无撞击力"],"answer":0,"module":"单选题","explain":""},
+        {"title":"240. 快速闸门断流控制方式具有的特点之一是","options":["设备费用低","进水阻力损失小","闸门在水中稳定","闭门无撞击力"],"answer":2,"module":"单选题","explain":""},
+        {"title":"241. 采用卷扬式快速闸门断流方式的优点是","options":["简单方便","可靠度高","体积小","重量轻"],"answer":0,"module":"单选题","explain":""},
+        {"title":"242. 采用卷扬式快速闸门断流方式的优点是","options":["重量轻","安全可靠","体积小","造价低"],"answer":1,"module":"单选题","explain":""},
+        {"title":"243. 卷扬式快速闸门断流的主要缺陷之一是","options":["安全性较差","维修困难","造价高","操作控制复杂"],"answer":0,"module":"单选题","explain":""},
+        {"title":"244. 液压快速闸门断流和卷扬机快速闸门断流比较，其特点是","options":["运行可靠","操作简便","维护方便","系统简单"],"answer":0,"module":"单选题","explain":""},
+        {"title":"245. 液压快速闸门断流和卷扬机快速闸门断流比较，其特点是","options":["减振效果好","操作简便","维护方便","系统简单"],"answer":0,"module":"单选题","explain":""},
+        {"title":"246. 液压快速闸门断流和卷扬机快速闸门断流比较，具有的特点是","options":["系统简单","造价较高","维修方便","系统简单"],"answer":1,"module":"单选题","explain":""},
+        {"title":"247. 拍门结构主要有下面几部分组成：门体､","options":["支座","拐臂","门座","密封装置"],"answer":2,"module":"单选题","explain":""},
+        {"title":"248. 下面属于拍门结构主要组成部分的是：","options":["止水橡皮与缓冲装置","铸铁拍门","铸钢拍门","合金拍门"],"answer":0,"module":"单选题","explain":""},
+        {"title":"249. 拍门一般都设置成倾斜的，以利止水｡小型拍门的安置角约为","options":["5°","10°","15°","20°"],"answer":1,"module":"单选题","explain":""},
+        {"title":"250. 中小型泵站通常为铸铁拍门，重量大，其开启角度一般在","options":["10°","20°","30°","40°"],"answer":2,"module":"单选题","explain":""},
+        {"title":"251. 对较重的铸铁拍门，可加设平衡锤把拍门吊起，平衡锤的重量约为拍门重量的","options":["30%","40%","55%","65%"],"answer":3,"module":"单选题","explain":""},
+        {"title":"252. 运行中对拍门要进行巡视检查，一般每班","options":["1~2 次","2~3 次","3~4 次","4~5 次"],"answer":1,"module":"单选题","explain":""},
+        {"title":"253. 闸门预埋件必须能将闸门所承受的载荷安全地传递到","options":["排架","工作桥","启闭机钢丝绳","混凝土"],"answer":3,"module":"单选题","explain":""},
+        {"title":"254. 各种金属埋件中对轨道的水上部位摩擦面可采用的保护方式是","options":["涂油脂","油漆防腐","喷锌防护","喷铝处理"],"answer":0,"module":"单选题","explain":""},
+        {"title":"255. 各种金属埋件除轨道水上部位摩擦面外，其余部位，宜采取的防护措施之一是","options":["调和漆防护","喷锌或喷铝处理","涂油脂防腐","包裹防护"],"answer":1,"module":"单选题","explain":""},
+        {"title":"256. 对闸门止水座板及底坎等预埋件，由于安装不牢受水流冲刷，泥沙磨损或锈蚀等原因发生","options":["松动","变形","折断","缺损脱落"],"answer":0,"module":"单选题","explain":""},
+        {"title":"257. 对闸门止水座板及底坎等预埋件，由于安装不牢受水流冲刷､泥沙磨损或锈蚀等原因发生","options":["缺损","变形","折断","脱落"],"answer":3,"module":"单选题","explain":""},
+        {"title":"258. 在对支承滑块的滑道主轨表面有缺陷的不锈钢进行喷镀或堆焊完毕后，应先根据需要用砂轮､零号砂布打磨后，再以油石蘸油研磨表面，以达到设计要求的","options":["平整度","耐磨度","粗糙度","外形尺寸"],"answer":2,"module":"单选题","explain":""},
+        {"title":"259. 更换新止水时，应用原止水压板的孔位在新止水橡皮上划线冲孔，孔径应比螺栓直径","options":["小1mm","小2 mm","大1mm","大2 mm"],"answer":0,"module":"单选题","explain":""},
+        {"title":"260. 止水橡皮更新或修理后，要求止水表面平面度不超过","options":["1 mm","2mm","5 mm","1cm"],"answer":1,"module":"单选题","explain":""},
+        {"title":"261. 止水橡皮更新或修理后，要求止水橡皮的压缩量应保持","options":["1 mm 左右","2~4mm","5 mm 左右","6~10cm"],"answer":1,"module":"单选题","explain":""},
+        {"title":"262. 磁粉探伤方法随着缺陷埋藏深度的增加，其灵敏度迅速降低，一般认为距表面约","options":["1 mm","3 mm","5mm","10 mm"],"answer":2,"module":"单选题","explain":""},
+        {"title":"263. 着色检验的灵敏度较荧光检验为高，其灵敏度一般为","options":["0.001mm","0.01mm","0.1mm","1mm"],"answer":1,"module":"单选题","explain":""},
+        {"title":"264. 渗透探伤又分为","options":["磁粉渗透探伤","荧光渗透探伤","射线渗透探伤","超声波渗透探伤"],"answer":1,"module":"单选题","explain":""},
+        {"title":"265. 下列不仅可用于检查磁性材料，还能检查有色金属和非金属等材料的方法是","options":["渗透探伤","磁粉探伤","磁粉检验","荧光检验"],"answer":0,"module":"单选题","explain":""},
+        {"title":"266. 射线探伤法采用x 射线能检查出大小为穿透厚度的","options":["1%~2%","3%","4%~5%","10%"],"answer":0,"module":"单选题","explain":""},
+        {"title":"267. 射线探伤法采用γ 射线能检查出大小为穿透厚度的","options":["2%","3%","4%","10%"],"answer":1,"module":"单选题","explain":""},
+        {"title":"268. 螺杆启闭机螺杆压弯的主要原因之一是","options":["过载保护没有调节好","闸门重量过大","水位差过大","行程开关上限位未调节好"],"answer":0,"module":"单选题","explain":""},
+        {"title":"269. 螺杆启闭机螺杆压弯的主要原因之一是","options":["闸门重量过大","闸门摩阻过大","水位差过大","行程开关上限位未调节好"],"answer":1,"module":"单选题","explain":""},
+        {"title":"270. 由于闸门自重的作用，螺杆式启闭机的启门力通常大于闭门力，电动机的容量是按","options":["启门力","闭门力","闸门重量","实际荷载"],"answer":0,"module":"单选题","explain":""},
+        {"title":"271. 为防止螺杆弯曲，电动和手电两用的螺杆启闭机均应装设过载保护装置，常用的闭门过载保护装置有","options":["牙嵌式安全联轴器","钢球式安全联轴器","液压式安全联轴器","磁粉式安全联轴器"],"answer":0,"module":"单选题","explain":""},
+        {"title":"272. 为防止螺杆弯曲，电动和手电两用的螺杆启闭机均应装设过载保护装置，常用的闭门过载保护装置有","options":["磁粉式安全联轴器","钢球式安全联轴器","液压式安全联轴器","超越摩擦片式安全联轴器"],"answer":3,"module":"单选题","explain":""},
+        {"title":"273. 超越摩擦片式安全联轴器由两部分组成：一部分是超越离合器，也叫定向离合器，另一部分是","options":["片式摩擦联轴器","钢片式摩擦联轴器","齿片式摩擦联轴器","滑动式摩擦联轴器"],"answer":0,"module":"单选题","explain":""},
+        {"title":"274. 拦污栅的跨度(栅墩间距)不宜过大，一般为","options":["1~2m","3~5m","6~7 m","6 m 内"],"answer":1,"module":"单选题","explain":""},
+        {"title":"275. 对拦污栅要求栅体和拦污桥能够承受被杂草污堵塞情况下栅前､栅后水位差为","options":["小于1.0m","1.0~2.0m","大于2 m","3~4 m"],"answer":1,"module":"单选题","explain":""},
+        {"title":"276. 拦污栅由钢制栅叶结构和","options":["支座","滑道","预埋件","底坎"],"answer":2,"module":"单选题","explain":""},
+        {"title":"277. 栅片间净距S 一般随水泵的性能不同而异，对直径D 为3m 的混流泵，则栅片间净距可取为","options":["5cm","10cm","15cm","20cm"],"answer":1,"module":"单选题","explain":""},
+        {"title":"278. 栅片间净距S 一般随水泵的性能不同而异，对直径D 为2m 的混流泵，则栅片间净距可取为","options":["4cm","10cm","12cm","20cm"],"answer":1,"module":"单选题","explain":""},
+        {"title":"279. 通过拦污栅的流速，采用机械清污或提栅清污时，可取","options":["0.1~0.2m/s","0.3~0.5m/s","0.6~1.0m/s","1.0m/s 以上"],"answer":2,"module":"单选题","explain":""},
+        {"title":"280. 被拦污栅拦截的污物如果不及时清除，则会大幅度地增加","options":["水泵扬程","水泵流量","效率","转速"],"answer":0,"module":"单选题","explain":""},
+        {"title":"281. 被拦污栅拦截的污物如果不及时清除，则会大幅度地增加","options":["轴功率","水泵流量","效率","转速"],"answer":0,"module":"单选题","explain":""},
+        {"title":"282. 被拦污栅拦截的污物如果不及时清除，则会大幅度地减小","options":["用电量","水泵扬程","效率","转速"],"answer":2,"module":"单选题","explain":""},
+        {"title":"283. 刮污装置变形的主要原因是","options":["齿耙清污量大","刮污板挂草太多","安全销未剪断","清污机动力过大"],"answer":1,"module":"单选题","explain":""},
+        {"title":"284. 齿耙钢管弯曲变形的原因这一是","options":["通过刮污板时阻力大","安全保护装置未起作用","链条强度大","清污机动力过大"],"answer":0,"module":"单选题","explain":""},
+        {"title":"285. 齿耙钢管弯曲变形的原因这一是","options":["清污机动力过大","安全保护装置未起作用","链条强度大","钢管壁厚偏薄"],"answer":3,"module":"单选题","explain":""},
+        {"title":"286. 存储设备(Memory)是计算机内各硬件和","options":["打印机","显示器","中央处理器(CPU)","硬盘"],"answer":2,"module":"单选题","explain":""},
+        {"title":"287. 计算机常用的输出设备有:","options":["鼠标","硬盘","中央处理器(CPU)","显示器"],"answer":3,"module":"单选题","explain":""},
+        {"title":"288. 下列哪个软件不是操作系统软件的名字","options":["WindowsXP","WINDOWS2008","CAD","Linux"],"answer":2,"module":"单选题","explain":""},
+        {"title":"289. 人们针对某一需要而为计算机编制的指令序列称为程序连同有关的数据和说明资料称为软件｡简单地讲，软件就是","options":["注释","说明","字符","程序"],"answer":3,"module":"单选题","explain":""},
+        {"title":"290. 以下不属于应用软件的是","options":["网卡驱动","接口程序","WINDOWS98","编解码程序"],"answer":2,"module":"单选题","explain":""},
+        {"title":"291. 广域网也称远程网缩写是","options":["WAN","Internet","LAN","www"],"answer":0,"module":"单选题","explain":""},
+        {"title":"292. 局域网缩写是","options":["万维网","Internet","ARPANET 网","LAN"],"answer":3,"module":"单选题","explain":""},
+        {"title":"293. 国际互联网(Internet)，也称:万维网｡它在英语中的全称是","options":["Wide World Web","World Wide Web","Web World Wide","World Web Wide"],"answer":1,"module":"单选题","explain":""},
+        {"title":"294. 有一种设备在计算机发送数据时将数字信号转换为模拟信号，在计算机接收数据时将模拟信号转换为数字信号，这种设备就是","options":["网卡","交换机","无线路由","调制解调器(MODEM)"],"answer":3,"module":"单选题","explain":""},
+        {"title":"295. 在上网时输入的网址，是通过","options":["DNS","网关","域名解析系统","防火墙"],"answer":2,"module":"单选题","explain":""},
+        {"title":"296. 泵站计算机监控系统一般采用分层分布式信息结构｡根据泵站的实际情况和系统的具体要求，从下层到上层可以分为4 级结构，分别为","options":["泵站管理层､决策管理层､现场级控制层､监督控制层","监督控制层､泵站管理层､决策管理层､现场级控制层","泵站管理层､现场级控制层､监督控制层､决策管理层","现场级控制层､监督控制层､泵站管理层､决策管理层"],"answer":3,"module":"单选题","explain":""},
+        {"title":"297. 信息检索系统包括","options":["目录检索系统､全文检索系统","辅助设计系统､目录检索系统､全文检索系统","决策支持系统､辅助设计系统､目录检索系统","全文检索系统､知识层业务处理系统"],"answer":0,"module":"单选题","explain":""},
+        {"title":"298. 摄像装置可以固定，也可以采用","options":["聚焦控制","转动角度控制","云台控制","485 控制"],"answer":2,"module":"单选题","explain":""},
+        {"title":"299. 视频系统中监控中心部分一般采用","options":["Client/Server(简称C/S)结构","树型结构","星形结构","Brower/Server(简称B/S)结构"],"answer":3,"module":"单选题","explain":""},
+        {"title":"300. 当几台发电机并列运行时，通过","options":["励磁控制器","直流系统","监控系统","保护装置"],"answer":0,"module":"单选题","explain":""},
+        {"title":"301. 同步发电机的整个工作过程的第二阶段，是指同步发电机并网之后｡此时励磁控制系统是通过调节励磁电流来调整发电机向电网输出的","options":["无功电能","有功功率","无功功率","有功电能"],"answer":2,"module":"单选题","explain":""},
+        {"title":"302. 励磁控制系统的控制规律最终都归结为","options":["积分运算","微分运算","比例运算","PID 运算"],"answer":3,"module":"单选题","explain":""},
+        {"title":"303. 泵站调速的主要硬件设备是","options":["进出水闸门装置","调速器","叶片装置","励磁控制器"],"answer":1,"module":"单选题","explain":""},
+        {"title":"304. 微机调速系统的实时运行控制软件系统，从控制方式上可分","options":["中央控制室常规控制方式或中央控制室上位机控制方式","中央控制室常规控制方式","中央控制室上位机控制方式","中央控制室触摸屏控制方式"],"answer":0,"module":"单选题","explain":""},
+        {"title":"305. 智能化调试维护软件系统包括","options":["智能诊断","维护诊断和智能化调试","维护调试","智能化调试"],"answer":1,"module":"单选题","explain":""},
+        {"title":"306. 当计算机失电，出现有电源不能启动时，如果是因为硬盘损坏或Windows 系统损坏，这时如果重装系统正常计算机运行正常，这说明是","options":["操作系统","硬盘","操作系统和硬盘","操作系统或硬盘"],"answer":3,"module":"单选题","explain":""},
+        {"title":"307. 当计算机失电，出现有电源不能启动时，如果是因为硬盘损坏或Windows 系统损坏，这时如果不能重装系统，说明","options":["操作系统","硬盘","操作系统和硬盘","操作系统或硬盘"],"answer":1,"module":"单选题","explain":""},
+        {"title":"308. 当计算机失电､启动后死机等故障，为此，可以通过一种最简单的方法解决:按下电源按钮后，计算机进入启动画面时，按键盘的","options":["CTRL+F8","F1","F8","F1"],"answer":2,"module":"单选题","explain":""},
+        {"title":"309. 采用“备份还原工具软件”或“","options":["DiskTool 磁盘分区工具","ghost 工具","office 工具","CAD"],"answer":1,"module":"单选题","explain":""},
+        {"title":"310. 微机保护装置有电源不能启动､启动后死机，首先更换电源模块看能不能解决，如能解决启动､启动后死机的问题，则说明","options":["DSP 模块","液晶模块","电源模块","采样模块"],"answer":2,"module":"单选题","explain":""},
+        {"title":"311. 现在的PLC 模块大多数是","options":["直流24V","交流90V","高压","低压"],"answer":0,"module":"单选题","explain":""},
+        {"title":"312. LCU 屏的PLC 有电源不能启动､启动后死机，如果开关电源输出电压正常，则查看PLC 的CPU 上的指示灯哪个等亮了，如果是RUN 指示灯灯不亮，","options":["BAT 指示灯","ERH 指示灯","IO 指示灯","FAULT 指示"],"answer":1,"module":"单选题","explain":""},
+        {"title":"313. LCU 屏的PLC 有电源不能启动､启动后死机，如果开关电源输出电压正常，则查看PLC 的CPU 上的指示灯，如果是RUN 指示灯灯不亮，","options":["BAT 指示灯","ERH 指示灯","IO 指示灯","FAULT 指示"],"answer":3,"module":"单选题","explain":""},
+        {"title":"314. 监控系统的检查与日常维护，下列","options":["如软件修改或重新设置，应将修改中设置前后的软件分别备份，并做好修改记录;","监视系统应正常，调节控制可靠，图像清晰","操作人员可以随意修改软件画面､设置相关参数","仪表､信道及电源的过电压保护应可靠､有效"],"answer":2,"module":"单选题","explain":""},
+        {"title":"315. 要求在授权的条件下能够对","options":["报警类型","报警信息","报警发生时间","报警界限值"],"answer":3,"module":"单选题","explain":""},
+        {"title":"316. 系统能够对事故发生前给出报警提示，对过去所发生的事件进行追忆查询，系统维护人员和管理人员根据过去发生的事件信息结合历史数据库来分析事故，这一功能为","options":["系统运行日志记录查询","事故追忆及故障诊断","事件报警管理","报警查询"],"answer":1,"module":"单选题","explain":""},
+        {"title":"317. 系统能够根据设备情况和用户的需水量等要求计算出系统机组的最佳运行方案，提出运行建议，进而实现梯级泵站及泵站群的","options":["整体调度","模型调度","整体优化调度","集中调度"],"answer":2,"module":"单选题","explain":""},
+        {"title":"318. 当计算机不能正常启动，遇到此问题的处理方法是听声音，电脑出现启动故障时都会发出不同的鸣叫声提示故障的部位，","options":["1 长1 短","1 长9 短","4 短","1 长8 短"],"answer":3,"module":"单选题","explain":""},
+        {"title":"319. 当计算机不能正常启动，遇到此问题的处理方法是听声音，电脑出现启动故障时都会发出不同的鸣叫声提示故障的部位，在AMI BIOS 系统中，","options":["2 长1 短","4 短","6 短","响声不停"],"answer":2,"module":"单选题","explain":""},
+        {"title":"1. 语言规范是","options":["爱岗敬业","办事公道","文明礼貌","诚实守信"],"answer":2,"module":"单选题","explain":""},
+        {"title":"2. 提高职业技能是","options":["文明礼貌","爱岗敬业","勤俭节约","诚实守信"],"answer":1,"module":"单选题","explain":""},
+        {"title":"3. 社会主义职业道德的核心是","options":["集体主义","共产主义","全心全意依靠工人阶级","全心全意为人民服务"],"answer":3,"module":"单选题","explain":""},
+        {"title":"4. 与法律相比，道德在调节人与人、个人与社会以及人与自然之间的各种关系时，它的","options":["时效性差","作用力弱","操作性强","适用范围大"],"answer":3,"module":"单选题","explain":""},
+        {"title":"5. 水利行业精神是：“","options":["创新","献身","奉献","超越"],"answer":1,"module":"单选题","explain":""},
+        {"title":"6. 与法律相比，道德","options":["产生的时间晚","适用范围更广","内容上显得十分笼统","评价标准难以确定。"],"answer":1,"module":"单选题","explain":""},
+        {"title":"7. 从一批相同的零件中任取一件，不经修配就能装配使用，并能保证使用性能要求的性质的称为","options":["公差","配合","互换性","尺寸偏差"],"answer":2,"module":"单选题","explain":""},
+        {"title":"8. 下列关于尺寸公差的公式错误的是","options":["上偏差＝最大极限尺寸-基本尺寸","下偏差＝最小极限尺寸-极限尺寸","公差=最大极限尺寸－最小极限尺寸","公差=上偏差－下偏差"],"answer":1,"module":"单选题","explain":""},
+        {"title":"9. ø 80h8表示圆柱零件，基本尺寸为80mm","options":["基本偏差为H的8级孔","上偏差为8mm","偏差为8mm","基本偏差代号h，公差等级为8级的轴"],"answer":0,"module":"单选题","explain":""},
+        {"title":"10. 倾斜度公差属于位置公差中的","options":["定位","定向","位置","跳动"],"answer":1,"module":"单选题","explain":""},
+        {"title":"11. 在满足使用要求的前提下，应尽量选用","options":["常用","较小","相同","较大"],"answer":1,"module":"单选题","explain":""},
+        {"title":"12. 水利工程图的分类中不包括","options":["规划图","枢纽布置图","详图","施工图"],"answer":2,"module":"单选题","explain":""},
+        {"title":"13. 枢纽布置图的特点是","options":["可以画在地形图上","应画在地形图上","不能只画出建筑物的主要轮廓","重力坝枢纽布置图可不画在地形图上"],"answer":1,"module":"单选题","explain":""},
+        {"title":"14. 泵站运行管理人员应按规定经培训和","options":["各类院校毕业","上级同意","领导审核","考核"],"answer":3,"module":"单选题","explain":""},
+        {"title":"15. 技术方案编写的依据是","options":["《泵站设计规范》","《泵站更新改造技术规范》","《泵站技术管理规程》","《大型泵站设备设施运行规程》"],"answer":2,"module":"单选题","explain":""},
+        {"title":"16. 泵站效率应根据泵型、泵站设计扬程或","options":["平均净扬程","最大扬程","最小扬程","泵站功率"],"answer":0,"module":"单选题","explain":""},
+        {"title":"17. 润滑和冷却用油应符合","options":["冷却油厂家","润滑油厂家","水泵生产厂家","泵站领导"],"answer":2,"module":"单选题","explain":""},
+        {"title":"18. 一台水泵机组是由具有一定质量的多个零部件组合而成的弹性组合体，它旋转时所产生的旋转力","options":["不可能绝对平衡","保持平衡","应绝对平衡","不能有波动"],"answer":0,"module":"单选题","explain":""},
+        {"title":"19. 电接点双金属温度计应用于生产现场对温度需自动控制和","options":["校核","调节","报警","显示"],"answer":2,"module":"单选题","explain":""},
+        {"title":"20. 液位计根据","options":["机械原理","电力原理","气压原理","浮力原理"],"answer":3,"module":"单选题","explain":""},
+        {"title":"21. 启动过程引起的振动对于采用拍门的平直管式流道就是一重阻尼式的","options":["水锤振动","空气的排除过程","汽蚀振动","机械振动"],"answer":0,"module":"单选题","explain":""},
+        {"title":"22. 运行期间应定期巡视检查技术供水水压及","options":["示流信号","渗漏信号","溢流信号","损失信号"],"answer":0,"module":"单选题","explain":""},
+        {"title":"23. 恒流直流电是指","options":["大小和方向","电流和电压","电流和电阻","电压和电阻"],"answer":0,"module":"单选题","explain":""},
+        {"title":"24. 将大电流变换为小电流的电气设备是","options":["电力变压器","电压互感器","电流互感器","行灯变压器"],"answer":2,"module":"单选题","explain":""},
+        {"title":"25. 把一通电直导线绕成一个螺线管，则其电流","options":["变大","不变","变小","无法判断"],"answer":1,"module":"单选题","explain":""},
+        {"title":"26. 更换的熔体应与原来使用的熔体的","options":["额定电流","额定电压","形状","大小"],"answer":0,"module":"单选题","explain":""},
+        {"title":"27. 是使用高压验电器时，应戴好","options":["绝缘手套","塑料手套","纱手套","布手套"],"answer":0,"module":"单选题","explain":""},
+        {"title":"28. 楞次定律是研究","options":["电流","电压","导体运动","感生电动势"],"answer":3,"module":"单选题","explain":""},
+        {"title":"29. 泵机停止运行时，应听","options":["集水池的水流声","压力窨井的水流声","闸阀关闭的响声","拍门关闭的响声"],"answer":3,"module":"单选题","explain":""},
+        {"title":"30. 电容器电容的大小与","options":["电压","电流","电介质","频率"],"answer":2,"module":"单选题","explain":""},
+        {"title":"31. 照明电路中出现","options":["开关断线","满载","开关熔焊","负载两端碰线"],"answer":3,"module":"单选题","explain":""},
+        {"title":"32. 除液压启闭机外，其它各类启闭机均应装设","options":["齿轮机构","蜗杆装置","螺杆装置","制动装置"],"answer":3,"module":"单选题","explain":""},
+        {"title":"33. 清污机设有机械过载保护和","options":["监控装置","电气过载保护","扩力装置","安全保护装置"],"answer":1,"module":"单选题","explain":""},
+        {"title":"34. 移动式启闭机的行走机构应装设","options":["缓冲器","保持器","平衡器","减速器"],"answer":0,"module":"单选题","explain":""},
+        {"title":"35. 螺杆启闭机常用的闭门过载保护装置有","options":["套筒式连轴器","刚性联轴器","牙嵌式安全联轴器","安全销"],"answer":2,"module":"单选题","explain":""},
+        {"title":"36. 计算机监控系统的软件集合中，","options":["监控软件","操作系统软件","数据库软件","网络通信软件"],"answer":1,"module":"单选题","explain":""},
+        {"title":"37. 泵站计算机监控系统远程调度端与信息中心距离较远时，监控信息可利用","options":["双绞线","同轴电缆","光纤","卫星信道"],"answer":2,"module":"单选题","explain":""},
+        {"title":"38. PLC是（programmable logica controller）缩写，意为","options":["现地控制单元","可编程控制器","可编程存储器","主控单元"],"answer":1,"module":"单选题","explain":""},
+        {"title":"39. 计算机监控系统的实时性反映在系统的响应时间上，数据的采集周期一般在","options":["1s","2s","5s","10s"],"answer":0,"module":"单选题","explain":""},
+        {"title":"40. 计算机监控系统安全性不包括","options":["操作安全","通信安全","人身安全","软硬件安全"],"answer":2,"module":"单选题","explain":""},
+        {"title":"41. 泵站计算机监控系统的现场设备可根据具体情况采用","options":["树形组网","环形组网","星型组网","总线组网"],"answer":3,"module":"单选题","explain":""},
+        {"title":"42. 对于模拟信号传输来讲，进行较远距离传输时，通常涉及到以下技术或设备：调制、解调","options":["MODEM","MPEG","CABLE","FDDI"],"answer":0,"module":"单选题","explain":""},
+        {"title":"43. 常用的液位传感器或变送器包括浮球式、","options":["静压式","气压式","差压式","浮板式"],"answer":0,"module":"单选题","explain":""},
+        {"title":"44. 因特网接入技术包括","options":["拨号接入","评价","方案","成本"],"answer":2,"module":"单选题","explain":""},
+        {"title":"45. 计算机监控系统通信接口通常采用","options":["ADSL","RS485","RJ45","ATM"],"answer":1,"module":"单选题","explain":""},
+        {"title":"46. 培训计划必须满足","options":["组织","上级部门","社会","群众"],"answer":0,"module":"单选题","explain":""},
+        {"title":"47. 质量改进的原理：质量改进是通过","options":["改造设备","改造技术","节约能源","改进过程"],"answer":3,"module":"单选题","explain":""},
+        {"title":"48. 标准体制主要包括标准分级和","options":["标准类别","标准性质","标准层次","标准规范"],"answer":1,"module":"单选题","explain":""},
+        {"title":"49. 编写培训讲义必须认真研究本职业","options":["《国家技术标准》","《国家职业标准》","行业标准","行业规范"],"answer":1,"module":"单选题","explain":""},
+        {"title":"50. 技术档案管理应符合","options":["行业管理","上级部门","泵站管理","国家档案管理"],"answer":3,"module":"单选题","explain":""},
+        {"title":"51. 泵站机电设备通常包括：","options":["主机组","水泵","电动机","柴油机"],"answer":0,"module":"单选题","explain":""},
+        {"title":"52. 电动机选择正确与否将直接影响泵站","options":["转速","经济效益","装置效率","扬程"],"answer":2,"module":"单选题","explain":""},
+        {"title":"53. 加装前置导轮可有效地改善泵的","options":["出水量","空蚀性能","工作效率","装置效率"],"answer":1,"module":"单选题","explain":""},
+        {"title":"54. 机电设备及金属结构的更新改造，应与继续保留使用的设备、设施在","options":["大小","形状","结构尺寸","功率"],"answer":2,"module":"单选题","explain":""},
+        {"title":"55. 更新改造中主水泵的","options":["效益","效率","性能参数","泵型"],"answer":3,"module":"单选题","explain":""},
+        {"title":"56. 主电动机的容量，应按主水泵在运行期间出现的","options":["最小轴功率","最大轴功率","平均轴功率","额定轴功率"],"answer":1,"module":"单选题","explain":""},
+        {"title":"57. 爱岗敬业是社会主义国家对每个从业人员的","options":["最高要求","起码要求","全面要求","局部要求"],"answer":1,"module":"单选题","explain":""},
+        {"title":"58. 下列说法中，你认为错误的是","options":["诚实守信是市场经济法则","诚实守信是企业的无形资产","诚实守信是为人之本","奉行诚实守信的原则在市场经济中必定难以立足"],"answer":3,"module":"单选题","explain":""},
+        {"title":"59. 社会主义的职业差别是","options":["分工不同","社会地位不同","经济地位不同","社会荣誉不同"],"answer":0,"module":"单选题","explain":""},
+        {"title":"60. 职业道德是从事一定职业的人们，在工作或劳动中，应遵循的与其","options":["思想活动","经济活动","政治活动","职业活动"],"answer":3,"module":"单选题","explain":""},
+        {"title":"61. 水利职业道德的基础和核心是：","options":["注重质量","崇尚科学","爱岗敬业","实事求是"],"answer":2,"module":"单选题","explain":""},
+        {"title":"62. 关于道德与法律，正确的说法是","options":["在法律健全完善的社会，不需要道德","由于道德不具备法律那样的强制性，所以道德的社会功用不如法律","在人类历史上，道德与法律同时产生","在一定条件下，道德与法律能够相互作用、相互转化"],"answer":3,"module":"单选题","explain":""},
+        {"title":"63. 为了保证零件具有互换性，必须对零件的尺寸规定一个允许的变动量，即","options":["尺寸公差","标准公差","基本偏差","极限偏差"],"answer":0,"module":"单选题","explain":""},
+        {"title":"64. 基准制是规定孔与轴相配合时，以其中一个作为基准件，它的","options":["标准公差","基本偏差","极限偏差","尺寸公差"],"answer":1,"module":"单选题","explain":""},
+        {"title":"65. 与标准件相配合时应选用","options":["基孔制","基轴制","以标准件为准的基准制","以孔为基准的基孔制"],"answer":2,"module":"单选题","explain":""},
+        {"title":"66. 极限与配合在装配图上的标注形式中，分子为","options":["孔的公差带代号","轴的公差带代号","孔的实际尺寸","轴的实际尺寸"],"answer":0,"module":"单选题","explain":""},
+        {"title":"67. 图样中基准代号不管处于什么方向，框内字母应","options":["垂直","倾斜","水平","任意"],"answer":2,"module":"单选题","explain":""},
+        {"title":"68. 零件上有配合要求或有相对运动的表面，粗糙度参数值","options":["要较大","应选较小值","不确定","不受影响"],"answer":1,"module":"单选题","explain":""},
+        {"title":"69. 勘测图样常用专业图例允许在一个图上用","options":["1种","2种","3种","4种"],"answer":1,"module":"单选题","explain":""},
+        {"title":"70. 用来表示水利枢纽中各建筑物的形状、大小、结构与构造及组成材料等内容的图样，成为","options":["枢纽图","平面布置图","施工详图","剖面图"],"answer":2,"module":"单选题","explain":""},
+        {"title":"71. 泵站运行管理人员应按规定经","options":["大学毕业","上级同意","领导审核","培训"],"answer":3,"module":"单选题","explain":""},
+        {"title":"72. 离心泵运行前宜","options":["盘车检查","推车检查","摇动检查","推动检查"],"answer":0,"module":"单选题","explain":""},
+        {"title":"73. 泵站机组用油大致可分为润滑油和","options":["机械油","绝缘油","润滑脂","润滑剂"],"answer":1,"module":"单选题","explain":""},
+        {"title":"74. 一台水泵机组是由具有一定质量的多个零部件组合而成的","options":["刚性部件","运动单元","刚性组合体","弹性组合体"],"answer":3,"module":"单选题","explain":""},
+        {"title":"75. 液位计根据浮力原理和","options":["机械原理","电力原理","气压原理","磁性耦合"],"answer":3,"module":"单选题","explain":""},
+        {"title":"76. 启动过程引起的振动对于虹吸式流道而言，是机组启动时，虹吸形成的过程，也就是残存在流道内的","options":["水锤振动","空气的排除过程","汽蚀振动","机械振动"],"answer":1,"module":"单选题","explain":""},
+        {"title":"77. 运行期间应定期巡视检查","options":["技术供水水压","渗漏信号","溢流信号","损失信号"],"answer":0,"module":"单选题","explain":""},
+        {"title":"78. 在闭合电路中，当电源内阻增大时，电源两端的电压将","options":["升高","降低","不变","不确定"],"answer":1,"module":"单选题","explain":""},
+        {"title":"79. 在泵站中，L1，L2，L3三相交流电习惯用","options":["黄、绿、红","红、绿、黄","红、黄、绿","黄、红、绿"],"answer":0,"module":"单选题","explain":""},
+        {"title":"80. 在万用表的标度盘上标有“AC”的标度尺为测量","options":["直流电压","直流电流","直流","交流"],"answer":3,"module":"单选题","explain":""},
+        {"title":"81. 楞次定律是研究","options":["电流","电压","导体运动","感生电动势"],"answer":3,"module":"单选题","explain":""},
+        {"title":"82. 照明电路中出现","options":["开关断线","满载","开关熔焊","负载两端碰线"],"answer":3,"module":"单选题","explain":""},
+        {"title":"83. 当运行中的电动机在转速突然下降同时迅速发热时，首先应","options":["切断电源","检查故障","汇报领导","继续使用"],"answer":0,"module":"单选题","explain":""},
+        {"title":"84. 电气设备在低于额定功率下的工作状态叫","options":["轻载","满载","过载","超载"],"answer":0,"module":"单选题","explain":""},
+        {"title":"85. 效率是指水泵的有效功率与","options":["轴功率","输出功率","扬程","转速"],"answer":0,"module":"单选题","explain":""},
+        {"title":"86. 清污机设有","options":["监控装置","机械过载保护","扩力装置","安全保护装置"],"answer":1,"module":"单选题","explain":""},
+        {"title":"87. 移动式启闭机的行走机构应装设缓冲器，室外作业的移动式启闭机应装设","options":["保持器","夹轨器","平衡器","减速器"],"answer":1,"module":"单选题","explain":""},
+        {"title":"88. 螺杆启闭机常用的闭门过载保护装置有牙嵌式安全联轴器和","options":["套筒式","凸缘式","超越摩擦片式","安全销"],"answer":2,"module":"单选题","explain":""},
+        {"title":"89. 泵站计算机监控系统的软件集合中，","options":["监控软件","操作系统软件","数据库软件","网络通信软件"],"answer":1,"module":"单选题","explain":""},
+        {"title":"90. 泵站计算机监控系统远程调度端与信息中心距离较远时，监控信息可利用","options":["双绞线","光纤","同轴电缆","卫星信道"],"answer":1,"module":"单选题","explain":""},
+        {"title":"91. 为了防止在突然失电的情况下引起监控软件某些文件破坏，一般需要对计算机","options":["从供电部门引出专用电线","配备稳压器","配备UPS","配备发电机组"],"answer":2,"module":"单选题","explain":""},
+        {"title":"92. 监控过程中，数据处理采用的是","options":["问题驱动","故障驱动","设备驱动","事件驱动"],"answer":3,"module":"单选题","explain":""},
+        {"title":"93. PLC性能主要取决于CPU速度和","options":["内存容量","I/O数量","软件容量","体积大小"],"answer":0,"module":"单选题","explain":""},
+        {"title":"94. 目前，计算机监控系统软件多采用","options":["B2B","B/S","C/S","B2C"],"answer":2,"module":"单选题","explain":""},
+        {"title":"95. 模拟信号如语音信号要在数字线路上传输，必须将语音信号转换成数字信号，其转换过程需经历3 个过程：","options":["压缩","采样","A/D","调制"],"answer":1,"module":"单选题","explain":""},
+        {"title":"96. 监控系统可靠性体现在平均无故障间隔时间和","options":["平均维修时间","CPU平均负荷率","可利用率","可维护性"],"answer":0,"module":"单选题","explain":""},
+        {"title":"97. 计算机监控系统的实时性反映在系统的响应时间上，数据的控制响应时间一般在","options":["10s","5s","2s","1s"],"answer":3,"module":"单选题","explain":""},
+        {"title":"98. 在信号传输过程中，解调是将","options":["对传输信号进行采样","传输的模拟信号变换成数字信号","对传输信号进行量化","传输的数字信号变换为模拟信号"],"answer":1,"module":"单选题","explain":""},
+        {"title":"99. 培训计划必须满足组织及","options":["员工","上级部门","社会","群众"],"answer":0,"module":"单选题","explain":""},
+        {"title":"100. 全面质量管理的特点：","options":["全员","全体","全面","全厂"],"answer":0,"module":"单选题","explain":""},
+        {"title":"101. 所谓标准分级就是根据标准适用范围的不同，将其划分为若干不同的","options":["类别","性质","层次","规范"],"answer":2,"module":"单选题","explain":""},
+        {"title":"102. 《中华人民共和国标准化法》规定，我国标准分为四级，即国家标准、","options":["县市标准","地市标准","省市标准","行业标准"],"answer":3,"module":"单选题","explain":""},
+        {"title":"103. 编写培训讲义必须认真研究本职业《国家职业标准》和","options":["《国家技术标准》","《国家职业资格培训教程》","行业标准","行业规范"],"answer":1,"module":"单选题","explain":""},
+        {"title":"104. 档案信息管理应符合的要求包括：定期对技术文档进行","options":["清理、整洁","整理、归档","编码、排序","替换、销毁"],"answer":1,"module":"单选题","explain":""},
+        {"title":"105. 《泵站安全鉴定规程》规定：二类水泵技术状态基本完好，满足泵站运行要求，水泵只需","options":["整体更换","局部修复","全面修复","整体修复"],"answer":1,"module":"单选题","explain":""},
+        {"title":"106. 液压马达可实现连续的","options":["旋转运动","往复直线运动","往复摆动运动","上下运动"],"answer":0,"module":"单选题","explain":""},
+        {"title":"107. 机电设备及金属结构的更新改造，应与继续保留使用的设备、设施在结构尺寸和","options":["大小","形状","性能参数","功率"],"answer":2,"module":"单选题","explain":""},
+        {"title":"108. 泵站改造所采用的新泵型应是技术参数先进、经济指标合理、并通过了","options":["县市级以上","省部级以上","专家组","地市级以上"],"answer":1,"module":"单选题","explain":""},
+        {"title":"109. 主电动机的容量，应按主水泵在","options":["模拟试验时","运行期间","设计时","试验期间"],"answer":1,"module":"单选题","explain":""},
+        {"title":"110. 一个人的社会地位、荣誉，从根本上取决于","options":["从业者所获得的报酬","自己的职业","从业者对社会的贡献","自己的职务"],"answer":2,"module":"单选题","explain":""},
+        {"title":"111. 要做到办事公道，应站在","options":["平衡","平均","公正","协调"],"answer":2,"module":"单选题","explain":""},
+        {"title":"112. 爱岗敬业是社会主义国家对每个从业人员的","options":["最高要求","起码要求","全面要求","局部要求"],"answer":1,"module":"单选题","explain":""},
+        {"title":"113. 社会主义职业道德的基本原则是","options":["共产主义","集团主义","集体主义","全心全意为人民服务"],"answer":2,"module":"单选题","explain":""},
+        {"title":"114. 关于职业道德，正确的说法是","options":["职业道德有助于增强企业凝聚力，但无助于促进企业技术进步","职业道德有助于提高劳动生产率，但无助于降低生产成本","职业道德有利于提高员工职业技能，增强企业竞争力","职业道德只是有助于提高产品质量，但无助于提高企业信誉和形象。"],"answer":2,"module":"单选题","explain":""},
+        {"title":"115. 在上偏差、下偏差中接近零线的那个偏差，称","options":["尺寸公差","标准公差","基本偏差","极限偏差"],"answer":2,"module":"单选题","explain":""},
+        {"title":"116. 机器中轴和孔的基本尺寸相同，轴的公差带在孔的公差带之上，这种配合称为","options":["过盈配合","间隙配合","过渡配合","互换性"],"answer":0,"module":"单选题","explain":""},
+        {"title":"117. 在公差等级高于IT8级的配合中，孔与轴的公差等级应","options":["相同","孔比轴高一个公差等级","孔比轴低一个等级","任意"],"answer":2,"module":"单选题","explain":""},
+        {"title":"118. 在孔或轴的基本尺寸后面，既注出基本偏差代号和公差等级，又同时注出上、下偏差数值，这种标注形式用于","options":["成批生产","单件生产","小批量生产","生产批量不定"],"answer":3,"module":"单选题","explain":""},
+        {"title":"119. 表示的形位公差项目是","options":["平行度","垂直度","同轴度","倾斜度"],"answer":1,"module":"单选题","explain":""},
+        {"title":"120. 地形图是在什么阶段绘制的","options":["施工","初步设计","技术设计","勘测"],"answer":3,"module":"单选题","explain":""},
+        {"title":"121. 表达水利工程的布局、位置、类别等内容的图样是","options":["规划图","勘测图","建筑物结构图","施工图"],"answer":0,"module":"单选题","explain":""},
+        {"title":"122. 按设计要求用于指导水利工程与水工建筑物施工的图样，称为","options":["枢纽布置图","建筑物结构图","地基处理图","施工图"],"answer":3,"module":"单选题","explain":""},
+        {"title":"123. 泵站运行管理人员应按规定经","options":["高等院校毕业","上级部门同意","泵站领导审核","培训和考核"],"answer":3,"module":"单选题","explain":""},
+        {"title":"124. 泵站效率应根据泵型、泵站设计扬程或平均净扬程以及水源的含沙量情况确定，并符合","options":["《泵站设计规范》","《泵站更新改造技术规范》","《泵站技术管理规程》","《大型泵站设备设施运行规程》"],"answer":2,"module":"单选题","explain":""},
+        {"title":"125. 泵站机组用油大致可分为","options":["黄油","润滑油","润滑脂","机械油"],"answer":1,"module":"单选题","explain":""},
+        {"title":"126. 一台水泵机组是由具有一定质量的","options":["运动单元","单个零部件组合","2个零部件组合","多个零部件组合"],"answer":3,"module":"单选题","explain":""},
+        {"title":"127. 电接点双金属温度计应用于生产现场对温度需","options":["校核","调节","自动控制","显示"],"answer":2,"module":"单选题","explain":""},
+        {"title":"128. 液位计根据","options":["浮力原理和机械原理","电力原理","气压原理和磁性耦合","浮力原理和磁性耦合"],"answer":3,"module":"单选题","explain":""},
+        {"title":"129. 启动过程引起的振动对于","options":["平直管式流道","虹吸式流道","圆形流导","矩形流道"],"answer":1,"module":"单选题","explain":""},
+        {"title":"130. 转轮间隙不等会使主轴产生","options":["径向振摆","轴向摆动","轴向窜动","径向窜动"],"answer":0,"module":"单选题","explain":""},
+        {"title":"131. 投入运行前应检查主水泵填料函处","options":["填料压紧程度","填料选择","填料材质","颜色"],"answer":0,"module":"单选题","explain":""},
+        {"title":"132. 电阻的连接有","options":["两种","三种","四种","五种"],"answer":0,"module":"单选题","explain":""},
+        {"title":"133. 变压器是一种","options":["静止","输电","传电","运行"],"answer":0,"module":"单选题","explain":""},
+        {"title":"134. 泵站内进出水闸门的启动应采用","options":["正反转控制","点动控制","全压控制","自锁控制"],"answer":0,"module":"单选题","explain":""},
+        {"title":"135. 在使用兆欧表前，应先检查兆欧表的","options":["电压等级","电流等级","电阻等级","绝缘等级"],"answer":0,"module":"单选题","explain":""},
+        {"title":"136. 泵站的动力设备是指","options":["变压器","互感器","电动机","水泵"],"answer":2,"module":"单选题","explain":""},
+        {"title":"137. 在闭合电路中，当电源内阻增大时，电源两端的电压将","options":["升高","降低","不变","不确定"],"answer":1,"module":"单选题","explain":""},
+        {"title":"138. 在泵站中，L1，L2，L3三相交流电习惯用","options":["黄、绿、红","红、绿、黄","红、黄、绿","黄、红、绿"],"answer":0,"module":"单选题","explain":""},
+        {"title":"139. 电气设备在低于额定功率下的工作状态叫","options":["轻载","满载","过载","超载"],"answer":0,"module":"单选题","explain":""},
+        {"title":"140. 在全电压起动的控制电路中，热继电器只起","options":["短路","断路","过载","欠压"],"answer":2,"module":"单选题","explain":""},
+        {"title":"141. 单相正弦交流电的电压有效值为220V，其最大值为","options":["220","250","311","380"],"answer":2,"module":"单选题","explain":""},
+        {"title":"142. 为了保证启闭机的安全可靠工作，各类启闭机均应设置相应的","options":["监控装置","自动装置","扩力装置","安全保护装置"],"answer":3,"module":"单选题","explain":""},
+        {"title":"143. 清污机的驱动装置由","options":["监控装置","链条张紧机构","扩力装置","皮带张紧机构"],"answer":1,"module":"单选题","explain":""},
+        {"title":"144. 移动式启闭机的","options":["螺杆机构","行走机构","滑轮机构","减速机构"],"answer":1,"module":"单选题","explain":""},
+        {"title":"145. 螺杆启闭机常用的闭门","options":["套筒装置","限速装置","过载保护装置","安全保护装置"],"answer":2,"module":"单选题","explain":""},
+        {"title":"146. 目前，计算机监控系统软件多采用","options":["C/S","B/S","B2B","B2C"],"answer":0,"module":"单选题","explain":""},
+        {"title":"147. 模拟信号如语音信号要在数字线路上传输，必须将语音信号转换成数字信号，其转换过程需经历3 个过程：","options":["压缩","采样","A/D","调制"],"answer":1,"module":"单选题","explain":""},
+        {"title":"148. 目前，接入因特网时，不受时空限制，方便的接入方式是","options":["拨号接入","LAN接入","无线接入","ISDN"],"answer":2,"module":"单选题","explain":""},
+        {"title":"149. 多台计算机组网后，每一台计算机必须","options":["是相同型号的","是不同型号的","设置相同的IP地址","设置不同的IP地址"],"answer":3,"module":"单选题","explain":""},
+        {"title":"150. PLC的编程中，适用于开关量控制和逻辑互锁程序，以图形符号及图形符号在图中的相互关系表示控制关系的的编程语言是","options":["功能块图","梯形图","顺序功能图","指令表"],"answer":1,"module":"单选题","explain":""},
+        {"title":"151. 计算机监控系统的实时性反映在系统的响应时间上，画面的数据刷新时间在","options":["2s","1.5s","1s","0.5s"],"answer":3,"module":"单选题","explain":""},
+        {"title":"152. 泵站计算机网络以以太网为主，通信协议采用","options":["NETBEUI","IPX/SPX","TCP/IP","OSI/RM"],"answer":2,"module":"单选题","explain":""},
+        {"title":"153. 数字数据通信过程中可使用","options":["整体重发","自动重发请求","全面检查","奇偶校验法"],"answer":1,"module":"单选题","explain":""},
+        {"title":"154. 计算机监控系统安全性不包括","options":["操作安全","通信安全","人身安全","软硬件安全"],"answer":2,"module":"单选题","explain":""},
+        {"title":"155. 泵站计算机监控系统的现场设备可根据具体情况采用","options":["总线组网","环形组网","星型组网","树形组网"],"answer":0,"module":"单选题","explain":""},
+        {"title":"156. 培训计划必须满足","options":["组织及员工","组织及上级部门","社会及员工","群众和领导"],"answer":0,"module":"单选题","explain":""},
+        {"title":"157. 全面质量管理的特点：全员、全过程、","options":["全范围","全体","全面","全厂"],"answer":0,"module":"单选题","explain":""},
+        {"title":"158. 《中华人民共和国标准化法》规定，我国标准分为四级，即国家标准、","options":["县市标准","地市标准","省市标准","行业标准"],"answer":3,"module":"单选题","explain":""},
+        {"title":"159. 强制性国家标准的代号为“GB”，推荐性国家标准的代号为","options":["“T/GB”","“SL”","“GB/T”","“SL/T”"],"answer":2,"module":"单选题","explain":""},
+        {"title":"160. 档案信息管理应符合的要求包括：定期对技术文档","options":["借阅、归还","整理、归档","编码、排序","替换、销毁"],"answer":0,"module":"单选题","explain":""},
+        {"title":"161. 主水泵的更新改造涉及两个层面，一是选型，二是更新改造","options":["范围","评价","方案","成本"],"answer":2,"module":"单选题","explain":""},
+        {"title":"162. 水泵机组直接传动是用","options":["制动器","皮带传动","联轴器","离合器"],"answer":2,"module":"单选题","explain":""},
+        {"title":"163. 液压缸可实现","options":["旋转运动","往复直线运动","往复摆动运动","左右运动"],"answer":1,"module":"单选题","explain":""},
+        {"title":"164. 大中型泵站的机电设备，包括各类闸门，在选型和设计时都应考虑满足泵站","options":["效益","效率","性能参数","计算机监控"],"answer":3,"module":"单选题","explain":""},
+        {"title":"165. 当水泵采用叶片全调节方式而需要在电动机主轴内开孔时，应复核电动机主轴的","options":["硬度和强度","硬度和刚度","强度和刚度","弹性和韧性"],"answer":2,"module":"单选题","explain":""},
+        {"title":"166. 泵站应配置安装检修用的起重设备，大中型泵站应采用","options":["电动起重设备","手动起重设备","机械起重设备","手拉葫芦起重设备"],"answer":0,"module":"单选题","explain":""},
+
+],
     
     getAll() { return this.data; },
     getLength() { return this.data.length; },
@@ -987,18 +1445,129 @@ const UI = {
         Utils.$('weakModule').innerText = max === 0 ? "未检测" : weakText;
     },
     
-    showAnswerResult(q, selectedIndex, dom) {
+    // 百度文心一言API配置
+    BAIDU_CONFIG: {
+        apiKey: '61rMYpLOVRIyyctyHTHflIyq',
+        secretKey: 'ayj6sMDzZ96bO792mDyPfmXuDMslfId8',
+        token: null,
+        tokenExpireTime: 0
+    },
+    
+    async getBaiduAccessToken() {
+        const now = Date.now();
+        if (this.BAIDU_CONFIG.token && now < this.BAIDU_CONFIG.tokenExpireTime) {
+            return this.BAIDU_CONFIG.token;
+        }
+        
+        try {
+            // 使用本地代理服务器获取token
+            const response = await fetch('/api/baidu/token', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                if (data.access_token) {
+                    this.BAIDU_CONFIG.token = data.access_token;
+                    this.BAIDU_CONFIG.tokenExpireTime = now + (data.expires_in - 60) * 1000;
+                    return data.access_token;
+                } else {
+                    console.error('获取token失败:', data);
+                }
+            } else {
+                const errorText = await response.text();
+                console.error('获取token HTTP错误:', response.status, errorText);
+            }
+        } catch (e) {
+            console.error('获取百度API token失败:', e.message);
+        }
+        return null;
+    },
+    
+    async fetchSmartExplain(q) {
+        // 先尝试使用题库自带的解析
+        if (q.explain && q.explain.trim()) {
+            return q.explain;
+        }
+        
+        try {
+            const token = await this.getBaiduAccessToken();
+            if (!token) {
+                return 'API配置错误，请检查密钥';
+            }
+            
+            const prompt = `请详细解析以下题目：\n\n题目：${q.title}\n选项：${q.options.join('、')}\n正确答案：${String.fromCharCode(65 + q.answer)}. ${q.options[q.answer]}\n\n请给出详细的解析说明。`;
+            
+            // 使用本地代理服务器调用百度API
+            const response = await fetch('/api/baidu/chat', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    messages: [
+                        { role: 'user', content: prompt }
+                    ],
+                    temperature: 0.7
+                })
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                console.log('API响应:', data);
+                if (data.result) {
+                    return data.result;
+                } else if (data.choices && data.choices[0] && data.choices[0].message) {
+                    return data.choices[0].message.content;
+                } else if (data.error_code) {
+                    console.error('API错误:', data.error_code, data.error_msg);
+                    return `解析失败(${data.error_code}): ${data.error_msg}`;
+                }
+            } else {
+                const errorText = await response.text();
+                console.error('HTTP错误:', response.status, errorText);
+                return `HTTP错误: ${response.status}`;
+            }
+        } catch (e) {
+            console.error('智能解析获取失败:', e.message);
+            return `获取解析失败: ${e.message}`;
+        }
+        return '暂无解析';
+    },
+
+    async showAnswerResult(q, selectedIndex, dom) {
         Utils.$('answerAnalyze').classList.remove('hidden');
-        Utils.$('correctAnswerContent').innerText = `${String.fromCharCode(65 + q.answer)}. ${q.options[q.answer]}`;
-        Utils.$('answerExplain').innerText = q.explain;
         Utils.$('nextBtn').disabled = false;
+        
+        // 显示用户选择的答案
+        const userAnswerText = `${String.fromCharCode(65 + selectedIndex)}. ${q.options[selectedIndex]}`;
+        Utils.$('userAnswerContent').innerText = userAnswerText;
+        
+        // 显示正确答案
+        Utils.$('correctAnswerContent').innerText = `${String.fromCharCode(65 + q.answer)}. ${q.options[q.answer]}`;
         
         if (selectedIndex === q.answer) {
             dom.classList.add('border-green-500/50');
+            Toast.success('回答正确！');
+            if (q.explain) {
+                Utils.$('answerExplain').innerText = q.explain;
+            } else {
+                Utils.$('answerExplain').innerText = '暂无解析';
+            }
         } else {
             dom.classList.add('border-red-500/50');
             const correctDom = Utils.$$('#answerOptions div')[q.answer];
             if (correctDom) correctDom.classList.add('border-green-500/50', 'option-selected');
+            Toast.error('回答错误！');
+            
+            if (q.explain) {
+                Utils.$('answerExplain').innerText = q.explain;
+            } else {
+                Utils.$('answerExplain').innerText = '正在获取智能解析...';
+                const smartExplain = await this.fetchSmartExplain(q);
+                Utils.$('answerExplain').innerText = smartExplain;
+            }
         }
     },
     
@@ -1123,6 +1692,25 @@ const Auth = {
         Utils.$('loginPwd').value = '';
     },
     
+    forgotPassword() {
+        const user = Utils.$('forgotUser').value.trim();
+        if (!user) {
+            alert('请输入账号');
+            return;
+        }
+        
+        const userData = DataStore.getUser(user);
+        if (!userData) {
+            alert('账号不存在');
+            return;
+        }
+        
+        // 由于是本地存储，直接显示密码（实际项目中不应这样做）
+        alert(`您的密码是：${userData.password}`);
+        Utils.$('forgotPwdModal').classList.add('hidden');
+        Utils.$('forgotUser').value = '';
+    },
+    
     showLoginTab() {
         Utils.$('loginTab').classList.add('text-purple-400', 'border-b-2', 'border-purple-400');
         Utils.$('regTab').classList.remove('text-purple-400', 'border-b-2', 'border-purple-400');
@@ -1156,7 +1744,7 @@ const Exam = {
         UI.switchPage('examPage');
     },
     
-    handleAnswer(selectedIndex, dom) {
+    async handleAnswer(selectedIndex, dom) {
         if (Store.state.isAnswered) return;
         
         const q = QuestionBank.getByIndex(Store.state.currentQuestionIndex);
@@ -1212,13 +1800,13 @@ const Exam = {
             moduleErr: newModuleErr
         });
         
-        UI.showAnswerResult(q, selectedIndex, dom);
+        await UI.showAnswerResult(q, selectedIndex, dom);
         UI.updateStats();
         UI.renderErrorList();
         UI.drawChart();
     },
     
-    confirmMultiAnswer() {
+    async confirmMultiAnswer() {
         if (!this.multiSelected || this.multiSelected.length === 0) {
             Toast.info('请选择至少一个答案');
             return;
@@ -1262,10 +1850,29 @@ const Exam = {
         Utils.$('confirmMultiBtn').classList.add('hidden');
         
         Utils.$('answerAnalyze').classList.remove('hidden');
+        Utils.$('nextBtn').disabled = false;
+        
+        // 显示用户选择的答案
+        const userAnswerLetters = this.multiSelected.map(a => String.fromCharCode(65 + a)).join('、');
+        Utils.$('userAnswerContent').innerText = `${userAnswerLetters}. ${this.multiSelected.map(a => q.options[a]).join('、')}`;
+        
+        // 显示正确答案
         const answerLetters = q.answer.map(a => String.fromCharCode(65 + a)).join('、');
         Utils.$('correctAnswerContent').innerText = `${answerLetters}. ${q.answer.map(a => q.options[a]).join('、')}`;
-        Utils.$('answerExplain').innerText = q.explain;
-        Utils.$('nextBtn').disabled = false;
+        
+        if (isCorrect) {
+            Toast.success('回答正确！');
+            Utils.$('answerExplain').innerText = q.explain || '暂无解析';
+        } else {
+            Toast.error('回答错误！');
+            if (q.explain) {
+                Utils.$('answerExplain').innerText = q.explain;
+            } else {
+                Utils.$('answerExplain').innerText = '正在获取智能解析...';
+                const smartExplain = await UI.fetchSmartExplain(q);
+                Utils.$('answerExplain').innerText = smartExplain;
+            }
+        }
         
         Store.setState({
             totalRight: newRight,
@@ -1514,6 +2121,12 @@ const SpecialTrain = {
             
             Utils.$('testAnswerAnalyze').classList.remove('hidden');
             const isJudge = q.module === '判断题';
+            
+            // 显示用户选择的答案
+            const userAnswerText = isJudge ? q.options[index] : `${String.fromCharCode(65 + index)}. ${q.options[index]}`;
+            Utils.$('testUserAnswerContent').innerText = userAnswerText;
+            
+            // 显示正确答案
             const answerText = isJudge ? q.options[q.answer] : `${String.fromCharCode(65 + q.answer)}. ${q.options[q.answer]}`;
             Utils.$('testCorrectAnswerContent').innerText = answerText;
             Utils.$('testAnswerExplain').innerText = q.explain;
@@ -1537,10 +2150,26 @@ const SpecialTrain = {
             d.onclick = null;
         });
         
+        const userSet = new Set(userAnswer);
+        const answerSet = new Set(q.answer);
+        const isCorrect = userSet.size === answerSet.size && [...userSet].every(a => answerSet.has(a));
+        
+        if (isCorrect) {
+            Toast.success('回答正确！');
+        } else {
+            Toast.error('回答错误！');
+        }
+        
         Utils.$('testAnswerAnalyze').classList.remove('hidden');
-        const answerLetters = userAnswer.map(a => String.fromCharCode(65 + a)).join('、');
-        Utils.$('testCorrectAnswerContent').innerText = `${answerLetters}. ${userAnswer.map(a => q.options[a]).join('、')}`;
-        Utils.$('testAnswerExplain').innerText = q.explain;
+        
+        // 显示用户选择的答案
+        const userAnswerLetters = userAnswer.map(a => String.fromCharCode(65 + a)).join('、');
+        Utils.$('testUserAnswerContent').innerText = `${userAnswerLetters}. ${userAnswer.map(a => q.options[a]).join('、')}`;
+        
+        // 显示正确答案
+        const answerLetters = q.answer.map(a => String.fromCharCode(65 + a)).join('、');
+        Utils.$('testCorrectAnswerContent').innerText = `${answerLetters}. ${q.answer.map(a => q.options[a]).join('、')}`;
+        Utils.$('testAnswerExplain').innerText = q.explain || '暂无解析';
         
         setTimeout(() => {
             if (this.currentIndex < this.questionList.length - 1) {
@@ -1846,6 +2475,12 @@ const TestExam = {
             
             Utils.$('testAnswerAnalyze').classList.remove('hidden');
             const isJudge = q.module === '判断题';
+            
+            // 显示用户选择的答案
+            const userAnswerText = isJudge ? q.options[index] : `${String.fromCharCode(65 + index)}. ${q.options[index]}`;
+            Utils.$('testUserAnswerContent').innerText = userAnswerText;
+            
+            // 显示正确答案
             const answerText = isJudge ? q.options[q.answer] : `${String.fromCharCode(65 + q.answer)}. ${q.options[q.answer]}`;
             Utils.$('testCorrectAnswerContent').innerText = answerText;
             Utils.$('testAnswerExplain').innerText = q.explain;
@@ -1885,8 +2520,14 @@ const TestExam = {
         });
         
         Utils.$('testAnswerAnalyze').classList.remove('hidden');
-        const answerLetters = userAnswer.map(a => String.fromCharCode(65 + a)).join('、');
-        Utils.$('testCorrectAnswerContent').innerText = `${answerLetters}. ${userAnswer.map(a => q.options[a]).join('、')}`;
+        
+        // 显示用户选择的答案
+        const userAnswerLetters = userAnswer.map(a => String.fromCharCode(65 + a)).join('、');
+        Utils.$('testUserAnswerContent').innerText = `${userAnswerLetters}. ${userAnswer.map(a => q.options[a]).join('、')}`;
+        
+        // 显示正确答案
+        const answerLetters = q.answer.map(a => String.fromCharCode(65 + a)).join('、');
+        Utils.$('testCorrectAnswerContent').innerText = `${answerLetters}. ${q.answer.map(a => q.options[a]).join('、')}`;
         Utils.$('testAnswerExplain').innerText = q.explain;
         
         setTimeout(() => {
@@ -2110,6 +2751,11 @@ document.addEventListener('DOMContentLoaded', () => {
     Utils.$('regTab').onclick = () => Auth.showRegTab();
     
     Utils.$('loginUser').onkeyup = (e) => { if(e.key === 'Enter') Auth.login(); };
+    
+    // 忘记密码功能
+    window.showForgotPwd = () => {
+        Utils.$('forgotPwdModal').classList.remove('hidden');
+    };
     Utils.$('loginPwd').onkeyup = (e) => { if(e.key === 'Enter') Auth.login(); };
     Utils.$('regUser').onkeyup = (e) => { if(e.key === 'Enter') Auth.register(); };
     Utils.$('regPwd').onkeyup = (e) => { if(e.key === 'Enter') Auth.register(); };
